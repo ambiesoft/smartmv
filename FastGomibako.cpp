@@ -7,14 +7,15 @@
 #include "shlwapi.h"
 #pragma comment (lib, "shlwapi.lib")
 
+#include "CSessionGlobalMemory.h"
+
 #include "../MyUtility/SHDeleteFile.h"
 
 #define APPLICATION_NAME _T("FastGomibako")
 
-int APIENTRY _tWinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPTSTR     lpCmdLine,
-                     int       nCmdShow )
+CSessionGlobalMemory<int> gCount("FastGomibakoCounter");
+
+int dowork()
 {
 	if(__argc  <= 1)
 	{
@@ -87,7 +88,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 		if(!RemoveDirectory(szGomiDir))
 		{
-			throw _T("Failed to remove FastGomibako directory");
+			if(gCount <= 1)
+				throw _T("Failed to remove FastGomibako directory");
 		}
 
 	}
@@ -106,3 +108,22 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 
 
+int APIENTRY _tWinMain(HINSTANCE hInstance,
+                     HINSTANCE hPrevInstance,
+                     LPTSTR     lpCmdLine,
+                     int       nCmdShow )
+{
+
+	int ret=0;
+	try
+	{
+		gCount=gCount+1;
+		ret= dowork();
+	}
+	catch(...)
+	{
+		ret=-1;
+	}
+	gCount=gCount-1;
+	return ret;
+}
