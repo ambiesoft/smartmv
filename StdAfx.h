@@ -16,6 +16,10 @@
 #include <tchar.h>
 #include <stdlib.h>
 
+#include <string>
+using namespace std;
+
+#define I18N(t) (t)
 // TODO: reference additional headers your program requires here
 
 //{{AFX_INSERT_LOCATION}}

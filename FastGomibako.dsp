@@ -154,26 +154,17 @@ SOURCE=.\rc.rc
 # Begin Source File
 
 SOURCE=..\MyUtility\SHDeleteFile.cpp
-
-!IF  "$(CFG)" == "FastGomibako - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "FastGomibako - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "FastGomibako - Win32 UnicodeDebug"
-
 # SUBTRACT CPP /YX /Yc /Yu
-
-!ELSEIF  "$(CFG)" == "FastGomibako - Win32 UnicodeRelease"
-
-# SUBTRACT CPP /YX /Yc /Yu
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
+# End Source File
+# Begin Source File
+
+SOURCE=..\MyUtility\stdwin32\stdwin32.cpp
+# SUBTRACT CPP /YX /Yc /Yu
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -186,6 +177,10 @@ SOURCE=.\CSessionGlobalMemory.h
 # Begin Source File
 
 SOURCE=.\StdAfx.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\MyUtility\stdwin32\stdwin32.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

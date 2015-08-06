@@ -10,6 +10,9 @@
 #include "CSessionGlobalMemory.h"
 
 #include "../MyUtility/SHDeleteFile.h"
+#include "../MyUtility/tstring.h"
+#include "../MyUtility/stdwin32/stdwin32.h"
+using namespace stdwin32;
 
 #define APPLICATION_NAME _T("FastGomibako")
 
@@ -61,12 +64,21 @@ int dowork()
 		szGomiDir[2] = _T('\\');
 		lstrcpy(&szGomiDir[3], _T(".FastGomibako"));
 
+		tstring message = string_format(I18N(_T("Are you sure to FastGomibako \"%s\"?")), pFileOrig);
+		if(IDYES != MessageBox(NULL, message.c_str(),
+			APPLICATION_NAME,MB_ICONQUESTION|MB_YESNO))
+		{
+			return 3;
+		}
+
 		CreateDirectory(szGomiDir, NULL);
 		dwAttr = GetFileAttributes(szGomiDir);
 		if(dwAttr==0xffffffff || (dwAttr & FILE_ATTRIBUTE_DIRECTORY)==0)
 		{
 			throw _T("Failed to create FastGomibako directory");
 		}
+
+		SetFileAttributes(szGomiDir, dwAttr|FILE_ATTRIBUTE_HIDDEN);
 
 		LPCTSTR pFileName = _tcsrchr(pFileOrig, _T('\\'));
 		++pFileName;
@@ -75,6 +87,7 @@ int dowork()
 		lstrcpy(szGomiFile, szGomiDir);
 		lstrcat(szGomiFile, _T("\\"));
 		lstrcat(szGomiFile, pFileName);
+
 
 		if(!MoveFile(pFileOrig, szGomiFile))
 		{
