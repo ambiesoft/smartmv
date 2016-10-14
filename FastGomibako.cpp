@@ -4,6 +4,8 @@
 // http://www.flickr.com/photos/bossco/2854452799/
 
 #include "stdafx.h"
+
+
 #include "shlwapi.h"
 #pragma comment (lib, "shlwapi.lib")
 
