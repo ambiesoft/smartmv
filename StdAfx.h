@@ -16,10 +16,16 @@
 #include <tchar.h>
 #include <stdlib.h>
 
+#include "../MyUtility/I18N.h"
+#include "../MyUtility/SHDeleteFile.h"
+#include "../MyUtility/tstring.h"
+#include "../MyUtility/stdwin32/stdwin32.h"
+using namespace stdwin32;
+
 #include <string>
 using namespace std;
 
-#define I18N(t) (t)
+#define I18N(s) Ambiesoft::I18N(_T(s))
 // TODO: reference additional headers your program requires here
 
 //{{AFX_INSERT_LOCATION}}

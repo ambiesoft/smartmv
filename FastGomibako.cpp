@@ -11,10 +11,6 @@
 
 #include "CSessionGlobalMemory.h"
 
-#include "../MyUtility/SHDeleteFile.h"
-#include "../MyUtility/tstring.h"
-#include "../MyUtility/stdwin32/stdwin32.h"
-using namespace stdwin32;
 
 #define APPLICATION_NAME _T("FastGomibako")
 
@@ -41,23 +37,23 @@ int dowork()
 	{
 		if( !(_T('A') <= pFile[0] || pFile[0] <= _T('Z')) )
 		{
-			throw _T("Invalid Argument");
+			throw I18N("Invalid Argument");
 		}
 
 		if(pFile[1] != _T(':') || pFile[2] != _T('\\'))
 		{
-			throw _T("Invalid Argument");
+			throw I18N("Invalid Argument");
 		}
 
 		if(pFile[3]==0)
 		{
-			throw _T("Root Drive unacceptable");
+			throw I18N("Root Drive unacceptable");
 		}
 
 		DWORD dwAttr = GetFileAttributes(pFile);
 		if(dwAttr == 0xffffffff)
 		{
-			throw _T("File Not Found");
+			throw I18N("File Not Found");
 		}
 
 		TCHAR szGomiDir[32];
@@ -66,7 +62,7 @@ int dowork()
 		szGomiDir[2] = _T('\\');
 		lstrcpy(&szGomiDir[3], _T(".FastGomibako"));
 
-		tstring message = string_format(I18N(_T("Are you sure to FastGomibako \"%s\"?")), pFileOrig);
+		tstring message = string_format(I18N("Are you sure to FastGomibako \"%s\"?"), pFileOrig);
 		if(IDYES != MessageBox(NULL, message.c_str(),
 			APPLICATION_NAME,MB_ICONQUESTION|MB_YESNO))
 		{
@@ -76,7 +72,7 @@ int dowork()
 		bool bComp = false;
 		if(GetAsyncKeyState(VK_SHIFT)<0)
 		{
-			message = string_format(I18N(_T("Are you sure to delete completely \"%s\"?")), pFileOrig);
+			message = string_format(I18N("Are you sure to delete completely \"%s\"?"), pFileOrig);
 			if(IDYES != MessageBox(NULL, message.c_str(),
 				APPLICATION_NAME,MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2))
 			{
@@ -116,7 +112,7 @@ int dowork()
 		if(!RemoveDirectory(szGomiDir))
 		{
 			if(gCount <= 1)
-				throw _T("Failed to remove FastGomibako directory");
+				throw I18N("Failed to remove FastGomibako directory");
 		}
 
 	}
@@ -127,7 +123,7 @@ int dowork()
 	}
 	catch(...)
 	{
-		MessageBox(NULL, _T("Invalid Argument"), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
+		MessageBox(NULL, I18N("Invalid Argument"), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
 		return 3;
 	}
 	return 0;
