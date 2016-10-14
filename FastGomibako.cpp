@@ -71,6 +71,18 @@ int dowork()
 			return 3;
 		}
 
+		bool bComp = false;
+		if(GetAsyncKeyState(VK_SHIFT)<0)
+		{
+			message = string_format(I18N(_T("Are you sure to delete completely \"%s\"?")), pFileOrig);
+			if(IDYES != MessageBox(NULL, message.c_str(),
+				APPLICATION_NAME,MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2))
+			{
+				return 4;
+			}
+			bComp = true;
+		}
+
 		CreateDirectory(szGomiDir, NULL);
 		dwAttr = GetFileAttributes(szGomiDir);
 		if(dwAttr==0xffffffff || (dwAttr & FILE_ATTRIBUTE_DIRECTORY)==0)
@@ -94,7 +106,7 @@ int dowork()
 			throw _T("Failed to move file");
 		}
 
-		if(!SHDeleteFile(szGomiFile))
+		if(!SHDeleteFile(szGomiFile, FALSE, bComp ? TRUE : FALSE))
 		{
 			throw _T("Failed to trash file");
 		}
