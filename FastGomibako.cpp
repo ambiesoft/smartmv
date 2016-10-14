@@ -16,17 +16,31 @@
 
 CSessionGlobalMemory<int> gCount("FastGomibakoCounter");
 
+tstring GetUsageString()
+{
+	tstring ret;
+	ret += _T("\r\n\r\n");
+	ret += I18N("Usage");
+	ret += _T(":\r\n");
+	ret += _T("FastGomibako [File or Folder]");
+	return ret;
+}
+
 int dowork()
 {
 	if(__argc  <= 1)
 	{
-		MessageBox(NULL, _T("No Arguments"), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
+		tstring message = I18N("No Arguments");
+		message += GetUsageString();
+		MessageBox(NULL, message.c_str(), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
 		return 0;
 	}
 
 	if(__argc > 2)
 	{
-		MessageBox(NULL, _T("Too many Arguments"), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
+		tstring message = I18N("Too many Arguments");
+		message += GetUsageString();
+		MessageBox(NULL, message.c_str(), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
 		return 1;
 	}
 
@@ -42,7 +56,7 @@ int dowork()
 
 		if(pFile[1] != _T(':') || pFile[2] != _T('\\'))
 		{
-			throw I18N("Invalid Argument");
+			throw I18N("Must be a fullpath");
 		}
 
 		if(pFile[3]==0)
@@ -85,7 +99,7 @@ int dowork()
 		dwAttr = GetFileAttributes(szGomiDir);
 		if(dwAttr==0xffffffff || (dwAttr & FILE_ATTRIBUTE_DIRECTORY)==0)
 		{
-			throw _T("Failed to create FastGomibako directory");
+			throw I18N("Failed to create FastGomibako directory");
 		}
 
 		SetFileAttributes(szGomiDir, dwAttr|FILE_ATTRIBUTE_HIDDEN);
@@ -101,12 +115,15 @@ int dowork()
 
 		if(!MoveFile(pFileOrig, szGomiFile))
 		{
-			throw _T("Failed to move file");
+			throw I18N("Failed to move file");
 		}
 
 		if(!SHDeleteFile(szGomiFile, FALSE, bComp ? TRUE : FALSE))
 		{
-			throw _T("Failed to trash file");
+			if(!bComp)
+				throw I18N("Failed to trash file");
+			else
+				throw I18N("Failed to delete file");
 		}
 
 		if(!RemoveDirectory(szGomiDir))
@@ -115,6 +132,11 @@ int dowork()
 				throw I18N("Failed to remove FastGomibako directory");
 		}
 
+	}
+	catch(tstring& message)
+	{
+		MessageBox(NULL, message.c_str(), APPLICATION_NAME, MB_OK|MB_ICONERROR);
+		return 2;
 	}
 	catch(LPCTSTR pMessage)
 	{
@@ -136,7 +158,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      LPTSTR     lpCmdLine,
                      int       nCmdShow )
 {
-
+	Ambiesoft::i18nInitLangmap(hInstance, NULL, _T(""));
 	int ret=0;
 	try
 	{
