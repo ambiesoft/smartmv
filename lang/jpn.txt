@@ -12,3 +12,11 @@
 "Failed to delete file"="ファイルの削除に失敗しました"
 "Failed to remove FastGomibako directory"="FastGomibakoのフォルダに移動できませんでした"
 
+"Move to trashcan"="ゴミ箱に移動"
+"Delete completely"="完全に削除"
+
+"High"="高い"
+"Normal"="通常"
+"Low"="低い"
+"Background"="バックグラウンド"
+

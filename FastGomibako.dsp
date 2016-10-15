@@ -1,24 +1,24 @@
 # Microsoft Developer Studio Project File - Name="FastGomibako" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
-# ** 編集しないでください **
+# ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Application" 0x0101
 
 CFG=FastGomibako - Win32 UnicodeDebug
-!MESSAGE これは有効なﾒｲｸﾌｧｲﾙではありません。 このﾌﾟﾛｼﾞｪｸﾄをﾋﾞﾙﾄﾞするためには NMAKE を使用してください。
-!MESSAGE [ﾒｲｸﾌｧｲﾙのｴｸｽﾎﾟｰﾄ] ｺﾏﾝﾄﾞを使用して実行してください
+!MESSAGE This is not a valid makefile. To build this project using NMAKE,
+!MESSAGE use the Export Makefile command and run
 !MESSAGE 
 !MESSAGE NMAKE /f "FastGomibako.mak".
 !MESSAGE 
-!MESSAGE NMAKE の実行時に構成を指定できます
-!MESSAGE ｺﾏﾝﾄﾞ ﾗｲﾝ上でﾏｸﾛの設定を定義します。例:
+!MESSAGE You can specify a configuration when running NMAKE
+!MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
 !MESSAGE NMAKE /f "FastGomibako.mak" CFG="FastGomibako - Win32 UnicodeDebug"
 !MESSAGE 
-!MESSAGE 選択可能なﾋﾞﾙﾄﾞ ﾓｰﾄﾞ:
+!MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "FastGomibako - Win32 UnicodeDebug" ("Win32 (x86) Application" 用)
-!MESSAGE "FastGomibako - Win32 UnicodeRelease" ("Win32 (x86) Application" 用)
+!MESSAGE "FastGomibako - Win32 UnicodeDebug" (based on "Win32 (x86) Application")
+!MESSAGE "FastGomibako - Win32 UnicodeRelease" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -56,7 +56,7 @@ LINK32=link.exe
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /debug /machine:I386 /out:"C:\Linkout\FastGomibako\FastGomibakoD.exe" /pdbtype:sept
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Cmds=mkdir                       C:\Linkout\FastGomibako\lang                      	copy                       lang\jpn.txt                       C:\Linkout\FastGomibako\lang\ 
+PostBuild_Cmds=mkdir                        C:\Linkout\FastGomibako\lang                       	copy                        lang\jpn.txt                        C:\Linkout\FastGomibako\lang\ 
 # End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "FastGomibako - Win32 UnicodeRelease"
@@ -86,7 +86,7 @@ LINK32=link.exe
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /machine:I386 /out:"C:\Linkout\FastGomibako\FastGomibako.exe"
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Cmds=mkdir                       C:\Linkout\FastGomibako\lang                      	copy                       lang\jpn.txt                       C:\Linkout\FastGomibako\lang\ 
+PostBuild_Cmds=mkdir                        C:\Linkout\FastGomibako\lang                       	copy                        lang\jpn.txt                        C:\Linkout\FastGomibako\lang\ 
 # End Special Build Tool
 
 !ENDIF 
@@ -106,6 +106,10 @@ SOURCE=.\FastGomibako.cpp
 
 SOURCE=..\MyUtility\I18N.cpp
 # SUBTRACT CPP /YX /Yc /Yu
+# End Source File
+# Begin Source File
+
+SOURCE=..\MyUtility\IsWindowsNT.cpp
 # End Source File
 # Begin Source File
 
@@ -137,6 +141,10 @@ SOURCE=.\CSessionGlobalMemory.h
 # Begin Source File
 
 SOURCE=..\MyUtility\I18N.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\MyUtility\IsWindowsNT.h
 # End Source File
 # Begin Source File
 

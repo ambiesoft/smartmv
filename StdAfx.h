@@ -18,6 +18,7 @@
 
 #include "../MyUtility/I18N.h"
 #include "../MyUtility/SHDeleteFile.h"
+#include "../MyUtility/IsWindowsNT.h"
 #include "../MyUtility/tstring.h"
 #include "../MyUtility/stdwin32/stdwin32.h"
 using namespace stdwin32;
