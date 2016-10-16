@@ -191,7 +191,7 @@ int dowork()
 
 
 		bool bComp = data.bRetComp;
-		SetPriorityClass(GetCurrentProcess(), data.dwRetPri);
+
 /***
 		tstring message = string_format(I18N("Are you sure to FastGomibako \"%s\"?"), pFileOrig);
 		if(IDYES != MessageBox(NULL, message.c_str(),
@@ -266,6 +266,8 @@ int dowork()
 		{
 			throw I18N("Failed to move file");
 		}
+
+		SetPriorityClass(GetCurrentProcess(), data.dwRetPri);
 
 		if(!SHDeleteFile(szGomiFile, FALSE, bComp ? TRUE : FALSE))
 		{
