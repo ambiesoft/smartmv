@@ -15,11 +15,14 @@
 #include <windows.h>
 #include <tchar.h>
 #include <stdlib.h>
+#include <shlwapi.h>
 
 #include "../MyUtility/I18N.h"
 #include "../MyUtility/SHDeleteFile.h"
 #include "../MyUtility/IsWindowsNT.h"
 #include "../MyUtility/tstring.h"
+#include "../MyUtility/CenterWindow.h"
+#include "../MyUtility/WritePrivateProfileInt.h"
 #include "../MyUtility/stdwin32/stdwin32.h"
 using namespace stdwin32;
 
@@ -27,6 +30,11 @@ using namespace stdwin32;
 using namespace std;
 
 #define I18N(s) Ambiesoft::I18N(_T(s))
+
+#define APPNAME _T("FastGomibako")
+#define KEY_DELETEMETHOD	_T("DeleteMethod")
+#define KEY_PRIORITY		_T("Priority")
+
 // TODO: reference additional headers your program requires here
 
 //{{AFX_INSERT_LOCATION}}
