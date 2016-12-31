@@ -23,6 +23,7 @@
 #include "../MyUtility/tstring.h"
 #include "../MyUtility/CenterWindow.h"
 #include "../MyUtility/WritePrivateProfileInt.h"
+#include "../MyUtility/GetLastErrorString.h"
 #include "../MyUtility/stdwin32/stdwin32.h"
 using namespace stdwin32;
 

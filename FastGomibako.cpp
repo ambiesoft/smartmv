@@ -275,12 +275,16 @@ int dowork()
 
 		if(!MoveFile(pFileOrig, szGomiFile))
 		{
-			throw I18N("Failed to move file");
+			tstring t = GetLastErrorString(GetLastError());
+			tstring message = I18N("Failed to move file");
+			message += L"\r\n";
+			message += t;
+			throw message;
 		}
 
 		SetPriorityClass(GetCurrentProcess(), data.dwRetPri);
 
-		if(!SHDeleteFile(szGomiFile, FALSE, bComp ? TRUE : FALSE))
+		if(!SHDeleteFile(szGomiFile, bComp ? SHDELETE_COMPLETEDELETE : SHDELETE_DEFAULT))
 		{
 			if(!bComp)
 				throw I18N("Failed to trash file");

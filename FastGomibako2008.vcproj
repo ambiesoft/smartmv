@@ -217,6 +217,10 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
+				RelativePath="..\MyUtility\CenterWindow.cpp"
+				>
+			</File>
+			<File
 				RelativePath="FastGomibako.cpp"
 				>
 				<FileConfiguration
@@ -235,6 +239,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\MyUtility\GetLastErrorString.cpp"
+				>
 			</File>
 			<File
 				RelativePath="..\MyUtility\I18N.cpp"
@@ -360,13 +368,25 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="..\MyUtility\WritePrivateProfileInt.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
+				RelativePath="..\MyUtility\CenterWindow.h"
+				>
+			</File>
+			<File
 				RelativePath="CSessionGlobalMemory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\MyUtility\GetLastErrorString.h"
 				>
 			</File>
 			<File
@@ -383,6 +403,10 @@
 			</File>
 			<File
 				RelativePath="..\MyUtility\stdwin32\stdwin32.h"
+				>
+			</File>
+			<File
+				RelativePath="..\MyUtility\WritePrivateProfileInt.h"
 				>
 			</File>
 		</Filter>
