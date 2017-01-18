@@ -130,9 +130,19 @@ BOOL CALLBACK MyDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return FALSE;
 }
 
+#include "../MyUtility/CommandLineParser.h"
+using namespace Ambiesoft;
+
 int dowork()
 {
-	if(__argc  <= 1)
+	COption optionC(L"-c", 0);
+	COption optionDefault(L"");
+	CCommandLineParser parser;
+	parser.AddOption(&optionC);
+	parser.AddOption(&optionDefault);
+	parser.Parse(__argc, __targv);
+
+	if(parser.isEmpty())
 	{
 		tstring message = I18N("No Arguments");
 		message += GetUsageString();
@@ -140,14 +150,33 @@ int dowork()
 		return 0;
 	}
 
-	if(__argc > 2)
+	bool quitafterremove = false;
+	if(optionC.hadOption())
 	{
-		tstring message = I18N("Too many Arguments");
+		quitafterremove = true;
+	}
+
+	if(!optionDefault.hadValue())
+	{
+		tstring message = I18N("No input");
 		message += GetUsageString();
+		message += L":\r\n";
+		message += parser.getUnknowOptionStrings();
 		MessageBox(NULL, message.c_str(), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
 		return 1;
 	}
+	tstring inputfilename = optionDefault.getFirstValue();
 
+	if(parser.hadUnknownOption())
+	{
+		tstring message = I18N("Unknown Option");
+		message += GetUsageString();
+		message += L":\r\n";
+		message += parser.getUnknowOptionStrings();
+		MessageBox(NULL, message.c_str(), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
+		return 1;
+	}
+	
 	LPCTSTR pFileOrig = _tcsdup(__targv[1]);
 	LPTSTR pFile = _tcsdup(__targv[1]);
 	_tcslwr(pFile);

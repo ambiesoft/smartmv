@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="FastGomibako"
 	ProjectGUID="{956C681B-76D4-4E24-A2F6-20CE7A854952}"
+	RootNamespace="FastGomibako"
 	TargetFrameworkVersion="0"
 	>
 	<Platforms>
@@ -379,6 +380,10 @@
 			>
 			<File
 				RelativePath="..\MyUtility\CenterWindow.h"
+				>
+			</File>
+			<File
+				RelativePath="..\MyUtility\CommandLineParser.h"
 				>
 			</File>
 			<File
