@@ -16,11 +16,15 @@
 #include <tchar.h>
 #include <stdlib.h>
 #include <shlwapi.h>
+#include <Shlobj.h>
+
+#include <assert.h>
 
 #include "../MyUtility/I18N.h"
 #include "../MyUtility/SHDeleteFile.h"
 #include "../MyUtility/IsWindowsNT.h"
 #include "../MyUtility/tstring.h"
+#include "../MyUtility/OpenCommon.h"
 #include "../MyUtility/CenterWindow.h"
 #include "../MyUtility/WritePrivateProfileInt.h"
 #include "../MyUtility/GetLastErrorString.h"
