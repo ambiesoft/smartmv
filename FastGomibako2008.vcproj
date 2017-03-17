@@ -288,6 +288,14 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\MainDlgProc.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\MyUtility\OpenCommon.cpp"
+				>
+			</File>
+			<File
 				RelativePath="rc.rc"
 				>
 				<FileConfiguration
@@ -306,6 +314,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\RetryDlgProc.cpp"
+				>
 			</File>
 			<File
 				RelativePath="..\MyUtility\SHDeleteFile.cpp"
@@ -400,6 +412,18 @@
 			</File>
 			<File
 				RelativePath="..\MyUtility\IsWindowsNT.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MainDlgProc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\MyUtility\OpenCommon.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RetryDlgProc.h"
 				>
 			</File>
 			<File

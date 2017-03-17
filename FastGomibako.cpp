@@ -234,9 +234,15 @@ int dowork()
 				}
 				else if(nDR==IDC_BUTTON_ELEVATE)
 				{
+					wstring app = stdGetModuleFileName();
+					int nArgc;
+					LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(GetCommandLineW(), &nArgc);
+					wstring arg = stdSplitCommandLine(nArgc, 1, ppArgv);
+					LocalFree(ppArgv);
+
 					OpenCommon(NULL,
-						GetCommandLine(),
-						NULL,
+						app.c_str(),
+						arg.c_str(),
 						NULL,
 						NULL,
 						L"runas");

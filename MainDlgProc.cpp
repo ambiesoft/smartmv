@@ -32,7 +32,14 @@ BOOL CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_SETCURSEL, nDeleteMethod, 0);
 			SendDlgItemMessage(hDlg, IDC_COMBO_PRIORITY, CB_SETCURSEL, nPriority, 0);
 
-			SetWindowText(hDlg, _T("FastGomibako"));
+			wstring title = _T("FastGomibako");
+			if (IsUserAnAdmin())
+			{
+				title += L" (";
+				title += I18N("Admin");
+				title += L")";
+			}
+			SetWindowText(hDlg, title.c_str());
 			CenterWindow(hDlg);
 			return TRUE;
 		}

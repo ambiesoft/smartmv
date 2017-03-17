@@ -12,7 +12,14 @@ BOOL CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			spData = (RetryDialogData*)lParam;
 
-			SetWindowText(hDlg, _T("FastGomibako"));
+			wstring title = _T("FastGomibako");
+			if (IsUserAnAdmin())
+			{
+				title += L" (";
+				title += I18N("Admin");
+				title += L")";
+			}
+			SetWindowText(hDlg, title.c_str());
 			SetDlgItemText(hDlg, IDC_EDIT_MESSAGE, spData->message.c_str());
 			EnableWindow(GetDlgItem(hDlg,IDC_BUTTON_ELEVATE), !IsUserAnAdmin());
 			CenterWindow(hDlg);
