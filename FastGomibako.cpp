@@ -207,7 +207,11 @@ int dowork()
 		bool movedone=false;
 		while(!movedone)
 		{
-			if(!MoveFile(pFileOrig, szGomiFile))
+			if(MoveFile(pFileOrig, szGomiFile))
+			{
+				break;
+			}
+			else
 			{
 				tstring t = GetLastErrorString(GetLastError());
 				tstring message = I18N("Failed to move file: ");
