@@ -214,7 +214,7 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
+			Name="2 Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
@@ -387,7 +387,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Header Files"
+			Name="1 Header Files"
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
@@ -440,7 +440,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Resource Files"
+			Name="3 Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 			>
 			<File

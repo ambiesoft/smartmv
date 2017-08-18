@@ -92,7 +92,13 @@ int dowork()
 
 		if(pFile[1] != _T(':') || pFile[2] != _T('\\'))
 		{
-			throw I18N("Must be a fullpath");
+			wstring full=stdGetFullPathName(pFile);
+			free((void*)pFileOrig);
+			pFileOrig = _tcsdup(full.c_str());
+
+			free(pFile);
+			pFile = _tcsdup(full.c_str());
+			_tcslwr(pFile);
 		}
 
 		if(pFile[3]==0)
