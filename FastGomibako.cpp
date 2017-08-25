@@ -82,7 +82,8 @@ int dowork()
 	
 	LPCTSTR pFileOrig = _tcsdup(__targv[1]);
 	LPTSTR pFile = _tcsdup(__targv[1]);
-	_tcslwr(pFile);
+	_tcslwr_s(pFile, _tcslen(pFile)+1);
+	// _tcslwr(pFile);
 	try
 	{
 		if( !(_T('A') <= pFile[0] || pFile[0] <= _T('Z')) )
@@ -98,7 +99,8 @@ int dowork()
 
 			free(pFile);
 			pFile = _tcsdup(full.c_str());
-			_tcslwr(pFile);
+			_tcslwr_s(pFile,_tcslen(pFile)+1);
+			//_tcslwr(pFile);
 		}
 
 		if(pFile[3]==0)
