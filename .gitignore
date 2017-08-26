@@ -1,0 +1,13 @@
+
+# /
+/*.user
+/*.ncb
+/*.suo
+/Debug
+/UnicodeDebug
+/UnicodeRelease
+/*.opt
+/*.plg
+/.vs
+/FastGomibako2015.VC.db
+/ipch
