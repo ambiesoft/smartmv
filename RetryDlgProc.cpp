@@ -45,7 +45,7 @@ static wstring getDlgItemText(HWND hdlg, int id)
 	return ret;
 }
 		
-BOOL CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	static RetryDialogData* spData;
 	static HANDLE shFindingCulplit;

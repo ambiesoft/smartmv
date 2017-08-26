@@ -8,6 +8,8 @@
 
 #include "CSessionGlobalMemory.h"
 #include "../MyUtility/CommandLineParser.h"
+#include "../MyUtility/Is64.h"
+#include "../MyUtility/CommandLineUtil.h"
 
 #include "MainDlgProc.h"
 #include "RetryDlgProc.h"
@@ -19,7 +21,7 @@ CSessionGlobalMemory<int> gCount("FastGomibakoCounter");
 
 
 using namespace Ambiesoft;
-
+using namespace stdwin32;
 
 tstring GetUsageString()
 {
@@ -230,7 +232,7 @@ int dowork()
 				RetryDialogData data;
 				data.file = pFileOrig;
 				data.message=message;
-				int nDR = DialogBoxParam(GetModuleHandle(NULL),
+				INT_PTR nDR = DialogBoxParam(GetModuleHandle(NULL),
 					MAKEINTRESOURCE(IDD_DIALOG_RETRY),
 					NULL,
 					RetryDlgProc,
@@ -310,6 +312,30 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      LPTSTR     lpCmdLine,
                      int       nCmdShow )
 {
+	if(Is64BitWindows() && !Is64BitProcess())
+	{
+		wstring exe64 = stdGetParentDirectory(stdGetModuleFileName(),true);
+		exe64 += L"FastGomibako";
+#ifdef _DEBUG
+		exe64 += L"D";
+#endif
+		exe64 += L"64.exe";
+		if(!PathFileExists(exe64.c_str()))
+		{
+			MessageBox(NULL,
+				I18N("could not find 64bit executable."),
+				APPNAME,
+				MB_ICONERROR);
+			return 1;
+		}
+
+		
+		OpenCommon(NULL,
+			exe64.c_str(),
+			lpCmdLine);
+			
+		return 0;
+	}
 	Ambiesoft::i18nInitLangmap(hInstance, NULL, _T(""));
 	int ret=0;
 	try

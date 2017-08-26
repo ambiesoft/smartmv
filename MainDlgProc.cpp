@@ -3,7 +3,7 @@
 
 #include "MainDlgProc.h"
 
-BOOL CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	static MainDialogData* spData;
 	static wstring sIni;
@@ -51,8 +51,8 @@ BOOL CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			{
 				case IDOK:
 				{
-					const int nDel = SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_GETCURSEL, 0, 0);
-					const int nPri = SendDlgItemMessage(hDlg, IDC_COMBO_PRIORITY, CB_GETCURSEL, 0, 0);
+					const LRESULT nDel = SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_GETCURSEL, 0, 0);
+					const LRESULT nPri = SendDlgItemMessage(hDlg, IDC_COMBO_PRIORITY, CB_GETCURSEL, 0, 0);
 					if(nDel==CB_ERR || nPri==CB_ERR)
 					{
 						EndDialog(hDlg, IDCANCEL);

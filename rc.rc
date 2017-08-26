@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -7,84 +7,13 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "windows.h"
+#include "afxres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Æ­°Ä×Ù resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
-#ifdef _WIN32
-LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
-#pragma code_page(932)
-#endif //_WIN32
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Dialog
-//
-
-IDD_DIALOG_ASK DIALOG DISCARDABLE  0, 0, 371, 172
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Dialog"
-FONT 9, "MS Shell Dlg 2"
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,260,151,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,314,151,50,14
-    LTEXT           "&Target:",IDC_STATIC_TARGET,7,7,357,8
-    EDITTEXT        IDC_EDIT_TARGET,7,16,357,14,ES_AUTOHSCROLL | ES_READONLY
-    COMBOBOX        IDC_COMBO_DELETEMETHOD,7,55,111,110,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO_PRIORITY,145,54,113,111,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-END
-
-IDD_DIALOG_RETRY DIALOG DISCARDABLE  0, 0, 243, 124
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-FONT 9, "MS Shell Dlg 2"
-BEGIN
-    DEFPUSHBUTTON   "&Retry",IDOK,132,102,50,14
-    PUSHBUTTON      "&Close",IDCANCEL,186,102,50,14
-    EDITTEXT        IDC_EDIT_MESSAGE,7,7,229,89,ES_MULTILINE | 
-                    ES_AUTOHSCROLL | ES_READONLY
-    PUSHBUTTON      "&Elevate",IDC_BUTTON_ELEVATE,7,102,50,14
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// DESIGNINFO
-//
-
-#ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
-BEGIN
-    IDD_DIALOG_ASK, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 364
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 165
-    END
-
-    IDD_DIALOG_RETRY, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 236
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 116
-    END
-END
-#endif    // APSTUDIO_INVOKED
-
-#endif    // Æ­°Ä×Ù resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// “ú–{Œê resources
+// Japanese resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
 #ifdef _WIN32
@@ -99,7 +28,7 @@ LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON    DISCARDABLE     "icon1.ico"
+IDI_ICON1               ICON                    "icon1.ico"
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -107,18 +36,18 @@ IDI_ICON1               ICON    DISCARDABLE     "icon1.ico"
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "\r\n"
     "\0"
@@ -126,7 +55,75 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // “ú–{Œê resources
+#endif    // Japanese resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+#ifdef _WIN32
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_ASK DIALOG  0, 0, 371, 172
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 9, "MS Shell Dlg 2"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,260,151,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,314,151,50,14
+    LTEXT           "&Target:",IDC_STATIC_TARGET,7,7,357,8
+    EDITTEXT        IDC_EDIT_TARGET,7,16,357,14,ES_AUTOHSCROLL | ES_READONLY
+    COMBOBOX        IDC_COMBO_DELETEMETHOD,7,55,111,110,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_PRIORITY,145,54,113,111,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_DIALOG_RETRY DIALOGEX 0, 0, 291, 155
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 9, "MS Shell Dlg 2", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "&Retry",IDOK,181,133,50,14
+    PUSHBUTTON      "&Close",IDCANCEL,234,133,50,14
+    EDITTEXT        IDC_EDIT_MESSAGE,7,7,277,120,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "&Elevate",IDC_BUTTON_ELEVATE,7,133,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DIALOG_ASK, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 364
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 165
+    END
+
+    IDD_DIALOG_RETRY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 284
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
 
