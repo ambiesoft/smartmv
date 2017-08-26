@@ -296,6 +296,26 @@
 				>
 			</File>
 			<File
+				RelativePath="..\MyUtility\OpenedFiles.cpp"
+				>
+				<FileConfiguration
+					Name="UnicodeDebug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="UnicodeRelease|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="rc.rc"
 				>
 				<FileConfiguration
@@ -423,6 +443,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\MyUtility\OpenedFiles.h"
+				>
+			</File>
+			<File
 				RelativePath=".\RetryDlgProc.h"
 				>
 			</File>
@@ -452,6 +476,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\lang\jpn.txt"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

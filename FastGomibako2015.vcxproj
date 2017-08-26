@@ -163,6 +163,10 @@ copy                        lang\jpn.txt                        C:\Linkout\FastG
     </ClCompile>
     <ClCompile Include="..\MyUtility\IsWindowsNT.cpp" />
     <ClCompile Include="..\MyUtility\OpenCommon.cpp" />
+    <ClCompile Include="..\MyUtility\OpenedFiles.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='UnicodeRelease|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='UnicodeDebug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\MyUtility\SHDeleteFile.cpp" />
     <ClCompile Include="..\MyUtility\stdwin32\stdwin32.cpp" />
     <ClCompile Include="..\MyUtility\WritePrivateProfileInt.cpp" />
@@ -184,6 +188,7 @@ copy                        lang\jpn.txt                        C:\Linkout\FastG
     <ClInclude Include="..\MyUtility\I18N.h" />
     <ClInclude Include="..\MyUtility\IsWindowsNT.h" />
     <ClInclude Include="..\MyUtility\OpenCommon.h" />
+    <ClInclude Include="..\MyUtility\OpenedFiles.h" />
     <ClInclude Include="..\MyUtility\stdwin32\stdwin32.h" />
     <ClInclude Include="..\MyUtility\WritePrivateProfileInt.h" />
     <ClInclude Include="CSessionGlobalMemory.h" />
@@ -194,6 +199,9 @@ copy                        lang\jpn.txt                        C:\Linkout\FastG
   <ItemGroup>
     <Image Include="app.ico" />
     <Image Include="icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="lang\jpn.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

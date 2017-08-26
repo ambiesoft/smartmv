@@ -228,6 +228,7 @@ int dowork()
 				message += t;
 				
 				RetryDialogData data;
+				data.file = pFileOrig;
 				data.message=message;
 				int nDR = DialogBoxParam(GetModuleHandle(NULL),
 					MAKEINTRESOURCE(IDD_DIALOG_RETRY),

@@ -1,5 +1,6 @@
 
 struct RetryDialogData {
+	wstring file;
 	wstring message;
 };
 

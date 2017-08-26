@@ -19,6 +19,7 @@
 #include <Shlobj.h>
 
 #include <assert.h>
+#include <process.h>  
 
 #include "../MyUtility/I18N.h"
 #include "../MyUtility/SHDeleteFile.h"
@@ -40,7 +41,10 @@ using namespace std;
 #define KEY_DELETEMETHOD	_T("DeleteMethod")
 #define KEY_PRIORITY		_T("Priority")
 
-// TODO: reference additional headers your program requires here
+enum {
+	WM_APP_RETRYDIALOG_FINDCULPLIT_THREADCREATIONFAILED = (WM_APP+1),
+	WM_APP_RETRYDIALOG_FINDCULPLIT_FOUND,
+};
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
