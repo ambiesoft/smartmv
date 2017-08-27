@@ -57,6 +57,9 @@
     <ClCompile Include="..\MyUtility\OpenedFiles.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\MyUtility\Is64.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="rc.rc">
@@ -101,6 +104,9 @@
       <Filter>1 Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\MyUtility\OpenedFiles.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MyUtility\Is64.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
   </ItemGroup>
