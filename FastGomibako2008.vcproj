@@ -52,6 +52,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="."
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;UNICODE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -147,6 +148,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="."
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;UNICODE"
 				StringPooling="true"
 				RuntimeLibrary="0"
@@ -408,11 +410,11 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="..\MyUtility\CenterWindow.cpp"
+				RelativePath="..\lsMisc\CenterWindow.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\CommandLineUtil.cpp"
+				RelativePath="..\lsMisc\CommandLineUtil.cpp"
 				>
 			</File>
 			<File
@@ -452,11 +454,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\MyUtility\GetLastErrorString.cpp"
+				RelativePath="..\lsMisc\GetLastErrorString.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\I18N.cpp"
+				RelativePath="..\lsMisc\I18N.cpp"
 				>
 				<FileConfiguration
 					Name="UnicodeDebug|Win32"
@@ -496,11 +498,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\MyUtility\Is64.cpp"
+				RelativePath="..\lsMisc\Is64.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\IsWindowsNT.cpp"
+				RelativePath="..\lsMisc\IsWindowsNT.cpp"
 				>
 				<FileConfiguration
 					Name="UnicodeDebug|Win32"
@@ -540,11 +542,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\OpenCommon.cpp"
+				RelativePath="..\lsMisc\OpenCommon.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\OpenedFiles.cpp"
+				RelativePath="..\lsMisc\OpenedFiles.cpp"
 				>
 				<FileConfiguration
 					Name="UnicodeDebug|Win32"
@@ -582,42 +584,6 @@
 			<File
 				RelativePath=".\RetryDlgProc.cpp"
 				>
-			</File>
-			<File
-				RelativePath="..\MyUtility\SHDeleteFile.cpp"
-				>
-				<FileConfiguration
-					Name="UnicodeDebug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="UnicodeRelease|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="UnicodeDebug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="UnicodeRelease|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="StdAfx.cpp"
@@ -660,7 +626,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\MyUtility\stdwin32\stdwin32.cpp"
+				RelativePath="..\lsMisc\stdwin32\stdwin32.cpp"
 				>
 				<FileConfiguration
 					Name="UnicodeDebug|Win32"
@@ -696,7 +662,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\MyUtility\WritePrivateProfileInt.cpp"
+				RelativePath="..\lsMisc\WritePrivateProfileInt.cpp"
 				>
 			</File>
 		</Filter>
@@ -705,15 +671,15 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
-				RelativePath="..\MyUtility\CenterWindow.h"
+				RelativePath="..\lsMisc\CenterWindow.h"
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\CommandLineParser.h"
+				RelativePath="..\lsMisc\CommandLineParser.h"
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\CommandLineUtil.h"
+				RelativePath="..\lsMisc\CommandLineUtil.h"
 				>
 			</File>
 			<File
@@ -721,19 +687,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\GetLastErrorString.h"
+				RelativePath="..\lsMisc\GetLastErrorString.h"
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\I18N.h"
+				RelativePath="..\lsMisc\I18N.h"
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\Is64.h"
+				RelativePath="..\lsMisc\Is64.h"
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\IsWindowsNT.h"
+				RelativePath="..\lsMisc\IsWindowsNT.h"
 				>
 			</File>
 			<File
@@ -741,11 +707,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\OpenCommon.h"
+				RelativePath="..\lsMisc\OpenCommon.h"
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\OpenedFiles.h"
+				RelativePath="..\lsMisc\OpenedFiles.h"
 				>
 			</File>
 			<File
@@ -757,11 +723,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\stdwin32\stdwin32.h"
+				RelativePath="..\lsMisc\stdwin32\stdwin32.h"
 				>
 			</File>
 			<File
-				RelativePath="..\MyUtility\WritePrivateProfileInt.h"
+				RelativePath="..\lsMisc\WritePrivateProfileInt.h"
 				>
 			</File>
 		</Filter>

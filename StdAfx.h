@@ -21,21 +21,21 @@
 #include <assert.h>
 #include <process.h>  
 
-#include "../MyUtility/I18N.h"
-#include "../MyUtility/SHDeleteFile.h"
-#include "../MyUtility/IsWindowsNT.h"
-#include "../MyUtility/tstring.h"
-#include "../MyUtility/OpenCommon.h"
-#include "../MyUtility/CenterWindow.h"
-#include "../MyUtility/WritePrivateProfileInt.h"
-#include "../MyUtility/GetLastErrorString.h"
-#include "../MyUtility/stdwin32/stdwin32.h"
+#include "../lsMisc/I18N.h"
+#include "../lsMisc/SHMoveFile.h"
+#include "../lsMisc/IsWindowsNT.h"
+#include "../lsMisc/tstring.h"
+#include "../lsMisc/OpenCommon.h"
+#include "../lsMisc/CenterWindow.h"
+#include "../lsMisc/WritePrivateProfileInt.h"
+#include "../lsMisc/GetLastErrorString.h"
+#include "../lsMisc/stdwin32/stdwin32.h"
 using namespace stdwin32;
 
 #include <string>
 using namespace std;
 
-#define I18N(s) Ambiesoft::I18N(_T(s))
+#define I18N(s) Ambiesoft::I18N(s)
 
 #define APPNAME _T("FastGomibako")
 #define KEY_DELETEMETHOD	_T("DeleteMethod")

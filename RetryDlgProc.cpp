@@ -1,9 +1,11 @@
 #include "stdafx.h"
-#include "../MyUtility/OpenedFiles.h"
+#include "../lsMisc/OpenedFiles.h"
 
 #include "resource.h"
 
 #include "RetryDlgProc.h"
+
+using namespace Ambiesoft;
 
 struct THREADPASSDATA
 {
@@ -59,7 +61,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			if (IsUserAnAdmin())
 			{
 				title += L" (";
-				title += I18N("Admin");
+				title += I18N(L"Admin");
 				title += L")";
 			}
 			SetWindowText(hDlg, title.c_str());
@@ -69,7 +71,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			message.append(L"\r\n");
 			message.append(L"\r\n");
 
-			message.append(I18N("Finding culplit..."));
+			message.append(I18N(L"Finding culplit..."));
 
 			SetDlgItemText(hDlg, IDC_EDIT_MESSAGE, message.c_str());
 
@@ -119,10 +121,10 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 
 			wstring message=L"\r\n";
 			if(grabbers.empty())
-				message.append(I18N("No culplits found."));
+				message.append(I18N(L"No culplits found."));
 			else
 			{
-				message.append(I18N("Following applications grab the file, close them and try again."));
+				message.append(I18N(L"Following applications grab the file, close them and try again."));
 				message.append(L"\r\n");
 				message.append(grabbers);
 			}
@@ -136,7 +138,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 		case WM_APP_RETRYDIALOG_FINDCULPLIT_THREADCREATIONFAILED:
 		{
 			wstring current = getDlgItemText(hDlg, IDC_EDIT_MESSAGE);
-			current.append(I18N("Failed to create thread."));
+			current.append(I18N(L"Failed to create thread."));
 			SetDlgItemText(hDlg, IDC_EDIT_MESSAGE, current.c_str());
 		}
 		break;

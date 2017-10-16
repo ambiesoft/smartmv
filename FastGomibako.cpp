@@ -7,9 +7,9 @@
 #include "resource.h"
 
 #include "CSessionGlobalMemory.h"
-#include "../MyUtility/CommandLineParser.h"
-#include "../MyUtility/Is64.h"
-#include "../MyUtility/CommandLineUtil.h"
+#include "../lsMisc/CommandLineParser.h"
+#include "../lsMisc/Is64.h"
+#include "../lsMisc/CommandLineUtil.h"
 
 #include "MainDlgProc.h"
 #include "RetryDlgProc.h"
@@ -27,7 +27,7 @@ tstring GetUsageString()
 {
 	tstring ret;
 	ret += _T("\r\n\r\n");
-	ret += I18N("Usage");
+	ret += I18N(_T("Usage"));
 	ret += _T(":\r\n");
 	ret += _T("FastGomibako [File or Folder]");
 	return ret;
@@ -49,7 +49,7 @@ int dowork()
 
 	if(parser.isEmpty())
 	{
-		tstring message = I18N("No Arguments");
+		tstring message = I18N(_T("No Arguments"));
 		message += GetUsageString();
 		MessageBox(NULL, message.c_str(), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
 		return 0;
@@ -63,7 +63,7 @@ int dowork()
 
 	if(!optionDefault.hadValue())
 	{
-		tstring message = I18N("No input");
+		tstring message = I18N(L"No input");
 		message += GetUsageString();
 		message += L":\r\n";
 		message += parser.getUnknowOptionStrings();
@@ -74,7 +74,7 @@ int dowork()
 
 	if(parser.hadUnknownOption())
 	{
-		tstring message = I18N("Unknown Option");
+		tstring message = I18N(L"Unknown Option");
 		message += GetUsageString();
 		message += L":\r\n";
 		message += parser.getUnknowOptionStrings();
@@ -90,7 +90,7 @@ int dowork()
 	{
 		if( !(_T('A') <= pFile[0] || pFile[0] <= _T('Z')) )
 		{
-			throw I18N("Invalid Argument");
+			throw I18N(L"Invalid Argument");
 		}
 
 		if(pFile[1] != _T(':') || pFile[2] != _T('\\'))
@@ -107,13 +107,13 @@ int dowork()
 
 		if(pFile[3]==0)
 		{
-			throw I18N("Root Drive unacceptable");
+			throw I18N(L"Root Drive unacceptable");
 		}
 
 		DWORD dwAttr = GetFileAttributes(pFile);
 		if(dwAttr == 0xffffffff)
 		{
-			throw I18N("File Not Found");
+			throw I18N(L"File Not Found");
 		}
 
 		TCHAR szGomiDir[32];
@@ -201,7 +201,7 @@ int dowork()
 		dwAttr = GetFileAttributes(szGomiDir);
 		if(dwAttr==0xffffffff || (dwAttr & FILE_ATTRIBUTE_DIRECTORY)==0)
 		{
-			throw I18N("Failed to create FastGomibako directory");
+			throw I18N(L"Failed to create FastGomibako directory");
 		}
 
 		SetFileAttributes(szGomiDir, dwAttr|FILE_ATTRIBUTE_HIDDEN);
@@ -224,7 +224,7 @@ int dowork()
 			else
 			{
 				tstring t = GetLastErrorString(GetLastError());
-				tstring message = I18N("Failed to move file: ");
+				tstring message = I18N(L"Failed to move file: ");
 				message += pFileOrig;
 				message += L"\r\n";
 				message += t;
@@ -272,18 +272,18 @@ int dowork()
 
 		SetPriorityClass(GetCurrentProcess(), data.dwRetPri);
 
-		if(!SHDeleteFile(szGomiFile, bComp ? SHDELETE_COMPLETEDELETE : SHDELETE_DEFAULT))
+		if(!SHDeleteFile(szGomiFile, bComp ? 0 : FOF_ALLOWUNDO))
 		{
 			if(!bComp)
-				throw I18N("Failed to trash file");
+				throw I18N(L"Failed to trash file");
 			else
-				throw I18N("Failed to delete file");
+				throw I18N(L"Failed to delete file");
 		}
 
 		if(!RemoveDirectory(szGomiDir))
 		{
 			if(gCount <= 1)
-				throw I18N("Failed to remove FastGomibako directory");
+				throw I18N(L"Failed to remove FastGomibako directory");
 		}
 
 	}
@@ -299,7 +299,7 @@ int dowork()
 	}
 	catch(...)
 	{
-		MessageBox(NULL, I18N("Invalid Argument"), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
+		MessageBox(NULL, I18N(L"Invalid Argument"), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
 		return 3;
 	}
 	return 0;
@@ -323,7 +323,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		if(!PathFileExists(exe64.c_str()))
 		{
 			MessageBox(NULL,
-				I18N("could not find 64bit executable."),
+				I18N(L"could not find 64bit executable."),
 				APPNAME,
 				MB_ICONERROR);
 			return 1;
