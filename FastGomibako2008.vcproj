@@ -21,7 +21,7 @@
 		<Configuration
 			Name="UnicodeDebug|Win32"
 			OutputDirectory="C:\Linkout\FastGomibako"
-			IntermediateDirectory=".\UnicodeDebug"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
@@ -52,7 +52,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="."
+				AdditionalIncludeDirectories=".;../lsMisc/stlsoft/include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;UNICODE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -78,12 +78,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="C:\Linkout\FastGomibako\FastGomibakoD.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				EntryPointSymbol="wWinMainCRTStartup"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				TargetMachine="1"
@@ -148,7 +146,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="."
+				AdditionalIncludeDirectories=".;../lsMisc/stlsoft/include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;UNICODE"
 				StringPooling="true"
 				RuntimeLibrary="0"
@@ -175,7 +173,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="C:\Linkout\FastGomibako\FastGomibako.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				ProgramDatabaseFile=".\UnicodeRelease/FastGomibako.pdb"
@@ -414,6 +411,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\lsMisc\CommandLineParser.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\lsMisc\CommandLineUtil.cpp"
 				>
 			</File>
@@ -586,6 +587,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\lsMisc\SHMoveFile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="StdAfx.cpp"
 				>
 				<FileConfiguration
@@ -662,6 +667,14 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\lsMisc\UrlEncode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\lsMisc\UTF16toUTF8.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\lsMisc\WritePrivateProfileInt.cpp"
 				>
 			</File>
@@ -719,11 +732,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\lsMisc\SHMoveFile.h"
+				>
+			</File>
+			<File
 				RelativePath="StdAfx.h"
 				>
 			</File>
 			<File
 				RelativePath="..\lsMisc\stdwin32\stdwin32.h"
+				>
+			</File>
+			<File
+				RelativePath="..\lsMisc\UrlEncode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\lsMisc\UTF16toUTF8.h"
 				>
 			</File>
 			<File
