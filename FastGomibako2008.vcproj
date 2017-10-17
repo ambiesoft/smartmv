@@ -543,6 +543,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\lsMisc\ntfs.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\lsMisc\OpenCommon.cpp"
 				>
 			</File>
@@ -717,6 +721,10 @@
 			</File>
 			<File
 				RelativePath=".\MainDlgProc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\lsMisc\ntfs.h"
 				>
 			</File>
 			<File
