@@ -294,7 +294,6 @@ copy                        lang\jpn.txt                        C:\Linkout\FastG
     </ClCompile>
     <ClCompile Include="..\lsMisc\Is64.cpp" />
     <ClCompile Include="..\lsMisc\IsWindowsNT.cpp" />
-    <ClCompile Include="..\lsMisc\ntfs.cpp" />
     <ClCompile Include="..\lsMisc\OpenCommon.cpp" />
     <ClCompile Include="..\lsMisc\OpenedFiles.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='UnicodeDebug|Win32'">
@@ -329,7 +328,6 @@ copy                        lang\jpn.txt                        C:\Linkout\FastG
     <ClInclude Include="..\lsMisc\I18N.h" />
     <ClInclude Include="..\lsMisc\Is64.h" />
     <ClInclude Include="..\lsMisc\IsWindowsNT.h" />
-    <ClInclude Include="..\lsMisc\ntfs.h" />
     <ClInclude Include="..\lsMisc\OpenCommon.h" />
     <ClInclude Include="..\lsMisc\OpenedFiles.h" />
     <ClInclude Include="..\lsMisc\SHMoveFile.h" />

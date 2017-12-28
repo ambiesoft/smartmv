@@ -10,7 +10,7 @@
 #include "../lsMisc/CommandLineParser.h"
 #include "../lsMisc/Is64.h"
 #include "../lsMisc/CommandLineUtil.h"
-#include "../lsMisc/ntfs.h"
+// #include "../lsMisc/ntfs.h"
 
 #include "MainDlgProc.h"
 #include "RetryDlgProc.h"
@@ -313,7 +313,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      LPTSTR     lpCmdLine,
                      int       nCmdShow )
 {
-	ResolveNtfsPath(__wargv[1]);
+	// ResolveNtfsPath(__wargv[1]);
 	if(Is64BitWindows() && !Is64BitProcess())
 	{
 		wstring exe64 = stdGetParentDirectory(stdGetModuleFileName(),true);
