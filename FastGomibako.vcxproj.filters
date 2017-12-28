@@ -13,6 +13,9 @@
       <UniqueIdentifier>{79080489-f20a-49fc-b196-4f27d411512e}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="4 dist">
+      <UniqueIdentifier>{fed9b171-e6d0-4973-8fc7-720d2a63569d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\lsMisc\CenterWindow.cpp">
@@ -139,5 +142,10 @@
     <ResourceCompile Include="rc.rc">
       <Filter>3 Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="history.txt">
+      <Filter>4 dist</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -1,0 +1,32 @@
+{
+    "name": "FastGomibako",
+    "solution": "FastGomibako.sln",
+    "targetproject": "FastGomibako",
+    "configuration": "Release",
+    "targets": [
+        {
+            "outdir": "C:\\Linkout\\FastGomibako",
+            "platform": "Win32",
+            "setoutdirforbuild": true
+        },
+        {
+            "outdir": "C:\\Linkout\\FastGomibako",
+            "platform": "x64",
+            "setoutdirforbuild": true
+        }
+    ],
+    "ShouldBeFiles": [
+        "FastGomibako.exe",
+        "FastGomibako64.exe",
+        "lang\\jpn.txt",
+        "history.txt"
+    ],
+    "TotalFileCount": 4,
+    "archivedir": "C:\\Linkout",
+    "remotedir": "http://ambiesoft.fam.cx/ffdav/uploads/FastGomibako/",
+    "remotesha1": "http://ambiesoft.fam.cx/ffdav/uploads/getSha1.php?file=FastGomibako/{}",
+    "ShouldNotBeFiles": [],
+    "ShouldBeOneOfThem": [],
+    "obtainverfrom": "history.txt",
+    "obtainverregex": "\\d+\\.\\d+"
+}

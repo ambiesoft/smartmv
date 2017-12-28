@@ -5,8 +5,7 @@ FastGomibako.opensdf
 /*.ncb
 /*.suo
 /Debug
-/UnicodeDebug
-/UnicodeRelease
+/Release
 /*.opt
 /*.plg
 /.vs
