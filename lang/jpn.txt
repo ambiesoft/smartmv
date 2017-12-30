@@ -21,5 +21,6 @@
 "Background"="バックグラウンド"
 
 "Failed to move file: "="ファイルの移動に失敗しました： "
-"Finding culplit..."="犯人を見つけています・・・"
-"Following applications grab the file, close them and try again."="以下のアプリケーションがファイルを開いています。それらを閉じてから再試行してください。"
+"Finding the process grabbing files..."="ファイルをロックしているプロセスを探しています・・・"
+"Following applications grab the file(s), close them and try again."="以下のアプリケーションがファイルを開いています。それらを閉じてから再試行してください。"
+"grabbing \"%s\""="ロック \"%s\""

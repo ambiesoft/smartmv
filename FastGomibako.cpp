@@ -314,7 +314,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      int       nCmdShow )
 {
 	// ResolveNtfsPath(__wargv[1]);
-	if(Is64BitWindows() && !Is64BitProcess())
+	if(false && Is64BitWindows() && !Is64BitProcess())
 	{
 		wstring exe64 = stdGetParentDirectory(stdGetModuleFileName(),true);
 		exe64 += L"FastGomibako";

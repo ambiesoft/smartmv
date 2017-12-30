@@ -71,7 +71,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			message.append(L"\r\n");
 			message.append(L"\r\n");
 
-			message.append(I18N(L"Finding culplit..."));
+			message.append(I18N(L"Finding the process grabbing files..."));
 
 			SetDlgItemText(hDlg, IDC_EDIT_MESSAGE, message.c_str());
 
@@ -79,6 +79,8 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			pThreadPass->hDlg=hDlg;
 			pThreadPass->file = spData->file;
 
+			EnableDebugPriv();
+				
 			shFindingCulplit = (HANDLE)_beginthreadex(
 				NULL,              // security
 				0,                 // stack size
@@ -115,6 +117,13 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 				if(!grabber.empty())
 				{
 					grabbers.append(grabber);
+					if (it->filename[0])
+					{
+						wstring t = stdwin32::string_format(I18N(L"grabbing \"%s\""), it->filename);
+						grabbers.append(L" (");
+						grabbers.append(t);
+						grabbers.append(L")");
+					}
 					grabbers.append(L"\r\n");
 				}
 			}
@@ -124,7 +133,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 				message.append(I18N(L"No culplits found."));
 			else
 			{
-				message.append(I18N(L"Following applications grab the file, close them and try again."));
+				message.append(I18N(L"Following applications grab the file(s), close them and try again."));
 				message.append(L"\r\n");
 				message.append(grabbers);
 			}

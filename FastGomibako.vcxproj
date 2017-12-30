@@ -189,7 +189,7 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_MBCS;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_MBCS;UNICODE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -301,6 +301,10 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     </ClCompile>
     <ClCompile Include="..\lsMisc\SHMoveFile.cpp" />
     <ClCompile Include="..\lsMisc\stdwin32\stdwin32.cpp" />
+    <ClCompile Include="..\lsMisc\SystemInfo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\lsMisc\UrlEncode.cpp" />
     <ClCompile Include="..\lsMisc\UTF16toUTF8.cpp" />
     <ClCompile Include="..\lsMisc\WritePrivateProfileInt.cpp" />
@@ -326,6 +330,7 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     <ClInclude Include="..\lsMisc\OpenedFiles.h" />
     <ClInclude Include="..\lsMisc\SHMoveFile.h" />
     <ClInclude Include="..\lsMisc\stdwin32\stdwin32.h" />
+    <ClInclude Include="..\lsMisc\SystemInfo.h" />
     <ClInclude Include="..\lsMisc\UrlEncode.h" />
     <ClInclude Include="..\lsMisc\UTF16toUTF8.h" />
     <ClInclude Include="..\lsMisc\WritePrivateProfileInt.h" />
