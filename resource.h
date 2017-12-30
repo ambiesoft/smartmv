@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
-// Used by rc.rc
+// Microsoft Visual C++ で生成されたインクルード ファイル。
+// rc.rc で使用
 //
 #define IDI_ICON1                       101
 #define IDD_DIALOG_ASK                  102
@@ -11,6 +11,8 @@
 #define IDC_STATIC_TARGET               1004
 #define IDC_EDIT_MESSAGE                1005
 #define IDC_BUTTON_ELEVATE              1006
+#define IDC_BUTTON1                     1007
+#define IDC_BUTTON_ABOUT                1007
 
 // Next default values for new objects
 // 
@@ -18,7 +20,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        104
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1007
+#define _APS_NEXT_CONTROL_VALUE         1008
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

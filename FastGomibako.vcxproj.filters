@@ -16,6 +16,9 @@
     <Filter Include="4 dist">
       <UniqueIdentifier>{fed9b171-e6d0-4973-8fc7-720d2a63569d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="5 lang">
+      <UniqueIdentifier>{8ddad1e0-7f8e-4c2b-a36c-1bb5464ed787}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\lsMisc\CenterWindow.cpp">
@@ -134,6 +137,12 @@
     <ClInclude Include="..\lsMisc\SystemInfo.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="version.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.ico">
@@ -142,7 +151,9 @@
     <None Include="icon1.ico">
       <Filter>3 Resource Files</Filter>
     </None>
-    <None Include="lang\jpn.txt" />
+    <None Include="lang\jpn.txt">
+      <Filter>5 lang</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="rc.rc">

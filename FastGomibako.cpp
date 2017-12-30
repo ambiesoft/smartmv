@@ -15,6 +15,8 @@
 #include "MainDlgProc.h"
 #include "RetryDlgProc.h"
 
+#pragma comment(lib,"Comctl32.lib")
+
 #define APPLICATION_NAME _T("FastGomibako")
 
 CSessionGlobalMemory<int> gCount("FastGomibakoCounter");
@@ -338,6 +340,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			
 		return 0;
 	}
+	InitCommonControls();
 	Ambiesoft::i18nInitLangmap(hInstance, NULL, _T(""));
 	int ret=0;
 	try

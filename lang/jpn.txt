@@ -24,3 +24,14 @@
 "Finding the process grabbing files..."="ファイルをロックしているプロセスを探しています・・・"
 "Following applications grab the file(s), close them and try again."="以下のアプリケーションがファイルを開いています。それらを閉じてから再試行してください。"
 "grabbing \"%s\""="ロック \"%s\""
+
+"&About"="情報(&A)"
+"&Target:"="対象(&T):"
+"Cancel"="キャンセル"
+"OK"="OK"
+
+"&Close"="閉じる(&C)"
+"&Elevate"="管理者で実行(&E)"
+"&Retry"="再試行(&R)"
+
+"Admin"="管理者"

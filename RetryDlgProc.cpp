@@ -57,6 +57,8 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 		{
 			spData = (RetryDialogData*)lParam;
 
+			i18nChangeChildWindowText(hDlg);
+
 			wstring title = _T("FastGomibako");
 			if (IsUserAnAdmin())
 			{

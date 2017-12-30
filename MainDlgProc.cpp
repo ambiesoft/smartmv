@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "resource.h"
-
+#include "version.h"
 #include "MainDlgProc.h"
 
 using namespace Ambiesoft;
@@ -16,6 +16,8 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 			spData = (MainDialogData*)lParam;
 			
+			i18nChangeChildWindowText(hDlg);
+
 			SetDlgItemText(hDlg, IDC_EDIT_TARGET, spData->pTarget_);
 
 			SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_ADDSTRING, 0, (LPARAM)I18N(L"Move to trashcan"));
@@ -93,6 +95,12 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				{
 					EndDialog(hDlg, IDCANCEL);
 					return 0;
+				}
+				break;
+
+				case IDC_BUTTON_ABOUT:
+				{
+					MessageBox(hDlg, APPNAME L" ver " VERSION, APPNAME, MB_ICONINFORMATION);
 				}
 				break;
 
