@@ -35,3 +35,8 @@
 "&Retry"="再試行(&R)"
 
 "Admin"="管理者"
+"\"%s\" already exists. You need remove it manually first."="\"%s\" が存在するため移動できません。"
+"\"%s\" is not found."="\"%s\" は存在しません。"
+
+
+

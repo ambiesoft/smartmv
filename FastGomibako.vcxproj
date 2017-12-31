@@ -133,11 +133,21 @@
     </Bscmake>
     <PostBuildEvent>
       <Command>mkdir "$(TargetDir)lang"
-copy "$(ProjectDir)lang\jpn.txt" "$(TargetDir)lang"
+copy "$(ProjectDir)lang\jpn.txt" "$(TargetDir)lang\"
 copy "$(ProjectDir)history.txt" "$(TargetDir)"
 
 </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>
+      </Outputs>
+      <Inputs>
+      </Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -227,11 +237,21 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     </Bscmake>
     <PostBuildEvent>
       <Command>mkdir "$(TargetDir)lang"
-copy "$(ProjectDir)lang\jpn.txt" "$(TargetDir)lang"
+copy "$(ProjectDir)lang\jpn.txt" "$(TargetDir)lang\"
 copy "$(ProjectDir)history.txt" "$(TargetDir)"
 
 </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>
+      </Outputs>
+      <Inputs>
+      </Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
