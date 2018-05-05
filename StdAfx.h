@@ -30,6 +30,11 @@
 #include "../lsMisc/WritePrivateProfileInt.h"
 #include "../lsMisc/GetLastErrorString.h"
 #include "../lsMisc/stdwin32/stdwin32.h"
+#include "../SessionGlobalMemory/SessionGlobalMemory.h"
+#include "../lsMisc/CommandLineParser.h"
+#include "../lsMisc/Is64.h"
+#include "../lsMisc/CommandLineUtil.h"
+// #include "../lsMisc/ntfs.h"
 using namespace stdwin32;
 
 #include <string>

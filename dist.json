@@ -15,7 +15,7 @@
         "history.txt",
         "lang\\jpn.txt"
     ],
-    "TotalFileCount": 3,
+    "TotalFileCount": "exact",
     "archivedir": "C:\\Linkout",
     "remotedir": "http://ambiesoft.fam.cx/ffdav/uploads/FastGomibako/",
     "remotesha1": "http://ambiesoft.fam.cx/ffdav/uploads/getSha1.php?file=FastGomibako/{}",

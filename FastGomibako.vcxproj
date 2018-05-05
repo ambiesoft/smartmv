@@ -127,6 +127,7 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -331,7 +332,9 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     <ClCompile Include="..\lsMisc\UTF16toUTF8.cpp" />
     <ClCompile Include="..\lsMisc\WritePrivateProfileInt.cpp" />
     <ClCompile Include="FastGomibako.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="MainDlgProc.cpp" />
+    <ClCompile Include="pragma.cpp" />
     <ClCompile Include="RetryDlgProc.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -357,6 +360,8 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     <ClInclude Include="..\lsMisc\UTF16toUTF8.h" />
     <ClInclude Include="..\lsMisc\WritePrivateProfileInt.h" />
     <ClInclude Include="CSessionGlobalMemory.h" />
+    <ClInclude Include="FastGomibako.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="MainDlgProc.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RetryDlgProc.h" />

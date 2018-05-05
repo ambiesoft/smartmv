@@ -6,20 +6,14 @@
 #include "stdafx.h"
 #include "resource.h"
 
-#include "CSessionGlobalMemory.h"
-#include "../lsMisc/CommandLineParser.h"
-#include "../lsMisc/Is64.h"
-#include "../lsMisc/CommandLineUtil.h"
-// #include "../lsMisc/ntfs.h"
+#include "main.h"
 
 #include "MainDlgProc.h"
 #include "RetryDlgProc.h"
 
-#pragma comment(lib,"Comctl32.lib")
 
-#define APPLICATION_NAME _T("FastGomibako")
 
-CSessionGlobalMemory<int> gCount("FastGomibakoCounter");
+
 
 
 
@@ -37,10 +31,144 @@ tstring GetUsageString()
 }
 
 
+bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
+{
+	bool movedone = false;
+	while (!movedone)
+	{
+		if (MoveFile(pFileOrig, pRenameFull))
+		{
+			break;
+		}
+		else
+		{
+			DWORD dwLastError = GetLastError();
+			if (ERROR_ALREADY_EXISTS == dwLastError)
+			{
+				tstring message = string_format(
+					I18N(L"\"%s\" already exists. You need remove it manually first."),
+					pRenameFull);
+				throw message;
+			}
+			else
+			{
+				tstring t = GetLastErrorString(dwLastError);
+				tstring message = I18N(L"Failed to move file: ");
+				message += pFileOrig;
+				message += L"\r\n";
+				message += t;
 
+				RetryDialogData data;
+				data.file = pFileOrig;
+				data.message = message;
+				INT_PTR nDR = DialogBoxParam(GetModuleHandle(NULL),
+					MAKEINTRESOURCE(IDD_DIALOG_RETRY),
+					NULL,
+					RetryDlgProc,
+					(LPARAM)&data);
 
+				if (nDR == IDOK)
+				{
+					// retry
+					continue;
+				}
+				else if (nDR == IDCANCEL)
+				{
+					return false;
+				}
+				else if (nDR == IDC_BUTTON_ELEVATE)
+				{
+					wstring app = stdGetModuleFileName();
+					int nArgc;
+					LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(GetCommandLineW(), &nArgc);
+					wstring arg = stdSplitCommandLine(nArgc, 1, ppArgv);
+					LocalFree(ppArgv);
 
+					OpenCommon(NULL,
+						app.c_str(),
+						arg.c_str(),
+						NULL,
+						NULL,
+						L"runas");
+					return false;
+				}
+				else
+				{
+					assert(FALSE);
+				}
+			}
+		}
+	}
+	return true;
+}
 
+int doRemoveWork(const TCHAR root, LPCTSTR pFileOrig, MainDialogData& data)
+{
+	TCHAR szGomiDir[32];
+	szGomiDir[0] = root;
+	szGomiDir[1] = _T(':');
+	szGomiDir[2] = _T('\\');
+	lstrcpy(&szGomiDir[3], _T(".FastGomibako"));
+
+	CreateDirectory(szGomiDir, NULL);
+	DWORD dwAttr = GetFileAttributes(szGomiDir);
+	if (dwAttr == 0xffffffff || (dwAttr & FILE_ATTRIBUTE_DIRECTORY) == 0)
+	{
+		throw I18N(L"Failed to create FastGomibako directory");
+	}
+
+	SetFileAttributes(szGomiDir, dwAttr | FILE_ATTRIBUTE_HIDDEN);
+
+	LPCTSTR pFileName = _tcsrchr(pFileOrig, _T('\\'));
+	++pFileName;
+
+	TCHAR szGomiFile[MAX_PATH];
+	lstrcpy(szGomiFile, szGomiDir);
+	lstrcat(szGomiFile, _T("\\"));
+	lstrcat(szGomiFile, pFileName);
+
+	if (!tryAndArchive(pFileOrig, szGomiFile))
+		return 0;
+
+	if (!SetPriorityClass(GetCurrentProcess(), data.m_dwRetPri))
+	{
+		MessageBox(NULL, I18N(L"SetPriorityClass failed."), APPNAME, MB_ICONASTERISK);
+	}
+
+	FILEOP_FLAGS foFlags = FOF_NOCONFIRMATION;
+	if (!data.IsComplete())
+		foFlags |= FOF_ALLOWUNDO;
+	if (0 != SHDeleteFile(szGomiFile, foFlags))
+	{
+		if (!data.IsComplete())
+			throw I18N(L"Failed to trash file");
+		else
+			throw I18N(L"Failed to delete file");
+	}
+
+	if (!RemoveDirectory(szGomiDir))
+	{
+		if (gCount <= 1)
+			throw I18N(L"Failed to remove FastGomibako directory");
+	}
+	return 0;
+}
+
+int doRename(MainDialogData& data)
+{
+	if (PathFileExists(data.renameefull().c_str()))
+	{
+		MessageBox(NULL, 
+			string_format(I18N(L"\"%s\" already exists."), data.renameefull().c_str()).c_str(),
+			APPNAME,
+			MB_ICONEXCLAMATION);
+		return 1;
+	}
+	if (!tryAndArchive(data.m_pTarget_, data.renameefull().c_str()))
+		return 0;
+
+	return 0;
+}
 int dowork()
 {
 	COption optionC(L"-c", 0);
@@ -54,7 +182,7 @@ int dowork()
 	{
 		tstring message = I18N(_T("No Arguments"));
 		message += GetUsageString();
-		MessageBox(NULL, message.c_str(), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
+		MessageBox(NULL, message.c_str(), APPNAME, MB_OK|MB_ICONQUESTION);
 		return 0;
 	}
 
@@ -70,7 +198,7 @@ int dowork()
 		message += GetUsageString();
 		message += L":\r\n";
 		message += parser.getUnknowOptionStrings();
-		MessageBox(NULL, message.c_str(), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
+		MessageBox(NULL, message.c_str(), APPNAME, MB_OK|MB_ICONQUESTION);
 		return 1;
 	}
 	tstring inputfilename = optionDefault.getFirstValue();
@@ -81,7 +209,7 @@ int dowork()
 		message += GetUsageString();
 		message += L":\r\n";
 		message += parser.getUnknowOptionStrings();
-		MessageBox(NULL, message.c_str(), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
+		MessageBox(NULL, message.c_str(), APPNAME, MB_OK|MB_ICONQUESTION);
 		return 1;
 	}
 	
@@ -119,12 +247,7 @@ int dowork()
 			throw string_format(I18N(L"\"%s\" is not found."), pFile);
 		}
 
-		TCHAR szGomiDir[32];
-		szGomiDir[0] = pFile[0];
-		szGomiDir[1] = _T(':');
-		szGomiDir[2] = _T('\\');
-		lstrcpy(&szGomiDir[3], _T(".FastGomibako"));
-
+		const TCHAR root = pFile[0];
 
 
 
@@ -134,7 +257,7 @@ int dowork()
 
 
 		MainDialogData data;
-		data.pTarget_ = pFile;
+		data.m_pTarget_ = pFileOrig;
 		if(IDOK != DialogBoxParam(GetModuleHandle(NULL),
 			MAKEINTRESOURCE(IDD_DIALOG_ASK),
 			NULL,
@@ -145,225 +268,32 @@ int dowork()
 		}
 
 
-		bool bComp = data.bRetComp;
-
-/***
-		tstring message = string_format(I18N("Are you sure to FastGomibako \"%s\"?"), pFileOrig);
-		if(IDYES != MessageBox(NULL, message.c_str(),
-			APPLICATION_NAME,MB_ICONQUESTION|MB_YESNO))
+		if (data.IsRemove())
+			return doRemoveWork(root, pFileOrig, data);
+		else
 		{
-			return 3;
+			doRename(data);
 		}
 
-		
-		if(GetAsyncKeyState(VK_SHIFT)<0)
-		{
-			message = string_format(I18N("Are you sure to delete completely \"%s\"?"), pFileOrig);
-			if(IDYES != MessageBox(NULL, message.c_str(),
-				APPLICATION_NAME,MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2))
-			{
-				return 4;
-			}
-			bComp = true;
-		}
-***/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		CreateDirectory(szGomiDir, NULL);
-		dwAttr = GetFileAttributes(szGomiDir);
-		if(dwAttr==0xffffffff || (dwAttr & FILE_ATTRIBUTE_DIRECTORY)==0)
-		{
-			throw I18N(L"Failed to create FastGomibako directory");
-		}
-
-		SetFileAttributes(szGomiDir, dwAttr|FILE_ATTRIBUTE_HIDDEN);
-
-		LPCTSTR pFileName = _tcsrchr(pFileOrig, _T('\\'));
-		++pFileName;
-
-		TCHAR szGomiFile[MAX_PATH];
-		lstrcpy(szGomiFile, szGomiDir);
-		lstrcat(szGomiFile, _T("\\"));
-		lstrcat(szGomiFile, pFileName);
-
-		bool movedone=false;
-		while(!movedone)
-		{
-			if(MoveFile(pFileOrig, szGomiFile))
-			{
-				break;
-			}
-			else
-			{
-				DWORD dwLastError = GetLastError();
-				if (ERROR_ALREADY_EXISTS==dwLastError)
-				{
-					tstring message = string_format(
-						I18N(L"\"%s\" already exists. You need remove it manually first."),
-						szGomiFile);
-					throw message;
-				}
-				else
-				{
-					tstring t = GetLastErrorString(dwLastError);
-					tstring message = I18N(L"Failed to move file: ");
-					message += pFileOrig;
-					message += L"\r\n";
-					message += t;
-
-					RetryDialogData data;
-					data.file = pFileOrig;
-					data.message = message;
-					INT_PTR nDR = DialogBoxParam(GetModuleHandle(NULL),
-						MAKEINTRESOURCE(IDD_DIALOG_RETRY),
-						NULL,
-						RetryDlgProc,
-						(LPARAM)&data);
-
-					if (nDR == IDOK)
-					{
-						// retry
-						continue;
-					}
-					else if (nDR == IDCANCEL)
-					{
-						return 0;
-					}
-					else if (nDR == IDC_BUTTON_ELEVATE)
-					{
-						wstring app = stdGetModuleFileName();
-						int nArgc;
-						LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(GetCommandLineW(), &nArgc);
-						wstring arg = stdSplitCommandLine(nArgc, 1, ppArgv);
-						LocalFree(ppArgv);
-
-						OpenCommon(NULL,
-							app.c_str(),
-							arg.c_str(),
-							NULL,
-							NULL,
-							L"runas");
-						return 0;
-					}
-					else
-					{
-						assert(FALSE);
-					}
-				}
-			}
-		}
-
-		SetPriorityClass(GetCurrentProcess(), data.dwRetPri);
-
-		FILEOP_FLAGS foFlags = FOF_NOCONFIRMATION;
-		if (!bComp)
-			foFlags |= FOF_ALLOWUNDO;
-		if (0 != SHDeleteFile(szGomiFile, foFlags))
-		{
-			if(!bComp)
-				throw I18N(L"Failed to trash file");
-			else
-				throw I18N(L"Failed to delete file");
-		}
-
-		if(!RemoveDirectory(szGomiDir))
-		{
-			if(gCount <= 1)
-				throw I18N(L"Failed to remove FastGomibako directory");
-		}
 	}
 	catch(tstring& message)
 	{
-		MessageBox(NULL, message.c_str(), APPLICATION_NAME, MB_OK|MB_ICONERROR);
+		MessageBox(NULL, message.c_str(), APPNAME, MB_OK|MB_ICONERROR);
 		return 2;
 	}
 	catch(LPCTSTR pMessage)
 	{
-		MessageBox(NULL, pMessage, APPLICATION_NAME, MB_OK|MB_ICONERROR);
+		MessageBox(NULL, pMessage, APPNAME, MB_OK|MB_ICONERROR);
 		return 2;
 	}
 	catch(...)
 	{
-		MessageBox(NULL, I18N(L"Invalid Argument"), APPLICATION_NAME, MB_OK|MB_ICONQUESTION);
+		MessageBox(NULL, I18N(L"Invalid Argument"), APPNAME, MB_OK|MB_ICONQUESTION);
 		return 3;
 	}
 	return 0;
 }
 
 
-
-int APIENTRY _tWinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPTSTR     lpCmdLine,
-                     int       nCmdShow )
-{
-	// ResolveNtfsPath(__wargv[1]);
-	if(false && Is64BitWindows() && !Is64BitProcess())
-	{
-		wstring exe64 = stdGetParentDirectory(stdGetModuleFileName(),true);
-		exe64 += L"FastGomibako";
-#ifdef _DEBUG
-		exe64 += L"D";
-#endif
-		exe64 += L"64.exe";
-		if(!PathFileExists(exe64.c_str()))
-		{
-			MessageBox(NULL,
-				I18N(L"could not find 64bit executable."),
-				APPNAME,
-				MB_ICONERROR);
-			return 1;
-		}
-
-		
-		OpenCommon(NULL,
-			exe64.c_str(),
-			lpCmdLine);
-			
-		return 0;
-	}
-	InitCommonControls();
-	Ambiesoft::i18nInitLangmap(hInstance, L"", _T(""));
-	int ret=0;
-	try
-	{
-		gCount=gCount+1;
-		ret= dowork();
-	}
-	catch(...)
-	{
-		ret=-1;
-	}
-	gCount=gCount-1;
-	return ret;
-}
