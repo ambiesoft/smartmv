@@ -6,6 +6,7 @@
 #include "RetryDlgProc.h"
 
 using namespace Ambiesoft;
+using namespace std;
 
 struct THREADPASSDATA
 {
@@ -73,7 +74,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			message.append(L"\r\n");
 			message.append(L"\r\n");
 
-			message.append(I18N(L"Finding the process grabbing files..."));
+			message.append(I18N(L"Finding the process grabbing the file..."));
 
 			SetDlgItemText(hDlg, IDC_EDIT_MESSAGE, message.c_str());
 
@@ -110,6 +111,8 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 		case WM_APP_RETRYDIALOG_FINDCULPLIT_FOUND:
 		{
 			wstring grabbers;
+			set<wstring> sets;
+
 			vector<OPENEDFILEINFO>* pV = (vector<OPENEDFILEINFO>*)wParam;
 			for(vector<OPENEDFILEINFO>::iterator it = pV->begin();
 				it != pV->end();
@@ -118,15 +121,20 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 				wstring grabber = GetPathFromProcessID(it->dwPID);
 				if(!grabber.empty())
 				{
-					grabbers.append(grabber);
-					if (it->filename[0])
+					// check already sets
+					if (sets.find(grabber) == sets.end())
 					{
-						wstring t = stdwin32::string_format(I18N(L"grabbing \"%s\""), it->filename);
-						grabbers.append(L" (");
-						grabbers.append(t);
-						grabbers.append(L")");
+						sets.insert(grabber);
+						grabbers.append(grabber);
+						if (it->filename[0])
+						{
+							wstring t = stdwin32::string_format(I18N(L"grabbing \"%s\""), it->filename);
+							grabbers.append(L" (");
+							grabbers.append(t);
+							grabbers.append(L")");
+						}
+						grabbers.append(L"\r\n");
 					}
-					grabbers.append(L"\r\n");
 				}
 			}
 

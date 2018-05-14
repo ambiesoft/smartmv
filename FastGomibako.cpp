@@ -19,6 +19,7 @@
 
 using namespace Ambiesoft;
 using namespace stdwin32;
+using namespace std;
 
 tstring GetUsageString()
 {

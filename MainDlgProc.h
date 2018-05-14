@@ -25,7 +25,7 @@ struct MainDialogData {
 	bool IsRename() const {
 		return m_op == Operation_Rename;
 	}
-	wstring renamee() const {
+	std::wstring renamee() const {
 		return renamee_;
 	}
 	void setRenamee(LPCTSTR p) {

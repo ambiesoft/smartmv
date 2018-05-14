@@ -3,6 +3,7 @@
 
 using namespace Ambiesoft;
 using namespace stdwin32;
+using namespace std;
 
 
 Ambiesoft::CSessionGlobalMemory<int> gCount("FastGomibakoCounter");

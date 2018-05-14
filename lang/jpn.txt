@@ -21,7 +21,7 @@
 "Background"="バックグラウンド"
 
 "Failed to move file: "="ファイルの移動に失敗しました： "
-"Finding the process grabbing files..."="ファイルをロックしているプロセスを探しています・・・"
+"Finding the process grabbing the file..."="ファイルをロックしているプロセスを探しています・・・"
 "Following applications grab the file(s), close them and try again."="以下のアプリケーションがファイルを開いています。それらを閉じてから再試行してください。"
 "grabbing \"%s\""="ロック \"%s\""
 

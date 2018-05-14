@@ -21,6 +21,9 @@
 #include <assert.h>
 #include <process.h>  
 
+#include <string>
+#include <set>
+
 #include "../lsMisc/I18N.h"
 #include "../lsMisc/SHMoveFile.h"
 #include "../lsMisc/IsWindowsNT.h"
@@ -37,8 +40,8 @@
 // #include "../lsMisc/ntfs.h"
 using namespace stdwin32;
 
-#include <string>
-using namespace std;
+
+
 
 #define I18N(s) Ambiesoft::I18N(s)
 

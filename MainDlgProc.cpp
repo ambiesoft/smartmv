@@ -6,6 +6,7 @@
 #include "MainDlgProc.h"
 
 using namespace Ambiesoft;
+using namespace std;
 
 bool MainDialogData::IsRenameeExists() const 
 {
@@ -64,6 +65,9 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendDlgItemMessage(hDlg, IDC_COMBO_PRIORITY, CB_ADDSTRING, 0, (LPARAM)I18N(L"Low"));
 			SendDlgItemMessage(hDlg, IDC_COMBO_PRIORITY, CB_ADDSTRING, 0, (LPARAM)I18N(L"Background"));
 			
+			// set default rename text
+			wstring renameText = stdGetFileName(spData->m_pTarget_);
+			SetDlgItemText(hDlg, IDC_EDIT_RENAME, renameText.c_str());
 
 			sIni = stdGetModuleFileName() + L".ini";
 			int nDeleteMethod = GetPrivateProfileInt(APPNAME, KEY_DELETEMETHOD, 0, sIni.c_str());
