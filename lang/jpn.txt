@@ -39,4 +39,10 @@
 "\"%s\" is not found."="\"%s\" は存在しません。"
 
 
+"&Operation:"="オペレーション(&O):"
+"&Priority:"="優先度(&P):"
+"&Rename:"="リネーム(&R):"
+"Rename"="リネーム"
+"Delete"="完全に削除"
+"Remove"="ごみ箱に移動"
 

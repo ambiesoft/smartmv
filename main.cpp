@@ -39,7 +39,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		return 0;
 	}
 	InitCommonControls();
-	Ambiesoft::i18nInitLangmap(hInstance, L"", _T(""));
+#if _DEBUG
+	Ambiesoft::i18nInitLangmap(hInstance, L"jpn", L"");
+#else
+	Ambiesoft::i18nInitLangmap(hInstance, L"", L"");
+#endif
 	int ret = 0;
 	try
 	{

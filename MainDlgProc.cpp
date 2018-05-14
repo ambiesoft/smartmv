@@ -21,17 +21,17 @@ static void updateDialog(HWND hDlg)
 	switch (SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_GETCURSEL, 0, 0))
 	{
 	case MainDialogData::Operation_MoveToTrashCan:
-		SetWindowText(GetDlgItem(hDlg, IDOK), L"Remove");
+		SetWindowText(GetDlgItem(hDlg, IDOK), I18N(L"Remove"));
 		EnableWindow(GetDlgItem(hDlg, IDC_EDIT_RENAME), FALSE);
 		EnableWindow(GetDlgItem(hDlg, IDC_COMBO_PRIORITY), TRUE);
 		break;
 	case MainDialogData::Operation_Delete:
-		SetWindowText(GetDlgItem(hDlg, IDOK), L"Delete");
+		SetWindowText(GetDlgItem(hDlg, IDOK), I18N(L"Delete"));
 		EnableWindow(GetDlgItem(hDlg, IDC_EDIT_RENAME), FALSE);
 		EnableWindow(GetDlgItem(hDlg, IDC_COMBO_PRIORITY), TRUE);
 		break;
 	case MainDialogData::Operation_Rename:
-		SetWindowText(GetDlgItem(hDlg, IDOK), L"Rename");
+		SetWindowText(GetDlgItem(hDlg, IDOK), I18N(L"Rename"));
 		EnableWindow(GetDlgItem(hDlg, IDC_EDIT_RENAME), TRUE);
 		EnableWindow(GetDlgItem(hDlg, IDC_COMBO_PRIORITY), FALSE);
 		break;
@@ -86,6 +86,10 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			
 			updateDialog(hDlg);
 			CenterWindow(hDlg);
+
+			HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON_MAIN));
+			SendMessage(hDlg, WM_SETICON, TRUE, (LPARAM)hIcon);
+			SendMessage(hDlg, WM_SETICON, FALSE, (LPARAM)hIcon);
 
 			return TRUE;
 		}

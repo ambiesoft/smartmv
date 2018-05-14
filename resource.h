@@ -3,6 +3,7 @@
 // Used by rc.rc
 //
 #define IDI_ICON1                       101
+#define IDI_ICON_MAIN                   101
 #define IDD_DIALOG_ASK                  102
 #define IDD_DIALOG_RETRY                103
 #define IDC_EDIT_TARGET                 1000

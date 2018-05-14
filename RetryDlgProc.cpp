@@ -103,6 +103,12 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			}
 
 			EnableWindow(GetDlgItem(hDlg,IDC_BUTTON_ELEVATE), !IsUserAnAdmin());
+
+			HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON_MAIN));
+			SendMessage(hDlg, WM_SETICON, TRUE, (LPARAM)hIcon);
+			SendMessage(hDlg, WM_SETICON, FALSE, (LPARAM)hIcon);
+
+
 			CenterWindow(hDlg);
 			return TRUE;
 		}
