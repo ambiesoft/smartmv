@@ -41,9 +41,40 @@
 解答したファイルを適当なフォルダに置いてください。ここではユーザのローカルの場所に移動する方法を紹介します。
 
 <ul>
-<li><i>[Ctrl]+R</i>で<em>実行ダイアログ</em>を表示します。
+<li><i>[Ctrl]+R</i>で<em>実行ダイアログ</em>を表示し、<i>%LOCALAPPDATA%</i>と入力してOKします。
+<p><img src="images/rundialog.png"></p>
+
+<li>解凍したファイル（フォルダ一式）をこの場所に移動して開きます。
+<p><img src="images/explorer.png"></p>
+
+<li><i>FastGomibako.exe</i>を選択して<i>コピー</i>します。
+<li>
+
+<li><i>[Ctrl]+R</i>で<em>実行ダイアログ</em>を表示し、<i>shell:sendto</i>と入力してOKします。
+<li>「送る」メニューの一覧を含むフォルダが表示されるので、何もないところを右クリックして、<i>ショートカットの貼り付け</i>を選択します。
+<li>ショートカットが作成されるので名前を<i>FastGomibako</i>に変えます。
+
+<h2>実行</h2>
+リネームや削除したいフォルダやファイルを右クリックして<i>送る</i>メニューから<i>FastGomibako</i>を選択します。
+<p><img src="images/fastgomibako.png"></p>
 
 
+<h2>削除失敗時のプロセス検索</h2>
+削除やリネームに失敗したときで、他のプロセスがそのファイルを使っている場合、当該プロセスを突き止める機能が起動します。
+<p><img src="images/findculprit.png"></p>
+もしここにプロセスが表示されれば、そのプロセスがファイルを使っているので、このプロセスを閉じてから再試行すれば削除できます。
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-4755653727306095"
+     data-ad-slot="1458999715"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<h2>寄付</h2>
+開発の寄付を募集しています。詳しくは<a href="http://ambiesoft.fam.cx/donate/">こちら</a>をご覧ください。
 
                 </div><!-- /main -->
                 <div id="sub">
