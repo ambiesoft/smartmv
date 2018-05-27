@@ -1,3 +1,6 @@
+2018/05/27 ver1.5
+Check if the file is moved by other process.
+
 2018/05/14 ver1.4
 I18N (japanese)
 Edit dialog resource

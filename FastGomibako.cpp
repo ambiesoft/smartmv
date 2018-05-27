@@ -37,6 +37,13 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
 	bool movedone = false;
 	while (!movedone)
 	{
+		if (!PathFileExists(pFileOrig))
+		{
+			tstring message = string_format(
+				I18N(L"\"%s\" does not exit anymore."),
+				pFileOrig);
+			throw message;
+		}
 		if (MoveFile(pFileOrig, pRenameFull))
 		{
 			break;

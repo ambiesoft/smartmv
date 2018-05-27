@@ -42,7 +42,11 @@
 "&Operation:"="オペレーション(&O):"
 "&Priority:"="優先度(&P):"
 "&Rename:"="リネーム(&R):"
-"Rename"="リネーム"
-"Delete"="完全に削除"
-"Remove"="ごみ箱に移動"
 
+# "Rename"="リネーム"
+# "Delete"="完全に削除"
+# "Remove"="ごみ箱に移動"
+
+"&Delete"="完全に削除(&D)"
+"Re&name"="リネーム(&N)"
+"Remo&ve"="ごみ箱に移動(&V)"

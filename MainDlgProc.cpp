@@ -21,17 +21,17 @@ static void updateDialog(HWND hDlg)
 	switch (SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_GETCURSEL, 0, 0))
 	{
 	case MainDialogData::Operation_MoveToTrashCan:
-		SetWindowText(GetDlgItem(hDlg, IDOK), I18N(L"Remove"));
+		SetWindowText(GetDlgItem(hDlg, IDOK), I18N(L"Remo&ve"));
 		EnableWindow(GetDlgItem(hDlg, IDC_EDIT_RENAME), FALSE);
 		EnableWindow(GetDlgItem(hDlg, IDC_COMBO_PRIORITY), TRUE);
 		break;
 	case MainDialogData::Operation_Delete:
-		SetWindowText(GetDlgItem(hDlg, IDOK), I18N(L"Delete"));
+		SetWindowText(GetDlgItem(hDlg, IDOK), I18N(L"&Delete"));
 		EnableWindow(GetDlgItem(hDlg, IDC_EDIT_RENAME), FALSE);
 		EnableWindow(GetDlgItem(hDlg, IDC_COMBO_PRIORITY), TRUE);
 		break;
 	case MainDialogData::Operation_Rename:
-		SetWindowText(GetDlgItem(hDlg, IDOK), I18N(L"Rename"));
+		SetWindowText(GetDlgItem(hDlg, IDOK), I18N(L"Re&name"));
 		EnableWindow(GetDlgItem(hDlg, IDC_EDIT_RENAME), TRUE);
 		EnableWindow(GetDlgItem(hDlg, IDC_COMBO_PRIORITY), FALSE);
 		break;
