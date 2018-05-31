@@ -95,9 +95,6 @@
     <ClInclude Include="..\lsMisc\CommandLineUtil.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CSessionGlobalMemory.h">
-      <Filter>1 Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\lsMisc\GetLastErrorString.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
@@ -153,6 +150,12 @@
       <Filter>1 Header Files</Filter>
     </ClInclude>
     <ClInclude Include="main.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\CommandLineString.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\stlScopedClear.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
   </ItemGroup>

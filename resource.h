@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by rc.rc
+// Microsoft Visual C++ で生成されたインクルード ファイル。
+// rc.rc で使用
 //
 #define IDI_ICON1                       101
 #define IDI_ICON_MAIN                   101
@@ -14,6 +14,7 @@
 #define IDC_BUTTON_ELEVATE              1006
 #define IDC_BUTTON1                     1007
 #define IDC_BUTTON_ABOUT                1007
+#define IDC_BUTTON_TERMINATE            1007
 #define IDC_STATIC_OPERATION            1008
 #define IDC_STATIC_RENAME               1009
 #define IDC_STATIC_PRIORITY             1010

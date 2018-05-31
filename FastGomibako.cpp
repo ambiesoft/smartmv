@@ -1,9 +1,39 @@
+//BSD 2-Clause License
+//
+//Copyright (c) 2018, Ambiesoft
+//All rights reserved.
+//
+//Redistribution and use in source and binary forms, with or without
+//modification, are permitted provided that the following conditions are met:
+//
+//* Redistributions of source code must retain the above copyright notice, this
+//  list of conditions and the following disclaimer.
+//
+//* Redistributions in binary form must reproduce the above copyright notice,
+//  this list of conditions and the following disclaimer in the documentation
+//  and/or other materials provided with the distribution.
+//
+//THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+//AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+//IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+//DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+//FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+//DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+//SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+//CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+//OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+//OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 // FastGomibako.cpp : Defines the entry point for the application.
 //
 
 // http://www.flickr.com/photos/bossco/2854452799/
 
 #include "stdafx.h"
+#include "../lsMisc/CommandLineString.h"
+#include "../lsMisc/stlScopedClear.h"
+#include "../lsMisc/CommandLineParser.h"
+
 #include "resource.h"
 
 #include "main.h"
@@ -21,15 +51,15 @@ using namespace Ambiesoft;
 using namespace stdwin32;
 using namespace std;
 
-tstring GetUsageString()
-{
-	tstring ret;
-	ret += _T("\r\n\r\n");
-	ret += I18N(_T("Usage"));
-	ret += _T(":\r\n");
-	ret += _T("FastGomibako [File or Folder]");
-	return ret;
-}
+//tstring GetUsageString()
+//{
+//	tstring ret;
+//	ret += _T("\r\n\r\n");
+//	ret += I18N(_T("Usage"));
+//	ret += _T(":\r\n");
+//	ret += _T("FastGomibako [File or Folder]");
+//	return ret;
+//}
 
 
 bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
@@ -179,52 +209,93 @@ int doRename(MainDialogData& data)
 }
 int dowork()
 {
-	COption optionC(L"-c", 0);
-	COption optionDefault(L"");
-	CCommandLineParser parser;
-	parser.AddOption(&optionC);
+	CCommandLineParser parser(CaseFlags_Default, I18N(L"Move and remove folder"));
+
+	COption optionDefault(L"",
+		ArgCount_Infinite,
+		ArgEncodingFlags_Default,
+		I18N(L"specify directory"));
 	parser.AddOption(&optionDefault);
+
+	bool bHelp = false;
+	parser.AddOption( L"-h", L"/h" , 
+		0,
+		&bHelp,
+		ArgEncodingFlags_Default,
+		I18N(L"show help"));
+	
+	bool bVersion = false;
+	parser.AddOption(L"-v", L"/v",
+		0,
+		&bVersion,
+		ArgEncodingFlags_Default,
+		I18N(L"show version"));
+
 	parser.Parse(__argc, __targv);
+
+	if (bHelp)
+	{
+		MessageBox(NULL, parser.getHelpMessage().c_str(), APPNAME, MB_ICONINFORMATION);
+		return 0;
+	}
 
 	if(parser.isEmpty())
 	{
 		tstring message = I18N(_T("No Arguments"));
-		message += GetUsageString();
+		message += L"\r\n";
+		message += parser.getHelpMessage();
 		MessageBox(NULL, message.c_str(), APPNAME, MB_OK|MB_ICONQUESTION);
 		return 0;
-	}
-
-	bool quitafterremove = false;
-	if(optionC.hadOption())
-	{
-		quitafterremove = true;
 	}
 
 	if(!optionDefault.hadValue())
 	{
 		tstring message = I18N(L"No input");
-		message += GetUsageString();
 		message += L":\r\n";
 		message += parser.getUnknowOptionStrings();
 		MessageBox(NULL, message.c_str(), APPNAME, MB_OK|MB_ICONQUESTION);
 		return 1;
 	}
+
+	if (optionDefault.getValueCount() > 1)
+	{
+		tstring exe = stdGetModuleFileName();
+		for (size_t i = 0; i < optionDefault.getValueCount(); ++i)
+		{
+			tstring input = optionDefault.getValue(i);
+			
+			if (!OpenCommon(NULL,
+				stdApplyDQ(exe).c_str(),
+				stdApplyDQ(input).c_str()))
+			{
+				MessageBox(NULL, I18N(L"Failed to launch self"), APPNAME, MB_ICONERROR);
+				return 1;
+			}
+		}
+		return 0;
+	}
+	
 	tstring inputfilename = optionDefault.getFirstValue();
 
 	if(parser.hadUnknownOption())
 	{
 		tstring message = I18N(L"Unknown Option");
-		message += GetUsageString();
 		message += L":\r\n";
 		message += parser.getUnknowOptionStrings();
+		
 		MessageBox(NULL, message.c_str(), APPNAME, MB_OK|MB_ICONQUESTION);
 		return 1;
 	}
 	
-	LPCTSTR pFileOrig = _tcsdup(__targv[1]);
-	LPTSTR pFile = _tcsdup(__targv[1]);
+	inputfilename = stdGetFullPathName(inputfilename);
+
+	LPCTSTR pFileOrig = _tcsdup(inputfilename.c_str());
+	STLSOFT_SCODEDFREE_CRT(pFileOrig);
+
+	LPTSTR pFile = _tcsdup(inputfilename.c_str());
+	STLSOFT_SCODEDFREE_CRT(pFile);
 	_tcslwr_s(pFile, _tcslen(pFile)+1);
-	// _tcslwr(pFile);
+	
 	try
 	{
 		if( !(_T('A') <= pFile[0] || pFile[0] <= _T('Z')) )
@@ -256,13 +327,6 @@ int dowork()
 		}
 
 		const TCHAR root = pFile[0];
-
-
-
-
-
-
-
 
 		MainDialogData data;
 		data.m_pTarget_ = pFileOrig;
@@ -298,7 +362,7 @@ int dowork()
 	}
 	catch(...)
 	{
-		MessageBox(NULL, I18N(L"Invalid Argument"), APPNAME, MB_OK|MB_ICONQUESTION);
+		MessageBox(NULL, I18N(L"Unexpected error"), APPNAME, MB_OK|MB_ICONQUESTION);
 		return 3;
 	}
 	return 0;

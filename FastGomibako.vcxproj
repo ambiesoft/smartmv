@@ -346,6 +346,7 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
   <ItemGroup>
     <ClInclude Include="..\lsMisc\CenterWindow.h" />
     <ClInclude Include="..\lsMisc\CommandLineParser.h" />
+    <ClInclude Include="..\lsMisc\CommandLineString.h" />
     <ClInclude Include="..\lsMisc\CommandLineUtil.h" />
     <ClInclude Include="..\lsMisc\GetLastErrorString.h" />
     <ClInclude Include="..\lsMisc\I18N.h" />
@@ -355,11 +356,11 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     <ClInclude Include="..\lsMisc\OpenedFiles.h" />
     <ClInclude Include="..\lsMisc\SHMoveFile.h" />
     <ClInclude Include="..\lsMisc\stdwin32\stdwin32.h" />
+    <ClInclude Include="..\lsMisc\stlScopedClear.h" />
     <ClInclude Include="..\lsMisc\SystemInfo.h" />
     <ClInclude Include="..\lsMisc\UrlEncode.h" />
     <ClInclude Include="..\lsMisc\UTF16toUTF8.h" />
     <ClInclude Include="..\lsMisc\WritePrivateProfileInt.h" />
-    <ClInclude Include="CSessionGlobalMemory.h" />
     <ClInclude Include="FastGomibako.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="MainDlgProc.h" />

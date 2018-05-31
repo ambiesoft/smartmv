@@ -1,3 +1,29 @@
+//BSD 2-Clause License
+//
+//Copyright (c) 2018, Ambiesoft
+//All rights reserved.
+//
+//Redistribution and use in source and binary forms, with or without
+//modification, are permitted provided that the following conditions are met:
+//
+//* Redistributions of source code must retain the above copyright notice, this
+//  list of conditions and the following disclaimer.
+//
+//* Redistributions in binary form must reproduce the above copyright notice,
+//  this list of conditions and the following disclaimer in the documentation
+//  and/or other materials provided with the distribution.
+//
+//THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+//AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+//IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+//DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+//FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+//DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+//SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+//CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+//OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+//OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 #include "stdafx.h"
 #include "../lsMisc/OpenedFiles.h"
 
@@ -52,10 +78,16 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 {
 	static RetryDialogData* spData;
 	static HANDLE shFindingCulplit;
+	static set<DWORD> pidsToKill;
+	static HWND btnTerminate;
 	switch(uMsg)
 	{
 		case WM_INITDIALOG:
 		{
+			btnTerminate = GetDlgItem(hDlg, IDC_BUTTON_TERMINATE);
+			pidsToKill.clear();
+			EnableWindow(btnTerminate, FALSE);
+
 			spData = (RetryDialogData*)lParam;
 
 			i18nChangeChildWindowText(hDlg);
@@ -117,7 +149,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 		case WM_APP_RETRYDIALOG_FINDCULPLIT_FOUND:
 		{
 			wstring grabbers;
-			set<wstring> sets;
+			set<DWORD> sets;
 
 			vector<OPENEDFILEINFO>* pV = (vector<OPENEDFILEINFO>*)wParam;
 			for(vector<OPENEDFILEINFO>::iterator it = pV->begin();
@@ -128,10 +160,16 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 				if(!grabber.empty())
 				{
 					// check already sets
-					if (sets.find(grabber) == sets.end())
+					if (sets.find(it->dwPID) == sets.end())
 					{
-						sets.insert(grabber);
-						grabbers.append(grabber);
+						sets.insert(it->dwPID);
+						pidsToKill.insert(it->dwPID);
+						EnableWindow(btnTerminate, TRUE);
+
+						grabbers.append(L"PID:");
+						grabbers.append(stdItoW(it->dwPID));
+						grabbers.append(L", ");
+						grabbers.append(stdApplyDQ(grabber));
 						if (it->filename[0])
 						{
 							wstring t = stdwin32::string_format(I18N(L"grabbing \"%s\""), it->filename);
@@ -178,6 +216,58 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 				{
 					EndDialog(hDlg, LOWORD(wParam));
 					return 0;
+				}
+				break;
+
+				case IDC_BUTTON_TERMINATE:
+				{
+					if (pidsToKill.empty())
+						break;
+
+					wstring question = string_format(I18N(L"Are you sure to terminate following process(es)?"), pidsToKill.size());
+					question += L"\r\n";
+					for (DWORD pid : pidsToKill)
+					{
+						question += stdItoW(pid);
+						question += L" ";
+					}
+					if (IDYES != MessageBox(hDlg,
+						question.c_str(),
+						APPNAME,
+						MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2))
+					{
+						break;
+					}
+
+					int nFailed = 0;
+					set<DWORD> tmpPids(pidsToKill);
+					for (DWORD pid : tmpPids)
+					{
+						HANDLE h = OpenProcess(PROCESS_TERMINATE, FALSE, pid);
+						if (!h)
+						{
+							++nFailed;
+							continue;
+						}
+						if (!TerminateProcess(h, -1))
+						{
+							++nFailed;
+							continue;
+						}
+						pidsToKill.erase(pid);
+
+						wstring message = string_format(I18N(L"Process %d has been terminated."), pid);
+						message += L"\r\n";
+						
+						wstring txt = getDlgItemText(hDlg, IDC_EDIT_MESSAGE);
+						txt.append(message);
+						SetDlgItemText(hDlg, IDC_EDIT_MESSAGE, txt.c_str());
+					}
+					if (nFailed == 0)
+					{
+						EnableWindow(btnTerminate, FALSE);
+					}
+
 				}
 				break;
 

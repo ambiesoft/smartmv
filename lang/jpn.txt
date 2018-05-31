@@ -50,3 +50,12 @@
 "&Delete"="完全に削除(&D)"
 "Re&name"="リネーム(&N)"
 "Remo&ve"="ごみ箱に移動(&V)"
+
+"&Terminate"="強制終了(&T)"
+"Are you sure to terminate following process(es)?"="以下のプロセスを強制終了しますか？"
+"Move and remove folder="フォルダの移動と削除"
+"Process %d has been terminated."="プロセス %d は強制終了されました。"
+"Rename"="リネーム"
+"show help"="ヘルプを表示"
+"show version"="バージョンを表示"
+"specify directory"="ディレクトリを指定"
