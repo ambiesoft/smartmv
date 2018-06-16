@@ -40,6 +40,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	int       nCmdShow)
 {
 	// ResolveNtfsPath(__wargv[1]);
+	// 64bit not work
 	if (false && Is64BitWindows() && !Is64BitProcess())
 	{
 		wstring exe64 = stdGetParentDirectory(stdGetModuleFileName(), true);

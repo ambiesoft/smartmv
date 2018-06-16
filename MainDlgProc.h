@@ -30,6 +30,7 @@ struct MainDialogData {
 	std::vector<std::wstring> targets_;
 	std::wstring renamee_;
 	enum Operation {
+		Operation_Default = -1,
 		Operation_Rename,
 		Operation_MoveToTrashCan,
 		Operation_Delete,

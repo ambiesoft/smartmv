@@ -45,7 +45,7 @@ wstring MainDialogData::renameefull() const
 }
 static void updateDialog(HWND hDlg, bool isSingle)
 {
-	int comboValue = SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_GETCURSEL, 0, 0);
+	LRESULT comboValue = SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_GETCURSEL, 0, 0);
 	switch (comboValue)
 	{
 	case MainDialogData::Operation_MoveToTrashCan:
@@ -121,7 +121,9 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			}
 
 			sIni = stdGetModuleFileName() + L".ini";
-			int nDeleteMethod = GetPrivateProfileInt(APPNAME, KEY_DELETEMETHOD, 0, sIni.c_str());
+			int nDeleteMethod = spData->m_op;
+			if (nDeleteMethod < 0)
+				nDeleteMethod = GetPrivateProfileInt(APPNAME, KEY_DELETEMETHOD, 0, sIni.c_str());
 			int nPriority = GetPrivateProfileInt(APPNAME, KEY_PRIORITY, 1, sIni.c_str());
 			SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_SETCURSEL, nDeleteMethod, 0);
 			SendDlgItemMessage(hDlg, IDC_COMBO_PRIORITY, CB_SETCURSEL, nPriority, 0);

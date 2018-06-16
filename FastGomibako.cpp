@@ -248,6 +248,13 @@ int dowork()
 		ArgEncodingFlags_Default,
 		I18N(L"show version"));
 
+	wstring operation;
+	parser.AddOption(L"-op",
+		1,
+		&operation,
+		ArgEncodingFlags_Default,
+		I18N(L"Operation: One of 'rename', 'trash', 'delete'"));
+
 	parser.Parse(__argc, __targv);
 
 	if (bHelp)
@@ -274,6 +281,22 @@ int dowork()
 		return 1;
 	}
 
+	MainDialogData::Operation op = MainDialogData::Operation_Default;
+	if (!operation.empty())
+	{
+		if (operation == L"rename")
+			op = MainDialogData::Operation_Rename;
+		else if (operation == L"trash")
+			op = MainDialogData::Operation_MoveToTrashCan;
+		else if (operation == L"delete")
+			op = MainDialogData::Operation_Delete;
+		else
+		{
+			wstring message = string_format(I18N(L"Unknown operation: %s"), operation.c_str());
+			MessageBox(NULL, message.c_str(), APPNAME, MB_ICONERROR);
+			return 1;
+		}
+	}
 	//if (optionDefault.getValueCount() > 1)
 	//{
 	//	tstring exe = stdGetModuleFileName();
@@ -343,6 +366,7 @@ int dowork()
 			// const TCHAR root = pFile[0];
 		}
 		MainDialogData data;
+		data.m_op = op;
 		data.targets_ = targetPathes;
 		if(IDOK != DialogBoxParam(GetModuleHandle(NULL),
 			MAKEINTRESOURCE(IDD_DIALOG_ASK),
