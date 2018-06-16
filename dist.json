@@ -8,10 +8,16 @@
             "outdir": "c:\\Linkout\\FastGomibako",
             "setoutdirforbuild": true,
             "platform": "Win32"
+        },
+        {
+            "outdir": "c:\\Linkout\\FastGomibako",
+            "setoutdirforbuild": true,
+            "platform": "x64"
         }
     ],
     "ShouldBeFiles": [
         "FastGomibako.exe",
+        "FastGomibako64.exe",
         "history.txt",
         "lang\\jpn.txt"
     ],
@@ -22,5 +28,5 @@
     "ShouldNotBeFiles": [],
     "ShouldBeOneOfThem": [],
     "obtainverfrom": "history.txt",
-    "obtainverregex": "\\d+\\.\\d+"
+    "obtainverregex": "\\d+\\.\\d+\\.\\d"
 }
