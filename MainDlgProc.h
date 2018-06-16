@@ -26,7 +26,8 @@
 
 
 struct MainDialogData {
-	LPCTSTR m_pTarget_;
+	// LPCTSTR m_pTarget_;
+	std::vector<std::wstring> targets_;
 	std::wstring renamee_;
 	enum Operation {
 		Operation_Rename,
@@ -38,7 +39,7 @@ struct MainDialogData {
 
 	MainDialogData() {
 		// ZeroMemory(this, sizeof(*this));
-		m_pTarget_ = nullptr;
+		// m_pTarget_ = nullptr;
 		m_op = Operation_Rename;
 		m_dwRetPri=GetPriorityClass(GetCurrentProcess());
 	}
@@ -59,6 +60,10 @@ struct MainDialogData {
 	}
 	bool IsRenameeExists() const;
 	std::wstring renameefull() const;
+
+	bool IsSingleFile() const{
+		return targets_.size() == 1;
+	}
 };
 
 INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);

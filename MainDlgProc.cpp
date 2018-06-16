@@ -40,11 +40,13 @@ bool MainDialogData::IsRenameeExists() const
 }
 wstring MainDialogData::renameefull() const
 {
-	return stdCombinePath(stdGetParentDirectory(m_pTarget_), renamee_);
+	assert(targets_.size() == 1);
+	return stdCombinePath(stdGetParentDirectory(targets_[0]), renamee_);
 }
-static void updateDialog(HWND hDlg)
+static void updateDialog(HWND hDlg, bool isSingle)
 {
-	switch (SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_GETCURSEL, 0, 0))
+	int comboValue = SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_GETCURSEL, 0, 0);
+	switch (comboValue)
 	{
 	case MainDialogData::Operation_MoveToTrashCan:
 		SetWindowText(GetDlgItem(hDlg, IDOK), I18N(L"Remo&ve"));
@@ -65,6 +67,19 @@ static void updateDialog(HWND hDlg)
 		assert(false);
 	}
 	
+	if (!isSingle)
+	{
+		if (comboValue == MainDialogData::Operation_Rename)
+		{
+			EnableWindow(GetDlgItem(hDlg, IDOK), FALSE);
+			EnableWindow(GetDlgItem(hDlg, IDC_EDIT_RENAME), FALSE);
+			EnableWindow(GetDlgItem(hDlg, IDC_COMBO_PRIORITY), FALSE);
+		}
+		else
+		{
+			EnableWindow(GetDlgItem(hDlg, IDOK), TRUE);
+		}
+	}
 }
 INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -79,7 +94,14 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			
 			i18nChangeChildWindowText(hDlg);
 
-			SetDlgItemText(hDlg, IDC_EDIT_TARGET, spData->m_pTarget_);
+			wstring editTexts;
+			for (auto&& path : spData->targets_)
+			{
+				editTexts += L"\"" + path + L"\"";
+				editTexts += L" ";
+			}
+			editTexts=trim(editTexts);
+			SetDlgItemText(hDlg, IDC_EDIT_TARGET, editTexts.c_str());
 
 			SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_ADDSTRING, 0, (LPARAM)I18N(L"Rename"));
 			SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_ADDSTRING, 0, (LPARAM)I18N(L"Move to trashcan"));
@@ -92,8 +114,11 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendDlgItemMessage(hDlg, IDC_COMBO_PRIORITY, CB_ADDSTRING, 0, (LPARAM)I18N(L"Background"));
 			
 			// set default rename text
-			wstring renameText = stdGetFileName(spData->m_pTarget_);
-			SetDlgItemText(hDlg, IDC_EDIT_RENAME, renameText.c_str());
+			if (spData->IsSingleFile())
+			{
+				wstring renameText = stdGetFileName(spData->targets_[0]);
+				SetDlgItemText(hDlg, IDC_EDIT_RENAME, renameText.c_str());
+			}
 
 			sIni = stdGetModuleFileName() + L".ini";
 			int nDeleteMethod = GetPrivateProfileInt(APPNAME, KEY_DELETEMETHOD, 0, sIni.c_str());
@@ -110,7 +135,7 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			}
 			SetWindowText(hDlg, title.c_str());
 			
-			updateDialog(hDlg);
+			updateDialog(hDlg,spData->IsSingleFile());
 			CenterWindow(hDlg);
 
 			HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON_MAIN));
@@ -132,7 +157,7 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 						case CBN_SELENDOK:
 						{
 							// combo op selected
-							updateDialog(hDlg);
+							updateDialog(hDlg,spData->IsSingleFile());
 						}
 						break;
 					}

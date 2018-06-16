@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="2 Source Files">
+      <UniqueIdentifier>{ff3cda30-e72b-48e4-8580-1ac53f714713}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="1 Header Files">
+      <UniqueIdentifier>{7bedafe1-5826-4f2a-8fb7-87351eeeadcd}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="3 Resource Files">
+      <UniqueIdentifier>{79080489-f20a-49fc-b196-4f27d411512e}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="4 dist">
+      <UniqueIdentifier>{fed9b171-e6d0-4973-8fc7-720d2a63569d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="5 lang">
+      <UniqueIdentifier>{8ddad1e0-7f8e-4c2b-a36c-1bb5464ed787}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\lsMisc\CenterWindow.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\CommandLineParser.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\CommandLineUtil.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FastGomibako.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\GetLastErrorString.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\I18N.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\Is64.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\IsWindowsNT.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainDlgProc.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\OpenCommon.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\OpenedFiles.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RetryDlgProc.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\SHMoveFile.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\stdwin32\stdwin32.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\UrlEncode.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\UTF16toUTF8.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\WritePrivateProfileInt.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\SystemInfo.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pragma.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\lsMisc\CenterWindow.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\CommandLineParser.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\CommandLineUtil.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\GetLastErrorString.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\I18N.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\Is64.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\IsWindowsNT.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainDlgProc.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\OpenCommon.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\OpenedFiles.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RetryDlgProc.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\SHMoveFile.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\stdwin32\stdwin32.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\UrlEncode.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\UTF16toUTF8.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\WritePrivateProfileInt.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\SystemInfo.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="version.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FastGomibako.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\CommandLineString.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\stlScopedClear.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.ico">
+      <Filter>3 Resource Files</Filter>
+    </None>
+    <None Include="icon1.ico">
+      <Filter>3 Resource Files</Filter>
+    </None>
+    <None Include="lang\jpn.txt">
+      <Filter>5 lang</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="rc.rc">
+      <Filter>3 Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="history.txt">
+      <Filter>4 dist</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

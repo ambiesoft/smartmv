@@ -140,34 +140,44 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
 	return true;
 }
 
-int doRemoveWork(const TCHAR root, LPCTSTR pFileOrig, MainDialogData& data)
+int doRemoveWork(MainDialogData& data)
 {
-	TCHAR szGomiDir[32];
-	szGomiDir[0] = root;
-	szGomiDir[1] = _T(':');
-	szGomiDir[2] = _T('\\');
-	lstrcpy(&szGomiDir[3], _T(".FastGomibako"));
-
-	CreateDirectory(szGomiDir, NULL);
-	DWORD dwAttr = GetFileAttributes(szGomiDir);
-	if (dwAttr == 0xffffffff || (dwAttr & FILE_ATTRIBUTE_DIRECTORY) == 0)
+	set<wstring> gomiDirs;
+	vector<wstring> gomiFiles;
+	
+	for (auto&& target : data.targets_)
 	{
-		throw I18N(L"Failed to create FastGomibako directory");
+		TCHAR root = target[0];
+		TCHAR szGomiDir[32];
+		szGomiDir[0] = root;
+		szGomiDir[1] = _T(':');
+		szGomiDir[2] = _T('\\');
+		lstrcpy(&szGomiDir[3], _T(".FastGomibako"));
+
+		CreateDirectory(szGomiDir, NULL);
+		DWORD dwAttr = GetFileAttributes(szGomiDir);
+		if (dwAttr == 0xffffffff || (dwAttr & FILE_ATTRIBUTE_DIRECTORY) == 0)
+		{
+			throw I18N(L"Failed to create FastGomibako directory");
+		}
+
+		// SetFileAttributes(szGomiDir, dwAttr | FILE_ATTRIBUTE_HIDDEN);
+
+		LPCTSTR pFileName = _tcsrchr(target.c_str(), _T('\\'));
+		++pFileName;
+
+		TCHAR szGomiFile[MAX_PATH];
+		lstrcpy(szGomiFile, szGomiDir);
+		lstrcat(szGomiFile, _T("\\"));
+		lstrcat(szGomiFile, pFileName);
+
+		if (!tryAndArchive(target.c_str(), szGomiFile))
+			return 0;
+
+		gomiDirs.insert(szGomiDir);
+		gomiFiles.push_back(szGomiFile);
 	}
-
-	SetFileAttributes(szGomiDir, dwAttr | FILE_ATTRIBUTE_HIDDEN);
-
-	LPCTSTR pFileName = _tcsrchr(pFileOrig, _T('\\'));
-	++pFileName;
-
-	TCHAR szGomiFile[MAX_PATH];
-	lstrcpy(szGomiFile, szGomiDir);
-	lstrcat(szGomiFile, _T("\\"));
-	lstrcat(szGomiFile, pFileName);
-
-	if (!tryAndArchive(pFileOrig, szGomiFile))
-		return 0;
-
+	
 	if (!SetPriorityClass(GetCurrentProcess(), data.m_dwRetPri))
 	{
 		MessageBox(NULL, I18N(L"SetPriorityClass failed."), APPNAME, MB_ICONASTERISK);
@@ -176,7 +186,7 @@ int doRemoveWork(const TCHAR root, LPCTSTR pFileOrig, MainDialogData& data)
 	FILEOP_FLAGS foFlags = FOF_NOCONFIRMATION;
 	if (!data.IsComplete())
 		foFlags |= FOF_ALLOWUNDO;
-	if (0 != SHDeleteFile(szGomiFile, foFlags))
+	if (0 != SHDeleteFile(gomiFiles, foFlags))
 	{
 		if (!data.IsComplete())
 			throw I18N(L"Failed to trash file");
@@ -184,11 +194,17 @@ int doRemoveWork(const TCHAR root, LPCTSTR pFileOrig, MainDialogData& data)
 			throw I18N(L"Failed to delete file");
 	}
 
-	if (!RemoveDirectory(szGomiDir))
+	bool failed = false;
+	for (auto&& gomiDir : gomiDirs)
+	{
+		failed |= !RemoveDirectory(gomiDir.c_str());
+	}
+	if(failed)
 	{
 		if (gCount <= 1)
 			throw I18N(L"Failed to remove FastGomibako directory");
 	}
+
 	return 0;
 }
 
@@ -202,7 +218,8 @@ int doRename(MainDialogData& data)
 			MB_ICONEXCLAMATION);
 		return 1;
 	}
-	if (!tryAndArchive(data.m_pTarget_, data.renameefull().c_str()))
+	assert(data.IsSingleFile());
+	if (!tryAndArchive(data.targets_[0].c_str(), data.renameefull().c_str()))
 		return 0;
 
 	return 0;
@@ -257,26 +274,24 @@ int dowork()
 		return 1;
 	}
 
-	if (optionDefault.getValueCount() > 1)
-	{
-		tstring exe = stdGetModuleFileName();
-		for (size_t i = 0; i < optionDefault.getValueCount(); ++i)
-		{
-			tstring input = optionDefault.getValue(i);
-			
-			if (!OpenCommon(NULL,
-				stdApplyDQ(exe).c_str(),
-				stdApplyDQ(input).c_str()))
-			{
-				MessageBox(NULL, I18N(L"Failed to launch self"), APPNAME, MB_ICONERROR);
-				return 1;
-			}
-		}
-		return 0;
-	}
+	//if (optionDefault.getValueCount() > 1)
+	//{
+	//	tstring exe = stdGetModuleFileName();
+	//	for (size_t i = 0; i < optionDefault.getValueCount(); ++i)
+	//	{
+	//		tstring input = optionDefault.getValue(i);
+	//		
+	//		if (!OpenCommon(NULL,
+	//			stdApplyDQ(exe).c_str(),
+	//			stdApplyDQ(input).c_str()))
+	//		{
+	//			MessageBox(NULL, I18N(L"Failed to launch self"), APPNAME, MB_ICONERROR);
+	//			return 1;
+	//		}
+	//	}
+	//	return 0;
+	//}
 	
-	tstring inputfilename = optionDefault.getFirstValue();
-
 	if(parser.hadUnknownOption())
 	{
 		tstring message = I18N(L"Unknown Option");
@@ -286,50 +301,49 @@ int dowork()
 		MessageBox(NULL, message.c_str(), APPNAME, MB_OK|MB_ICONQUESTION);
 		return 1;
 	}
-	
-	inputfilename = stdGetFullPathName(inputfilename);
-
-	LPCTSTR pFileOrig = _tcsdup(inputfilename.c_str());
-	STLSOFT_SCODEDFREE_CRT(pFileOrig);
-
-	LPTSTR pFile = _tcsdup(inputfilename.c_str());
-	STLSOFT_SCODEDFREE_CRT(pFile);
-	_tcslwr_s(pFile, _tcslen(pFile)+1);
-	
+		
 	try
 	{
-		if( !(_T('A') <= pFile[0] || pFile[0] <= _T('Z')) )
+		vector<wstring> targetPathes;
+		for (size_t i = 0; i < optionDefault.getValueCount(); ++i)
 		{
-			throw I18N(L"Invalid Argument");
+			wstring inputfilename = optionDefault.getValue(i);
+			inputfilename = stdGetFullPathName(inputfilename);
+
+			LPCTSTR pFileOrig = _tcsdup(inputfilename.c_str());
+			STLSOFT_SCODEDFREE_CRT(pFileOrig);
+
+			LPTSTR pFile = _tcsdup(inputfilename.c_str());
+			STLSOFT_SCODEDFREE_CRT(pFile);
+			_tcslwr_s(pFile, _tcslen(pFile) + 1);
+
+
+			if (!(_T('A') <= pFile[0] || pFile[0] <= _T('Z')))
+			{
+				throw I18N(L"Invalid Argument");
+			}
+
+			if (pFile[1] != _T(':') || pFile[2] != _T('\\'))
+			{
+				throw I18N(L"Invalid Argument");
+			}
+
+			if (pFile[3] == 0)
+			{
+				throw I18N(L"Root Drive unacceptable");
+			}
+
+			DWORD dwAttr = GetFileAttributes(pFile);
+			if (dwAttr == 0xffffffff)
+			{
+				throw string_format(I18N(L"\"%s\" is not found."), pFile);
+			}
+
+			targetPathes.push_back(pFileOrig);
+			// const TCHAR root = pFile[0];
 		}
-
-		if(pFile[1] != _T(':') || pFile[2] != _T('\\'))
-		{
-			wstring full=stdGetFullPathName(pFile);
-			free((void*)pFileOrig);
-			pFileOrig = _tcsdup(full.c_str());
-
-			free(pFile);
-			pFile = _tcsdup(full.c_str());
-			_tcslwr_s(pFile,_tcslen(pFile)+1);
-			//_tcslwr(pFile);
-		}
-
-		if(pFile[3]==0)
-		{
-			throw I18N(L"Root Drive unacceptable");
-		}
-
-		DWORD dwAttr = GetFileAttributes(pFile);
-		if(dwAttr == 0xffffffff)
-		{
-			throw string_format(I18N(L"\"%s\" is not found."), pFile);
-		}
-
-		const TCHAR root = pFile[0];
-
 		MainDialogData data;
-		data.m_pTarget_ = pFileOrig;
+		data.targets_ = targetPathes;
 		if(IDOK != DialogBoxParam(GetModuleHandle(NULL),
 			MAKEINTRESOURCE(IDD_DIALOG_ASK),
 			NULL,
@@ -341,7 +355,9 @@ int dowork()
 
 
 		if (data.IsRemove())
-			return doRemoveWork(root, pFileOrig, data);
+		{
+			return doRemoveWork(data);
+		}
 		else
 		{
 			doRename(data);
