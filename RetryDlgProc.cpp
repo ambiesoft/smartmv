@@ -32,6 +32,7 @@
 #include "RetryDlgProc.h"
 
 using namespace Ambiesoft;
+using namespace Ambiesoft::stdosd;
 using namespace std;
 
 struct THREADPASSDATA
@@ -172,7 +173,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 						grabbers.append(stdApplyDQ(grabber));
 						if (it->filename[0])
 						{
-							wstring t = stdwin32::string_format(I18N(L"grabbing \"%s\""), it->filename);
+							wstring t = stdFormat(I18N(L"grabbing \"%s\""), it->filename);
 							grabbers.append(L" (");
 							grabbers.append(t);
 							grabbers.append(L")");
@@ -224,7 +225,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 					if (pidsToKill.empty())
 						break;
 
-					wstring question = string_format(I18N(L"Are you sure to terminate following process(es)?"), pidsToKill.size());
+					wstring question = stdFormat(I18N(L"Are you sure to terminate following process(es)?"), pidsToKill.size());
 					question += L"\r\n";
 					for (DWORD pid : pidsToKill)
 					{
@@ -256,7 +257,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 						}
 						pidsToKill.erase(pid);
 
-						wstring message = string_format(I18N(L"Process %d has been terminated."), pid);
+						wstring message = stdFormat(I18N(L"Process %d has been terminated."), pid);
 						message += L"\r\n";
 						
 						wstring txt = getDlgItemText(hDlg, IDC_EDIT_MESSAGE);

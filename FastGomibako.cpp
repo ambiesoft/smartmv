@@ -48,6 +48,7 @@
 
 
 using namespace Ambiesoft;
+using namespace Ambiesoft::stdosd;
 using namespace stdwin32;
 using namespace std;
 
@@ -69,7 +70,7 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
 	{
 		if (!PathFileExists(pFileOrig))
 		{
-			tstring message = string_format(
+			tstring message = stdFormat(
 				I18N(L"\"%s\" does not exit anymore."),
 				pFileOrig);
 			throw message;
@@ -83,7 +84,7 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
 			DWORD dwLastError = GetLastError();
 			if (ERROR_ALREADY_EXISTS == dwLastError)
 			{
-				tstring message = string_format(
+				tstring message = stdFormat(
 					I18N(L"\"%s\" already exists. You need remove it manually first."),
 					pRenameFull);
 				throw message;
@@ -213,7 +214,7 @@ int doRename(MainDialogData& data)
 	if (PathFileExists(data.renameefull().c_str()))
 	{
 		MessageBox(NULL, 
-			string_format(I18N(L"\"%s\" already exists."), data.renameefull().c_str()).c_str(),
+			stdFormat(I18N(L"\"%s\" already exists."), data.renameefull().c_str()).c_str(),
 			APPNAME,
 			MB_ICONEXCLAMATION);
 		return 1;
@@ -229,7 +230,7 @@ int dowork()
 	CCommandLineParser parser(CaseFlags_Default, I18N(L"Move and remove folder"));
 
 	COption optionDefault(L"",
-		ArgCount_Infinite,
+		ArgCount::ArgCount_Infinite,
 		ArgEncodingFlags_Default,
 		I18N(L"specify directory"));
 	parser.AddOption(&optionDefault);
@@ -292,7 +293,7 @@ int dowork()
 			op = MainDialogData::Operation_Delete;
 		else
 		{
-			wstring message = string_format(I18N(L"Unknown operation: %s"), operation.c_str());
+			wstring message = stdFormat(I18N(L"Unknown operation: %s"), operation.c_str());
 			MessageBox(NULL, message.c_str(), APPNAME, MB_ICONERROR);
 			return 1;
 		}
@@ -331,6 +332,8 @@ int dowork()
 		for (size_t i = 0; i < optionDefault.getValueCount(); ++i)
 		{
 			wstring inputfilename = optionDefault.getValue(i);
+
+			// TODO: extract canonical path
 			inputfilename = stdGetFullPathName(inputfilename);
 
 			LPCTSTR pFileOrig = _tcsdup(inputfilename.c_str());
@@ -359,7 +362,7 @@ int dowork()
 			DWORD dwAttr = GetFileAttributes(pFile);
 			if (dwAttr == 0xffffffff)
 			{
-				throw string_format(I18N(L"\"%s\" is not found."), pFile);
+				throw stdFormat(I18N(L"\"%s\" is not found."), pFile);
 			}
 
 			targetPathes.push_back(pFileOrig);

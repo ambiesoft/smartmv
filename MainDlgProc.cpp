@@ -32,6 +32,7 @@
 #include "MainDlgProc.h"
 
 using namespace Ambiesoft;
+using namespace Ambiesoft::stdosd;
 using namespace std;
 
 bool MainDialogData::IsRenameeExists() const 
@@ -192,7 +193,7 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 						if (spData->IsRenameeExists())
 						{
 							MessageBox(NULL,
-								string_format(I18N(L"\"%s\" already exists."), spData->renameefull().c_str()).c_str(),
+								stdFormat(I18N(L"\"%s\" already exists."), spData->renameefull().c_str()).c_str(),
 								APPNAME,
 								MB_ICONEXCLAMATION);
 							break;
