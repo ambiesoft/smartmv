@@ -34,6 +34,8 @@
 #include "../lsMisc/stlScopedClear.h"
 #include "../lsMisc/CommandLineParser.h"
 
+
+
 #include "resource.h"
 
 #include "main.h"
@@ -334,7 +336,8 @@ int dowork()
 			wstring inputfilename = optionDefault.getValue(i);
 
 			// TODO: extract canonical path
-			inputfilename = stdGetFullPathName(inputfilename);
+			// inputfilename = stdGetFullPathName(inputfilename);
+			inputfilename = resolveLink(inputfilename);
 
 			LPCTSTR pFileOrig = _tcsdup(inputfilename.c_str());
 			STLSOFT_SCODEDFREE_CRT(pFileOrig);
