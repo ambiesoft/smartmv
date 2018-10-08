@@ -28,6 +28,7 @@
 #include "FastGomibako.h"
 
 using namespace Ambiesoft;
+using namespace Ambiesoft::stdosd;
 using namespace stdwin32;
 using namespace std;
 

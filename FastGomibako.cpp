@@ -64,13 +64,21 @@ using namespace std;
 //	return ret;
 //}
 
-
+static bool myPathFileExists(const wchar_t* pFile)
+{
+	if (GetFileAttributes(pFile) == 0xFFFFFFFF)
+	{
+		if (GetLastError() != 5) // access denied
+			return false;
+	}
+	return true;
+}
 bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
 {
 	bool movedone = false;
 	while (!movedone)
 	{
-		if (!PathFileExists(pFileOrig))
+		if (!myPathFileExists(pFileOrig))
 		{
 			tstring message = stdFormat(
 				I18N(L"\"%s\" does not exit anymore."),
@@ -121,7 +129,16 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
 				{
 					wstring app = stdGetModuleFileName();
 					int nArgc;
-					LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(GetCommandLineW(), &nArgc);
+					wstring cmdLine = GetCommandLineW();
+					// TODO: Add param -newfilename
+					//if (!data.newFileName.empty())
+					//{
+					//	cmdLine += L" ";
+					//	cmdLine += L"-newfilename";
+					//	cmdLine += L" ";
+					//	cmdLine += dq(data.newFileName);
+					//}
+					LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(cmdLine.c_str(), &nArgc);
 					wstring arg = stdSplitCommandLine(nArgc, 1, ppArgv);
 					LocalFree(ppArgv);
 
@@ -365,7 +382,9 @@ int dowork()
 			DWORD dwAttr = GetFileAttributes(pFile);
 			if (dwAttr == 0xffffffff)
 			{
-				throw stdFormat(I18N(L"\"%s\" is not found."), pFile);
+				DWORD dwLE = GetLastError();
+				if (dwLE != 5)  // 'access is denied' means delete pending
+					throw stdFormat(wstring(I18N(L"\"%s\" is not found.")) + L"\r\n" + GetLastErrorString(dwLE), pFile);
 			}
 
 			targetPathes.push_back(pFileOrig);
