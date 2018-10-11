@@ -135,7 +135,10 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 				ResumeThread(shFindingCulplit);
 			}
 
-			EnableWindow(GetDlgItem(hDlg,IDC_BUTTON_ELEVATE), !IsUserAnAdmin());
+			EnableWindow(GetDlgItem(hDlg, IDC_BUTTON_ELEVATE), !IsUserAnAdmin());
+			ShowWindow(GetDlgItem(hDlg, IDC_BUTTON_RUNAS_DIFFERENTCPU), Is64BitWindows() ? SW_SHOW : SW_HIDE);
+			SetDlgItemText(hDlg, IDC_BUTTON_RUNAS_DIFFERENTCPU,
+				Is64BitProcess() ? I18N(L"Run &32bit") : I18N(L"Run &64bit"));
 
 			HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON_MAIN));
 			SendMessage(hDlg, WM_SETICON, TRUE, (LPARAM)hIcon);
@@ -214,6 +217,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 				case IDOK:
 				case IDCANCEL:
 				case IDC_BUTTON_ELEVATE:
+				case IDC_BUTTON_RUNAS_DIFFERENTCPU:
 				{
 					EndDialog(hDlg, LOWORD(wParam));
 					return 0;

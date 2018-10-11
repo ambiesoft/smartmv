@@ -28,3 +28,5 @@
 #pragma once
 
 int dowork();
+
+extern LPCWSTR gpCommandLine;

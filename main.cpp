@@ -34,38 +34,41 @@ using namespace std;
 
 
 Ambiesoft::CSessionGlobalMemory<int> gCount("FastGomibakoCounter");
+LPCWSTR gpCommandLine;
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPTSTR     lpCmdLine,
 	int       nCmdShow)
 {
-	// ResolveNtfsPath(__wargv[1]);
-	// 64bit not work
-	if (false && Is64BitWindows() && !Is64BitProcess())
-	{
-		wstring exe64 = stdGetParentDirectory(stdGetModuleFileName(), true);
-		exe64 += L"FastGomibako";
-#ifdef _DEBUG
-		exe64 += L"D";
-#endif
-		exe64 += L"64.exe";
-		if (!PathFileExists(exe64.c_str()))
-		{
-			MessageBox(NULL,
-				I18N(L"could not find 64bit executable."),
-				APPNAME,
-				MB_ICONERROR);
-			return 1;
-		}
+	gpCommandLine = lpCmdLine;
 
+	// can not find 32bin in 64bit, vice vasa
+//	if (Is64BitWindows() && !Is64BitProcess())
+//	{
+//		wstring exe64 = stdGetParentDirectory(stdGetModuleFileName(), true);
+//		exe64 += L"FastGomibako";
+//#ifdef _DEBUG
+//		exe64 += L"D";
+//#endif
+//		exe64 += L"64.exe";
+//		if (!PathFileExists(exe64.c_str()))
+//		{
+//			MessageBox(NULL,
+//				I18N(L"could not find 64bit executable."),
+//				APPNAME,
+//				MB_ICONERROR);
+//			return 1;
+//		}
+//
+//
+//		OpenCommon(NULL,
+//			exe64.c_str(),
+//			lpCmdLine);
+//
+//		return 0;
+//	}
 
-		OpenCommon(NULL,
-			exe64.c_str(),
-			lpCmdLine);
-
-		return 0;
-	}
 	InitCommonControls();
 #if _DEBUG
 	Ambiesoft::i18nInitLangmap(hInstance, L"jpn", L"");

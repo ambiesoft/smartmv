@@ -32,6 +32,8 @@
 
 "&Close"="閉じる(&C)"
 "&Elevate"="管理者で実行(&E)"
+"Run &32bit"="&32bitを実行"
+"Run &64bit"="&64bitを実行"
 "&Retry"="再試行(&R)"
 
 "Admin"="管理者"

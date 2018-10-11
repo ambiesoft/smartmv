@@ -150,6 +150,38 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
 						L"runas");
 					return false;
 				}
+				else if (nDR == IDC_BUTTON_RUNAS_DIFFERENTCPU)
+				{
+					if (Is64BitWindows())
+					{
+						bool isNow64 = Is64BitProcess();
+						wstring exe = stdGetParentDirectory(stdGetModuleFileName(), true);
+						exe += L"FastGomibako";
+#ifdef _DEBUG
+						exe += L"D";
+#endif
+						exe += isNow64 ? L".exe" : L"64.exe";
+
+
+						wstring cmdLine = GetCommandLineW();
+						int nArgc;
+						LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(cmdLine.c_str(), &nArgc);
+						wstring arg = stdSplitCommandLine(nArgc, 1, ppArgv);
+						LocalFree(ppArgv);
+
+						OpenCommon(NULL,
+							exe.c_str(),
+							arg.c_str(),
+							NULL,
+							NULL);
+
+						return false;
+					}
+					else
+					{
+						assert(FALSE);
+					}
+				}
 				else
 				{
 					assert(FALSE);
