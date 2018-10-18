@@ -1,30 +1,30 @@
 {
-    "name": "FastGomibako",
-    "solution": "FastGomibako.sln",
-    "targetproject": "FastGomibako",
+    "name": "smartmv",
+    "solution": "smartmv.sln",
+    "targetproject": "smartmv",
     "configuration": "Release",
     "targets": [
         {
-            "outdir": "c:\\Linkout\\FastGomibako",
+            "outdir": "c:\\Linkout\\smartmv",
             "setoutdirforbuild": true,
             "platform": "Win32"
         },
         {
-            "outdir": "c:\\Linkout\\FastGomibako",
+            "outdir": "c:\\Linkout\\smartmv",
             "setoutdirforbuild": true,
             "platform": "x64"
         }
     ],
     "ShouldBeFiles": [
-        "FastGomibako.exe",
-        "FastGomibako64.exe",
+        "smartmv.exe",
+        "smartmv64.exe",
         "history.txt",
         "lang\\jpn.txt"
     ],
     "TotalFileCount": "exact",
     "archivedir": "C:\\Linkout",
-    "remotedir": "http://ambiesoft.fam.cx/ffdav/uploads/FastGomibako/",
-    "remotesha1": "http://ambiesoft.fam.cx/ffdav/uploads/getSha1.php?file=FastGomibako/{}",
+    "remotedir": "http://ambiesoft.fam.cx/ffdav/uploads/smartmv/",
+    "remotesha1": "http://ambiesoft.fam.cx/ffdav/uploads/getSha1.php?file=smartmv/{}",
     "ShouldNotBeFiles": [],
     "ShouldBeOneOfThem": [],
     "obtainverfrom": "history.txt",

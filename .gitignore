@@ -1,4 +1,4 @@
-FastGomibako.opensdf
+smartmv.opensdf
 
 # /
 /*.user
@@ -9,11 +9,11 @@ FastGomibako.opensdf
 /*.opt
 /*.plg
 /.vs
-/FastGomibako2015.VC.db
+/smartmv2015.VC.db
 /ipch
 
 rc.aps
 x64/
 
-FastGomibako.sdf
+smartmv.sdf
 

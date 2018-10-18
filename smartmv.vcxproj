@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{956C681B-76D4-4E24-A2F6-20CE7A854952}</ProjectGuid>
-    <RootNamespace>FastGomibako</RootNamespace>
+    <RootNamespace>smartmv</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -72,25 +72,26 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\smartmv\</OutDir>
+    <IntDir>$(Configuration)\$(PlatformToolset)\</IntDir>
+    <TargetName>$(ProjectName)D</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\smartmv\</OutDir>
+    <IntDir>$(Configuration)\$(PlatformToolset)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>$(ProjectName)64</TargetName>
-    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(Configuration)\$(Platform)\</IntDir>
+    <TargetName>$(ProjectName)D64</TargetName>
+    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\smartmv\</OutDir>
+    <IntDir>$(Configuration)\$(PlatformToolset)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>$(ProjectName)64</TargetName>
-    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\smartmv\</OutDir>
+    <IntDir>$(Configuration)\$(PlatformToolset)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -98,7 +99,7 @@
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>Win32</TargetEnvironment>
-      <TypeLibraryName>.\UnicodeDebug/FastGomibako.tlb</TypeLibraryName>
+      <TypeLibraryName>.\UnicodeDebug/smartmv.tlb</TypeLibraryName>
       <HeaderFileName>
       </HeaderFileName>
     </Midl>
@@ -156,7 +157,7 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>Win32</TargetEnvironment>
-      <TypeLibraryName>.\UnicodeRelease/FastGomibako.tlb</TypeLibraryName>
+      <TypeLibraryName>.\UnicodeRelease/smartmv.tlb</TypeLibraryName>
       <HeaderFileName>
       </HeaderFileName>
     </Midl>
@@ -202,7 +203,7 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>X64</TargetEnvironment>
-      <TypeLibraryName>.\UnicodeDebug/FastGomibako.tlb</TypeLibraryName>
+      <TypeLibraryName>.\UnicodeDebug/smartmv.tlb</TypeLibraryName>
       <HeaderFileName>
       </HeaderFileName>
     </Midl>
@@ -260,7 +261,7 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>X64</TargetEnvironment>
-      <TypeLibraryName>.\UnicodeRelease/FastGomibako.tlb</TypeLibraryName>
+      <TypeLibraryName>.\UnicodeRelease/smartmv.tlb</TypeLibraryName>
       <HeaderFileName>
       </HeaderFileName>
     </Midl>
@@ -343,7 +344,7 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     <ClCompile Include="..\lsMisc\UrlEncode.cpp" />
     <ClCompile Include="..\lsMisc\UTF16toUTF8.cpp" />
     <ClCompile Include="..\lsMisc\WritePrivateProfileInt.cpp" />
-    <ClCompile Include="FastGomibako.cpp" />
+    <ClCompile Include="smartmv.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainDlgProc.cpp" />
     <ClCompile Include="pragma.cpp" />
@@ -374,7 +375,7 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     <ClInclude Include="..\lsMisc\UrlEncode.h" />
     <ClInclude Include="..\lsMisc\UTF16toUTF8.h" />
     <ClInclude Include="..\lsMisc\WritePrivateProfileInt.h" />
-    <ClInclude Include="FastGomibako.h" />
+    <ClInclude Include="smartmv.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="MainDlgProc.h" />
     <ClInclude Include="resource.h" />

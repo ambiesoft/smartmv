@@ -30,9 +30,6 @@
     <ClCompile Include="..\lsMisc\CommandLineUtil.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FastGomibako.cpp">
-      <Filter>2 Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\lsMisc\GetLastErrorString.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
@@ -88,6 +85,9 @@
       <Filter>2 Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\lsMisc\stdosd\stdosd_win.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="smartmv.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -152,9 +152,6 @@
     <ClInclude Include="version.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FastGomibako.h">
-      <Filter>1 Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
@@ -165,6 +162,9 @@
       <Filter>1 Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lsMisc\stdosd\stdosd.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="smartmv.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -129,7 +129,7 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_SETCURSEL, nDeleteMethod, 0);
 			SendDlgItemMessage(hDlg, IDC_COMBO_PRIORITY, CB_SETCURSEL, nPriority, 0);
 
-			wstring title = _T("FastGomibako");
+			wstring title = APPNAME;
 			if (IsUserAnAdmin())
 			{
 				title += L" (";

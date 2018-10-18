@@ -24,7 +24,7 @@
 //OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// FastGomibako.cpp : Defines the entry point for the application.
+// smartmv.cpp : Defines the entry point for the application.
 //
 
 // http://www.flickr.com/photos/bossco/2854452799/
@@ -60,7 +60,7 @@ using namespace std;
 //	ret += _T("\r\n\r\n");
 //	ret += I18N(_T("Usage"));
 //	ret += _T(":\r\n");
-//	ret += _T("FastGomibako [File or Folder]");
+//	ret += _T("smartmv [File or Folder]");
 //	return ret;
 //}
 
@@ -156,7 +156,7 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
 					{
 						bool isNow64 = Is64BitProcess();
 						wstring exe = stdGetParentDirectory(stdGetModuleFileName(), true);
-						exe += L"FastGomibako";
+						exe += L"smartmv";
 #ifdef _DEBUG
 						exe += L"D";
 #endif
@@ -204,13 +204,13 @@ int doRemoveWork(MainDialogData& data)
 		szGomiDir[0] = root;
 		szGomiDir[1] = _T(':');
 		szGomiDir[2] = _T('\\');
-		lstrcpy(&szGomiDir[3], _T(".FastGomibako"));
+		lstrcpy(&szGomiDir[3], _T(".smartmv"));
 
 		CreateDirectory(szGomiDir, NULL);
 		DWORD dwAttr = GetFileAttributes(szGomiDir);
 		if (dwAttr == 0xffffffff || (dwAttr & FILE_ATTRIBUTE_DIRECTORY) == 0)
 		{
-			throw I18N(L"Failed to create FastGomibako directory");
+			throw I18N(L"Failed to create smartmv directory");
 		}
 
 		// SetFileAttributes(szGomiDir, dwAttr | FILE_ATTRIBUTE_HIDDEN);
@@ -254,7 +254,7 @@ int doRemoveWork(MainDialogData& data)
 	if(failed)
 	{
 		if (gCount <= 1)
-			throw I18N(L"Failed to remove FastGomibako directory");
+			throw I18N(L"Failed to remove smartmv directory");
 	}
 
 	return 0;

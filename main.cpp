@@ -25,7 +25,7 @@
 //OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "StdAfx.h"
-#include "FastGomibako.h"
+#include "smartmv.h"
 
 using namespace Ambiesoft;
 using namespace Ambiesoft::stdosd;
@@ -33,7 +33,7 @@ using namespace stdwin32;
 using namespace std;
 
 
-Ambiesoft::CSessionGlobalMemory<int> gCount("FastGomibakoCounter");
+Ambiesoft::CSessionGlobalMemory<int> gCount("smartmvCounter");
 LPCWSTR gpCommandLine;
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
@@ -47,7 +47,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 //	if (Is64BitWindows() && !Is64BitProcess())
 //	{
 //		wstring exe64 = stdGetParentDirectory(stdGetModuleFileName(), true);
-//		exe64 += L"FastGomibako";
+//		exe64 += L"smartmv";
 //#ifdef _DEBUG
 //		exe64 += L"D";
 //#endif

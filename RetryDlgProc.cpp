@@ -93,7 +93,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 
 			i18nChangeChildWindowText(hDlg);
 
-			wstring title = _T("FastGomibako");
+			wstring title = APPNAME;
 			if (IsUserAnAdmin())
 			{
 				title += L" (";

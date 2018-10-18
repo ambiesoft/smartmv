@@ -71,7 +71,7 @@ using namespace stdwin32;
 
 #define I18N(s) Ambiesoft::I18N(s)
 
-#define APPNAME _T("FastGomibako")
+#define APPNAME _T("smartmv")
 #define KEY_DELETEMETHOD	_T("DeleteMethod")
 #define KEY_PRIORITY		_T("Priority")
 

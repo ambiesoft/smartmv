@@ -25,7 +25,7 @@
 //OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // stdafx.cpp : source file that includes just the standard includes
-//	FastGomibako.pch will be the pre-compiled header
+//	smartmv.pch will be the pre-compiled header
 //	stdafx.obj will contain the pre-compiled type information
 
 #include "stdafx.h"
