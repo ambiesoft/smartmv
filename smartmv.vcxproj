@@ -306,6 +306,7 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     <ClCompile Include="..\lsMisc\CommandLineParser.cpp" />
     <ClCompile Include="..\lsMisc\CommandLineUtil.cpp" />
     <ClCompile Include="..\lsMisc\GetLastErrorString.cpp" />
+    <ClCompile Include="..\lsMisc\HighDPI.cpp" />
     <ClCompile Include="..\lsMisc\I18N.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
@@ -362,6 +363,7 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     <ClInclude Include="..\lsMisc\CommandLineString.h" />
     <ClInclude Include="..\lsMisc\CommandLineUtil.h" />
     <ClInclude Include="..\lsMisc\GetLastErrorString.h" />
+    <ClInclude Include="..\lsMisc\HighDPI.h" />
     <ClInclude Include="..\lsMisc\I18N.h" />
     <ClInclude Include="..\lsMisc\Is64.h" />
     <ClInclude Include="..\lsMisc\IsWindowsNT.h" />

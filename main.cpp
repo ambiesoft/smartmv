@@ -25,6 +25,9 @@
 //OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "StdAfx.h"
+
+#include "../lsMisc/HighDPI.h"
+
 #include "smartmv.h"
 
 using namespace Ambiesoft;
@@ -41,6 +44,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	LPTSTR     lpCmdLine,
 	int       nCmdShow)
 {
+	Ambiesoft::InitHighDPISupport();
+
 	gpCommandLine = lpCmdLine;
 
 	// can not find 32bin in 64bit, vice vasa
