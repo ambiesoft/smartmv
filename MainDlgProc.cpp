@@ -117,7 +117,8 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			// set default rename text
 			if (spData->IsSingleFile())
 			{
-				wstring renameText = stdGetFileName(spData->targets_[0]);
+				// wstring renameText = stdGetFileName(spData->targets_[0]);
+				wstring renameText = !spData->renamee().empty() ? spData->renamee() : stdGetFileName(spData->targets_[0]);
 				SetDlgItemText(hDlg, IDC_EDIT_RENAME, renameText.c_str());
 			}
 

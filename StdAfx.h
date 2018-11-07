@@ -64,7 +64,7 @@
 #include "../lsMisc/Is64.h"
 #include "../lsMisc/CommandLineUtil.h"
 // #include "../lsMisc/ntfs.h"
-using namespace stdwin32;
+using namespace Ambiesoft::stdwin32;
 
 
 

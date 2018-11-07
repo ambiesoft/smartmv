@@ -215,9 +215,9 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			switch(LOWORD(wParam))
 			{
 				case IDOK:
-				case IDCANCEL:
 				case IDC_BUTTON_ELEVATE:
 				case IDC_BUTTON_RUNAS_DIFFERENTCPU:
+				case IDCANCEL:
 				{
 					EndDialog(hDlg, LOWORD(wParam));
 					return 0;

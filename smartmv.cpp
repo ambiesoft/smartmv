@@ -34,7 +34,7 @@
 #include "../lsMisc/stlScopedClear.h"
 #include "../lsMisc/CommandLineParser.h"
 
-
+#include "../lsMisc/stdosd/stdosd.h"
 
 #include "resource.h"
 
@@ -73,7 +73,7 @@ static bool myPathFileExists(const wchar_t* pFile)
 	}
 	return true;
 }
-bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
+bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee)
 {
 	bool movedone = false;
 	while (!movedone)
@@ -110,6 +110,7 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
 				RetryDialogData data;
 				data.file = pFileOrig;
 				data.message = message;
+				data.renamee = pRenamee;
 				INT_PTR nDR = DialogBoxParam(GetModuleHandle(NULL),
 					MAKEINTRESOURCE(IDD_DIALOG_RETRY),
 					NULL,
@@ -164,11 +165,26 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull)
 
 
 						wstring cmdLine = GetCommandLineW();
-						int nArgc;
-						LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(cmdLine.c_str(), &nArgc);
-						wstring arg = stdSplitCommandLine(nArgc, 1, ppArgv);
-						LocalFree(ppArgv);
-
+						wstring arg;
+						try
+						{
+							CCommandLineString cls(cmdLine.c_str());
+							cls.remove(0); // remove exe
+							int toIndex = cls.getIndex(L"-to");
+							if (toIndex >= 0)
+								cls.remove(toIndex, 2);
+							arg = cls.toString();
+							arg += L" ";
+							arg += L"-to ";
+							arg += stdAddDQIfNecessary(data.renamee);
+						}
+						catch (...)
+						{
+							int nArgc;
+							LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(cmdLine.c_str(), &nArgc);
+							arg = stdSplitCommandLine(nArgc, 1, ppArgv);
+							LocalFree(ppArgv);
+						}
 						OpenCommon(NULL,
 							exe.c_str(),
 							arg.c_str(),
@@ -223,7 +239,7 @@ int doRemoveWork(MainDialogData& data)
 		lstrcat(szGomiFile, _T("\\"));
 		lstrcat(szGomiFile, pFileName);
 
-		if (!tryAndArchive(target.c_str(), szGomiFile))
+		if (!tryAndArchive(target.c_str(), szGomiFile, nullptr))
 			return 0;
 
 		gomiDirs.insert(szGomiDir);
@@ -271,7 +287,7 @@ int doRename(MainDialogData& data)
 		return 1;
 	}
 	assert(data.IsSingleFile());
-	if (!tryAndArchive(data.targets_[0].c_str(), data.renameefull().c_str()))
+	if (!tryAndArchive(data.targets_[0].c_str(), data.renameefull().c_str(), data.renamee().c_str()))
 		return 0;
 
 	return 0;
@@ -306,6 +322,13 @@ int dowork()
 		&operation,
 		ArgEncodingFlags_Default,
 		I18N(L"Operation: One of 'rename', 'trash', 'delete'"));
+
+	wstring renameto;
+	parser.AddOption(L"-to",
+		1,
+		&renameto,
+		ArgEncodingFlags_Default,
+		I18N(L"Specify new name"));
 
 	parser.Parse(__argc, __targv);
 
@@ -425,6 +448,7 @@ int dowork()
 		MainDialogData data;
 		data.m_op = op;
 		data.targets_ = targetPathes;
+		data.renamee_ = renameto;
 		if(IDOK != DialogBoxParam(GetModuleHandle(NULL),
 			MAKEINTRESOURCE(IDD_DIALOG_ASK),
 			NULL,
