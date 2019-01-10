@@ -107,10 +107,9 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee)
 				message += L"\r\n";
 				message += t;
 
-				RetryDialogData data;
-				data.file = pFileOrig;
-				data.message = message;
-				data.renamee = pRenamee;
+				assert(pFileOrig);
+				RetryDialogData data(pFileOrig, message, pRenamee ? pRenamee : wstring());
+
 				INT_PTR nDR = DialogBoxParam(GetModuleHandle(NULL),
 					MAKEINTRESOURCE(IDD_DIALOG_RETRY),
 					NULL,
@@ -176,7 +175,7 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee)
 							arg = cls.toString();
 							arg += L" ";
 							arg += L"-to ";
-							arg += stdAddDQIfNecessary(data.renamee);
+							arg += stdAddDQIfNecessary(data.renamee());
 						}
 						catch (...)
 						{

@@ -103,7 +103,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			SetWindowText(hDlg, title.c_str());
 
 			wstring message;
-			message.append(spData->message);
+			message.append(spData->message());
 			message.append(L"\r\n");
 			message.append(L"\r\n");
 
@@ -113,7 +113,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 
 			THREADPASSDATA* pThreadPass = new THREADPASSDATA;
 			pThreadPass->hDlg=hDlg;
-			pThreadPass->file = spData->file;
+			pThreadPass->file = spData->file();
 
 			EnableDebugPriv();
 				
