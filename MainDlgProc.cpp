@@ -101,7 +101,7 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				editTexts += L"\"" + path + L"\"";
 				editTexts += L" ";
 			}
-			editTexts=trim(editTexts);
+			editTexts=stdTrim(editTexts);
 			SetDlgItemText(hDlg, IDC_EDIT_TARGET, editTexts.c_str());
 
 			SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_ADDSTRING, 0, (LPARAM)I18N(L"Rename"));
@@ -122,7 +122,7 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				SetDlgItemText(hDlg, IDC_EDIT_RENAME, renameText.c_str());
 			}
 
-			sIni = stdGetModuleFileName() + L".ini";
+			sIni = stdGetModuleFileName<wchar_t>() + L".ini";
 			int nDeleteMethod = spData->m_op;
 			if (nDeleteMethod < 0)
 				nDeleteMethod = GetPrivateProfileInt(APPNAME, KEY_DELETEMETHOD, 0, sIni.c_str());

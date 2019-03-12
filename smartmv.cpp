@@ -127,20 +127,15 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee)
 				}
 				else if (nDR == IDC_BUTTON_ELEVATE)
 				{
-					wstring app = stdGetModuleFileName();
-					int nArgc;
-					wstring cmdLine = GetCommandLineW();
-					// TODO: Add param -newfilename
-					//if (!data.newFileName.empty())
-					//{
-					//	cmdLine += L" ";
-					//	cmdLine += L"-newfilename";
-					//	cmdLine += L" ";
-					//	cmdLine += dq(data.newFileName);
-					//}
-					LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(cmdLine.c_str(), &nArgc);
-					wstring arg = stdSplitCommandLine(nArgc, 1, ppArgv);
-					LocalFree(ppArgv);
+					wstring app = stdGetModuleFileName<wchar_t>();
+
+					CCommandLineString cmsString;
+					wstring arg = cmsString.subString(1);
+
+					//int nArgc;
+					//LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(GetCommandLine(), &nArgc);
+					//wstring arg = stdSplitCommandLine(nArgc, 1, ppArgv);
+					//LocalFree(ppArgv);
 
 					OpenCommon(NULL,
 						app.c_str(),
@@ -155,7 +150,7 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee)
 					if (Is64BitWindows())
 					{
 						bool isNow64 = Is64BitProcess();
-						wstring exe = stdGetParentDirectory(stdGetModuleFileName(), true);
+						wstring exe = stdGetParentDirectory(stdGetModuleFileName<wchar_t>(), true);
 						exe += L"smartmv";
 #ifdef _DEBUG
 						exe += L"D";
@@ -179,10 +174,13 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee)
 						}
 						catch (...)
 						{
-							int nArgc;
-							LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(cmdLine.c_str(), &nArgc);
-							arg = stdSplitCommandLine(nArgc, 1, ppArgv);
-							LocalFree(ppArgv);
+							//int nArgc;
+							//LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(cmdLine.c_str(), &nArgc);
+							//arg = stdSplitCommandLine(nArgc, 1, ppArgv);
+							//LocalFree(ppArgv);
+
+							CCommandLineString cls(cmdLine);
+							arg = cls.subString(1);
 						}
 						OpenCommon(NULL,
 							exe.c_str(),
@@ -399,6 +397,56 @@ int dowork()
 		return 1;
 	}
 		
+	if (optionDefault.getValueCount() > 1 && op == MainDialogData::Operation_Rename)
+	{
+		// launch each of them
+		CCommandLineString cls;
+		wstring app = cls[0];
+		wstring arg;
+		wstring option;
+
+		// first take options
+		for (size_t i = 1; i < cls.getCount(); ++i)
+		{
+			if (cls[i] == L"-h")
+			{
+				option += L"-h ";
+				continue;
+			}
+			if (cls[i] == L"-op")
+			{
+				option += cls[i];
+				option += L" ";
+				++i;
+				option += cls[i];
+				option += L" ";
+				continue;
+			}
+		}
+
+		// second, get arg and launch
+		for (size_t i = 1; i < cls.getCount(); ++i)
+		{
+			if (cls[i] == L"-h")
+			{
+				continue;
+			}
+			if (cls[i] == L"-op")
+			{
+				++i;
+				continue;
+			}
+
+			wstring command;
+			command += option;
+			command += stdAddDQIfNecessary(cls[i]);
+			if (!OpenCommon(nullptr, app.c_str(), command.c_str()))
+			{
+				throw stdFormat(L"Failed to launch %s", (app + L" " + command));
+			}
+		}
+		return 0;
+	}
 	try
 	{
 		vector<wstring> targetPathes;
@@ -410,38 +458,40 @@ int dowork()
 			// inputfilename = stdGetFullPathName(inputfilename);
 			inputfilename = resolveLink(inputfilename);
 
-			LPCTSTR pFileOrig = _tcsdup(inputfilename.c_str());
-			STLSOFT_SCODEDFREE_CRT(pFileOrig);
+			wstring fileOrig = inputfilename;
+			wstring file = stdStringLower(inputfilename);
+	
+			// if (!(_T('A') <= file[0] || file[0] <= _T('Z')))
 
-			LPTSTR pFile = _tcsdup(inputfilename.c_str());
-			STLSOFT_SCODEDFREE_CRT(pFile);
-			_tcslwr_s(pFile, _tcslen(pFile) + 1);
-
-
-			if (!(_T('A') <= pFile[0] || pFile[0] <= _T('Z')))
+			if ((file.length() >= 2 && file[0] == L'\\' && file[1] == '\\') ||
+				PathIsNetworkPath(file.c_str()))
 			{
-				throw I18N(L"Invalid Argument");
+				throw I18N(L"Could not process for path of network drive.");
+			}
+			if (!stdIsAsciiAlpha(file[0]))
+			{
+				throw I18N(L"Could not obtain fullpath.");
 			}
 
-			if (pFile[1] != _T(':') || pFile[2] != _T('\\'))
+			if (file[1] != _T(':') || file[2] != _T('\\'))
 			{
-				throw I18N(L"Invalid Argument");
+				throw I18N(L"Could not obtain fullpath.");
 			}
 
-			if (pFile[3] == 0)
+			if (file[3] == 0)
 			{
 				throw I18N(L"Root Drive unacceptable");
 			}
 
-			DWORD dwAttr = GetFileAttributes(pFile);
+			DWORD dwAttr = GetFileAttributes(file.c_str());
 			if (dwAttr == 0xffffffff)
 			{
 				DWORD dwLE = GetLastError();
 				if (dwLE != 5)  // 'access is denied' means delete pending
-					throw stdFormat(wstring(I18N(L"\"%s\" is not found.")) + L"\r\n" + GetLastErrorString(dwLE), pFile);
+					throw stdFormat(wstring(I18N(L"\"%s\" is not found.")) + L"\r\n" + GetLastErrorString(dwLE), fileOrig.c_str());
 			}
 
-			targetPathes.push_back(pFileOrig);
+			targetPathes.push_back(fileOrig);
 			// const TCHAR root = pFile[0];
 		}
 		MainDialogData data;
@@ -470,7 +520,7 @@ int dowork()
 
 
 	}
-	catch(tstring& message)
+	catch(wstring& message)
 	{
 		MessageBox(NULL, message.c_str(), APPNAME, MB_OK|MB_ICONERROR);
 		return 2;
