@@ -60,4 +60,6 @@
 "Rename"="リネーム"
 "show help"="ヘルプを表示"
 "show version"="バージョンを表示"
+"Operation: One of 'rename', 'trash', 'delete'"="オペレーション：以下のいずれか。'rename', 'trash', 'delete'"
+"Specify new name"="新しい名前を指定"
 "specify directory"="ディレクトリを指定"

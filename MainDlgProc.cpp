@@ -90,7 +90,6 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		case WM_INITDIALOG:
 		{
-
 			spData = (MainDialogData*)lParam;
 			
 			i18nChangeChildWindowText(hDlg);
@@ -123,11 +122,19 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			}
 
 			sIni = stdGetModuleFileName<wchar_t>() + L".ini";
-			int nDeleteMethod = spData->m_op;
-			if (nDeleteMethod < 0)
-				nDeleteMethod = GetPrivateProfileInt(APPNAME, KEY_DELETEMETHOD, 0, sIni.c_str());
+			MainDialogData::Operation operation = spData->m_op;
+			if(operation == MainDialogData::Operation::Operation_Default)
+				operation = (MainDialogData::Operation)GetPrivateProfileInt(APPNAME, KEY_DELETEMETHOD, 0, sIni.c_str());
+			switch (operation)
+			{
+			case MainDialogData::Operation::Operation_Rename:
+			case MainDialogData::Operation::Operation_MoveToTrashCan:
+			case MainDialogData::Operation::Operation_Delete:
+				SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_SETCURSEL, operation, 0);
+				break;
+			}
+
 			int nPriority = GetPrivateProfileInt(APPNAME, KEY_PRIORITY, 1, sIni.c_str());
-			SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_SETCURSEL, nDeleteMethod, 0);
 			SendDlgItemMessage(hDlg, IDC_COMBO_PRIORITY, CB_SETCURSEL, nPriority, 0);
 
 			wstring title = APPNAME;
@@ -139,14 +146,28 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			}
 			SetWindowText(hDlg, title.c_str());
 			
+
 			updateDialog(hDlg,spData->IsSingleFile());
+
+			BOOL ret = TRUE;
+			if (operation == MainDialogData::Operation::Operation_Rename)
+			{
+				// focus edit and select all
+				SetFocus(GetDlgItem(hDlg, IDC_EDIT_RENAME));
+				SendMessage(GetDlgItem(hDlg, IDC_EDIT_RENAME), EM_SETSEL, 0, -1);
+
+				// keep focus to this
+				ret = FALSE;
+			}
+
 			CenterWindow(hDlg);
 
 			HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON_MAIN));
 			SendMessage(hDlg, WM_SETICON, TRUE, (LPARAM)hIcon);
 			SendMessage(hDlg, WM_SETICON, FALSE, (LPARAM)hIcon);
 
-			return TRUE;
+
+			return ret;
 		}
 		break;
 

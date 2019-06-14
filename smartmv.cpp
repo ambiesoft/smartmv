@@ -164,7 +164,7 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee)
 						{
 							CCommandLineString cls(cmdLine.c_str());
 							cls.remove(0); // remove exe
-							int toIndex = cls.getIndex(L"-to");
+							size_t toIndex = cls.getIndex(L"-to");
 							if (toIndex >= 0)
 								cls.remove(toIndex, 2);
 							arg = cls.toString();
