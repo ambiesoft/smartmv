@@ -137,13 +137,25 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			int nPriority = GetPrivateProfileInt(APPNAME, KEY_PRIORITY, 1, sIni.c_str());
 			SendDlgItemMessage(hDlg, IDC_COMBO_PRIORITY, CB_SETCURSEL, nPriority, 0);
 
-			wstring title = APPNAME;
+			vector<wstring> addToTitles;
 			if (IsUserAnAdmin())
 			{
-				title += L" (";
-				title += I18N(L"Admin");
-				title += L")";
+				addToTitles.push_back(I18N(L"Admin"));
 			}
+			// add x86 or x64 to title
+			addToTitles.push_back(Is64BitProcess() ? L"x64" : L"x86");
+
+			wstring partTitle;
+			for (auto&& addToTitle : addToTitles)
+			{
+				partTitle += addToTitle;
+				partTitle += L",";
+			}
+			partTitle = stdTrim(partTitle, L",");
+
+			wstring title = stdFormat(L"%s (%s)",
+				APPNAME,
+				partTitle.c_str());
 			SetWindowText(hDlg, title.c_str());
 			
 
@@ -160,12 +172,12 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				ret = FALSE;
 			}
 
-			CenterWindow(hDlg);
-
+		
 			HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON_MAIN));
 			SendMessage(hDlg, WM_SETICON, TRUE, (LPARAM)hIcon);
 			SendMessage(hDlg, WM_SETICON, FALSE, (LPARAM)hIcon);
 
+			CenterWindow(hDlg);
 
 			return ret;
 		}

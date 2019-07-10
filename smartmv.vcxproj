@@ -73,25 +73,25 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\smartmv\</OutDir>
-    <IntDir>$(Configuration)\$(PlatformToolset)\</IntDir>
+    <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\</IntDir>
     <TargetName>$(ProjectName)D</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\smartmv\</OutDir>
-    <IntDir>$(Configuration)\$(PlatformToolset)\</IntDir>
+    <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)D64</TargetName>
     <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\smartmv\</OutDir>
-    <IntDir>$(Configuration)\$(PlatformToolset)\</IntDir>
+    <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>$(ProjectName)64</TargetName>
     <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\smartmv\</OutDir>
-    <IntDir>$(Configuration)\$(PlatformToolset)\</IntDir>
+    <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -191,7 +191,7 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     </Bscmake>
     <PostBuildEvent>
       <Command>mkdir "$(TargetDir)lang"
-copy "$(ProjectDir)lang\jpn.txt" "$(TargetDir)lang"
+copy "$(ProjectDir)lang\jpn.txt" "$(TargetDir)lang\"
 copy "$(ProjectDir)history.txt" "$(TargetDir)"
 
 </Command>
@@ -295,7 +295,7 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
     </Bscmake>
     <PostBuildEvent>
       <Command>mkdir "$(TargetDir)lang"
-copy "$(ProjectDir)lang\jpn.txt" "$(TargetDir)lang"
+copy "$(ProjectDir)lang\jpn.txt" "$(TargetDir)lang\"
 copy "$(ProjectDir)history.txt" "$(TargetDir)"
 
 </Command>
