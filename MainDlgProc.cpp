@@ -29,6 +29,7 @@
 
 #include "resource.h"
 #include "version.h"
+#include "smartmv.h"
 #include "MainDlgProc.h"
 
 using namespace Ambiesoft;
@@ -269,7 +270,7 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 				case IDC_BUTTON_ABOUT:
 				{
-					MessageBox(hDlg, APPNAME L" ver " VERSION, APPNAME, MB_ICONINFORMATION);
+					ShowVersionMessageBox(hDlg);
 				}
 				break;
 

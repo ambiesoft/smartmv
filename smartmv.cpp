@@ -39,7 +39,7 @@
 #include "resource.h"
 
 #include "main.h"
-
+#include "version.h"
 #include "MainDlgProc.h"
 #include "RetryDlgProc.h"
 
@@ -64,6 +64,13 @@ using namespace std;
 //	return ret;
 //}
 
+void ShowVersionMessageBox(HWND hParent)
+{
+	wstring message = APPNAME L" ver " VERSION;
+	message += L"\r\n\r\n";
+	message += L"Copyright 2019 Ambiesoft http://ambiesoft.fam.cx/";
+	MessageBox(hParent, message.c_str(), APPNAME, MB_ICONINFORMATION);
+}
 static bool myPathFileExists(const wchar_t* pFile)
 {
 	if (GetFileAttributes(pFile) == 0xFFFFFFFF)
@@ -335,6 +342,11 @@ int dowork()
 		return 0;
 	}
 
+	if (bVersion)
+	{
+		ShowVersionMessageBox(nullptr);
+		return 0;
+	}
 	if(parser.isEmpty())
 	{
 		tstring message = I18N(_T("No Arguments"));

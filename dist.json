@@ -1,23 +1,25 @@
 {
     "name": "smartmv",
     "solution": "smartmv.sln",
-    "targetproject": "smartmv",
+    "targetproject": "zzzDist",
     "configuration": "Release",
     "targets": [
         {
-            "outdir": "c:\\Linkout\\smartmv",
-            "setoutdirforbuild": true,
+            "outdir": "Release\\v120\\smartmv",
+            "setoutdirforbuild": false,
             "platform": "Win32"
         },
         {
-            "outdir": "c:\\Linkout\\smartmv",
-            "setoutdirforbuild": true,
+            "outdir": "Release\\v120\\smartmv",
+            "setoutdirforbuild": false,
             "platform": "x64"
         }
     ],
     "ShouldBeFiles": [
         "smartmv.exe",
         "smartmv64.exe",
+        "CREDITS",
+        "LICENSE",
         "history.txt",
         "lang\\jpn.txt"
     ],

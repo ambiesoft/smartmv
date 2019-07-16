@@ -28,5 +28,6 @@
 #pragma once
 
 int dowork();
+void ShowVersionMessageBox(HWND hParent);
 
 extern LPCWSTR gpCommandLine;

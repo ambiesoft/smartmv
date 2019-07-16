@@ -184,6 +184,12 @@
     <None Include="lang\jpn.txt">
       <Filter>5 lang</Filter>
     </None>
+    <None Include="LICENSE">
+      <Filter>4 dist</Filter>
+    </None>
+    <None Include="CREDITS">
+      <Filter>4 dist</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="rc.rc">

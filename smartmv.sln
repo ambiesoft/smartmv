@@ -5,6 +5,11 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "smartmv", "smartmv.vcxproj", "{956C681B-76D4-4E24-A2F6-20CE7A854952}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zzzDist", "zzzDist.vcxproj", "{6BEA0E97-8803-48C6-B310-42DBBA63F832}"
+	ProjectSection(ProjectDependencies) = postProject
+		{956C681B-76D4-4E24-A2F6-20CE7A854952} = {956C681B-76D4-4E24-A2F6-20CE7A854952}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +26,12 @@ Global
 		{956C681B-76D4-4E24-A2F6-20CE7A854952}.Release|Win32.Build.0 = Release|Win32
 		{956C681B-76D4-4E24-A2F6-20CE7A854952}.Release|x64.ActiveCfg = Release|x64
 		{956C681B-76D4-4E24-A2F6-20CE7A854952}.Release|x64.Build.0 = Release|x64
+		{6BEA0E97-8803-48C6-B310-42DBBA63F832}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6BEA0E97-8803-48C6-B310-42DBBA63F832}.Debug|x64.ActiveCfg = Debug|Win32
+		{6BEA0E97-8803-48C6-B310-42DBBA63F832}.Release|Win32.ActiveCfg = Release|Win32
+		{6BEA0E97-8803-48C6-B310-42DBBA63F832}.Release|Win32.Build.0 = Release|Win32
+		{6BEA0E97-8803-48C6-B310-42DBBA63F832}.Release|x64.ActiveCfg = Release|x64
+		{6BEA0E97-8803-48C6-B310-42DBBA63F832}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

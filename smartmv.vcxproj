@@ -73,25 +73,25 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\smartmv\</OutDir>
-    <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\</IntDir>
+    <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\int_$(ProjectName)\</IntDir>
     <TargetName>$(ProjectName)D</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\smartmv\</OutDir>
-    <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\</IntDir>
+    <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\int_$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)D64</TargetName>
     <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\smartmv\</OutDir>
-    <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\</IntDir>
+    <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\int_$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>$(ProjectName)64</TargetName>
     <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\smartmv\</OutDir>
-    <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\</IntDir>
+    <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\int_$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -134,11 +134,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
     <PostBuildEvent>
-      <Command>mkdir "$(TargetDir)lang"
-copy "$(ProjectDir)lang\jpn.txt" "$(TargetDir)lang\"
-copy "$(ProjectDir)history.txt" "$(TargetDir)"
-
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>
@@ -190,11 +187,8 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
     <PostBuildEvent>
-      <Command>mkdir "$(TargetDir)lang"
-copy "$(ProjectDir)lang\jpn.txt" "$(TargetDir)lang\"
-copy "$(ProjectDir)history.txt" "$(TargetDir)"
-
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -238,11 +232,8 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
     <PostBuildEvent>
-      <Command>mkdir "$(TargetDir)lang"
-copy "$(ProjectDir)lang\jpn.txt" "$(TargetDir)lang\"
-copy "$(ProjectDir)history.txt" "$(TargetDir)"
-
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>
@@ -294,11 +285,8 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
     <PostBuildEvent>
-      <Command>mkdir "$(TargetDir)lang"
-copy "$(ProjectDir)lang\jpn.txt" "$(TargetDir)lang\"
-copy "$(ProjectDir)history.txt" "$(TargetDir)"
-
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -387,8 +375,10 @@ copy "$(ProjectDir)history.txt" "$(TargetDir)"
   </ItemGroup>
   <ItemGroup>
     <None Include="app.ico" />
+    <None Include="CREDITS" />
     <None Include="icon1.ico" />
     <None Include="lang\jpn.txt" />
+    <None Include="LICENSE" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="rc.rc" />
