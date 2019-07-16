@@ -8,3 +8,8 @@ body {
 footer {
   text-align: right;
 }
+
+i {
+  font-size: 1.25em;
+  font-weight: bold;
+}

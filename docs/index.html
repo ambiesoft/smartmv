@@ -24,10 +24,13 @@
                 <div id="main">
                         <a name="jp">
                                 <div>
+                                        <p>削除したいフォルダが大きいフォルダの場合、削除するのに時間がかかって、次の作業に進めないことがあります。このアプリは対象フォルダを移動したあと削除するため、すばやく次の作業に映ることができます。ただしごみ箱からもとに戻すときに、元の位置には戻らなくなりますのでそこま注意が必要です。「送る」メニューなどに置いて使ってください。</p>
 
-                                        削除したいフォルダが大きいフォルダの場合、削除するのに時間がかかって、次の作業に進めないことがあります。このアプリは対象フォルダを移動したあと削除するため、すばやく次の作業に映ることができます。ただしごみ箱からもとに戻すときに、元の位置には戻らなくなりますのでそこま注意が必要です。「送る」メニューなどに置いて使ってください。
-
-
+                                        <h2>動作環境</h2>
+                                        <ul>
+                                                <li>Windows7以上</li>
+                                                <li>Visual Studio 2013 の Visual C++ 再頒布可能パッケージ</li>
+                                        </ul>
                                         <h2>ダウンロード</h2>
                                         <a
                                                 href="https://github.com/ambiesoft/smartmv/releases/">こちら</a>から行えます。<em>Assets</em>の実行ファイルをダウンロードしてください。ベータ状態のファイルは<a
@@ -42,41 +45,53 @@
                                         <ul>
                                                 <li><i>[Ctrl]+R</i>で<em>実行ダイアログ</em>を表示し、<i>%LOCALAPPDATA%</i>と入力してOKします。
                                                         <p><img src="images/rundialog.png"></p>
+                                                </li>
 
                                                 <li>解凍したファイル（フォルダ一式）をこの場所に移動して開きます。
                                                         <p><img src="images/explorer.png"></p>
+                                                </li>
 
-                                                <li><i>smartmv.exe</i>を選択して<i>コピー</i>します。
-                                                <li>
+                                                <li><i>smartmv.exe</i>を選択して<i>コピー</i>します。</li>
 
                                                 <li><i>[Ctrl]+R</i>で<em>実行ダイアログ</em>を表示し、<i>shell:sendto</i>と入力してOKします。
+                                                </li>
                                                 <li>「送る」メニューの一覧を含むフォルダが表示されるので、何もないところを右クリックして、<i>ショートカットの貼り付け</i>を選択します。
-                                                <li>ショートカットが作成されるので名前を<i>smartmv</i>に変えます。
+                                                </li>
+                                                <li>ショートカットが作成されるので名前を<i>smartmv</i>に変えます。</li>
+                                        </ul>
+                                        <h2>実行</h2>
+                                        リネームや削除したいフォルダやファイルを右クリックして<i>送る</i>メニューから<i>smartmv</i>を選択します。
+                                        <p><img src="images/smartmv.png"></p>
 
-                                                        <h2>実行</h2>
-                                                        リネームや削除したいフォルダやファイルを右クリックして<i>送る</i>メニューから<i>smartmv</i>を選択します。
-                                                        <p><img src="images/smartmv.png"></p>
 
+                                        <h2>削除時のアルゴリズム</h2>
+                                        <ol>
+                                                <li>対象ファイル・フォルダをそのドライブのルートディレクトリの下の<i>.smartmv</i>フォルダに移動します。</li>
+                                                <li>移動したファイル・フォルダを実際に削除します。</li>
+                                        </ol>
+                                        <p>このようなアルゴリズムになっているため、ゴミ箱に削除したあともとに戻す操作をしても<i>.smartmv</i>に戻ることになりますのでご注意ください。
+                                        </p>
 
-                                                        <h2>削除失敗時のプロセス検索</h2>
-                                                        削除やリネームに失敗したときで、他のプロセスがそのファイルを使っている場合、当該プロセスを突き止める機能が起動します。
-                                                        <p><img src="images/findculprit.png"></p>
-                                                        もしここにプロセスが表示されれば、そのプロセスがファイルを使っているので、このプロセスを閉じてから再試行すれば削除できます。
+                                        <h2>削除失敗時のプロセス検索</h2>
+                                        削除やリネームに失敗したときで、他のプロセスがそのファイルを使っている場合、当該プロセスを突き止める機能が起動します。
+                                        <p><img src="images/findculprit.png"></p>
+                                        もしここにプロセスが表示されれば、そのプロセスがファイルを使っているので、このプロセスを閉じてから再試行すれば削除できます。
 
-                                                        <h2>開発</h2>
-                                                        <a href="https://github.com/ambiesoft/smartmv">githubのページ</a>をご覧ください。
+                                        <h2>開発</h2>
+                                        <a href="https://github.com/ambiesoft/smartmv">githubのページ</a>をご覧ください。
 
-                                                        <h2>寄付</h2>
-                                                        開発の寄付を募集しています。詳しくは<a
-                                                                href="http://ambiesoft.fam.cx/donate/">こちら</a>をご覧ください。
+                                        <h2>寄付</h2>
+                                        開発の寄付を募集しています。詳しくは<a href="http://ambiesoft.fam.cx/donate/">こちら</a>をご覧ください。
 
                                 </div><!-- /main -->
                                 <div id="sub">
                                 </div><!-- /sub -->
                 </div><!-- /contents -->
 
+                <hr />
                 <footer>
-                        <div id="copyright">Copyright (C) 2018 <a href="http://ambiesoft.fam.cx/">Ambiesoft</a>. All Rights Reserved.</div>
+                        <div id="copyright">Copyright (C) 2018 <a href="http://ambiesoft.fam.cx/">Ambiesoft</a>. All
+                                Rights Reserved.</div>
                 </footer>
 </body>
 
