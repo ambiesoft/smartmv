@@ -60,7 +60,7 @@
 #include "../lsMisc/GetLastErrorString.h"
 #include "../lsMisc/stdwin32/stdwin32.h"
 #include "../lsMisc/stdosd/stdosd.h"
-#include "../SessionGlobalMemory/SessionGlobalMemory.h"
+#include "../lsMisc/SessionGlobalMemory/SessionGlobalMemory.h"
 #include "../lsMisc/Is64.h"
 #include "../lsMisc/CommandLineUtil.h"
 // #include "../lsMisc/ntfs.h"

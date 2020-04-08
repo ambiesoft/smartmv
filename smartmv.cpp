@@ -307,14 +307,14 @@ int dowork()
 	parser.AddOption(&optionDefault);
 
 	bool bHelp = false;
-	parser.AddOption( L"-h", L"/h" , 
+	parser.AddOption({ L"-h", L"/h"},
 		0,
 		&bHelp,
 		ArgEncodingFlags_Default,
 		I18N(L"show help"));
 	
 	bool bVersion = false;
-	parser.AddOption(L"-v", L"/v",
+	parser.AddOption({ L"-v", L"/v" },
 		0,
 		&bVersion,
 		ArgEncodingFlags_Default,
