@@ -5,12 +5,12 @@
     "configuration": "Release",
     "targets": [
         {
-            "outdir": "Release\\v120\\smartmv",
+            "outdir": "Release\\v142\\smartmv",
             "setoutdirforbuild": false,
             "platform": "Win32"
         },
         {
-            "outdir": "Release\\v120\\smartmv",
+            "outdir": "Release\\v142\\smartmv",
             "setoutdirforbuild": false,
             "platform": "x64"
         }
@@ -18,6 +18,8 @@
     "ShouldBeFiles": [
         "smartmv.exe",
         "smartmv64.exe",
+        "smartmv.pdb",
+        "smartmv64.pdb",
         "CREDITS",
         "LICENSE",
         "history.txt",
@@ -25,8 +27,8 @@
     ],
     "TotalFileCount": "exact",
     "archivedir": "C:\\Linkout",
-    "remotedir": "http://ambiesoft.fam.cx/ffdav/uploads/smartmv/",
-    "remotesha1": "http://ambiesoft.fam.cx/ffdav/uploads/getSha1.php?file=smartmv/{}",
+    "remotedir": "http://ambiesoft.mooo.com/ffdav/uploads/smartmv/",
+    "remotesha1": "http://ambiesoft.mooo.com/ffdav/uploads/getSha1.php?file=smartmv/{}",
     "ShouldNotBeFiles": [],
     "ShouldBeOneOfThem": [],
     "obtainverfrom": "history.txt",
