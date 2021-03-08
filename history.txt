@@ -1,4 +1,7 @@
-﻿2019/07/16 ver1.8.1
+﻿2021/03/08 ver2.0.1
+toVS2019
+
+2019/07/16 ver1.8.1
 Add version, LICENSE, CREDITS
 
 2019/07/10 ver1.7.10

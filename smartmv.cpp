@@ -31,10 +31,10 @@
 
 #include "stdafx.h"
 #include "../lsMisc/CommandLineString.h"
-#include "../lsMisc/stlScopedClear.h"
 #include "../lsMisc/CommandLineParser.h"
 
 #include "../lsMisc/stdosd/stdosd.h"
+#include "../lsMisc/RunAsAdmin.h"
 
 #include "resource.h"
 
@@ -75,7 +75,7 @@ static bool myPathFileExists(const wchar_t* pFile)
 {
 	if (GetFileAttributes(pFile) == 0xFFFFFFFF)
 	{
-		if (GetLastError() != 5) // access denied
+		if (GetLastError() == ERROR_FILE_NOT_FOUND)
 			return false;
 	}
 	return true;
@@ -134,22 +134,7 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee)
 				}
 				else if (nDR == IDC_BUTTON_ELEVATE)
 				{
-					wstring app = stdGetModuleFileName<wchar_t>();
-
-					CCommandLineString cmsString;
-					wstring arg = cmsString.subString(1);
-
-					//int nArgc;
-					//LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(GetCommandLine(), &nArgc);
-					//wstring arg = stdSplitCommandLine(nArgc, 1, ppArgv);
-					//LocalFree(ppArgv);
-
-					OpenCommon(NULL,
-						app.c_str(),
-						arg.c_str(),
-						NULL,
-						NULL,
-						L"runas");
+					RunThisAsAdmin();
 					return false;
 				}
 				else if (nDR == IDC_BUTTON_RUNAS_DIFFERENTCPU)
@@ -258,7 +243,7 @@ int doRemoveWork(MainDialogData& data)
 	FILEOP_FLAGS foFlags = FOF_NOCONFIRMATION;
 	if (!data.IsComplete())
 		foFlags |= FOF_ALLOWUNDO;
-	if (0 != SHDeleteFile(gomiFiles, foFlags))
+	if (0 != SHDeleteFileEx(gomiFiles, foFlags))
 	{
 		if (!data.IsComplete())
 			throw I18N(L"Failed to trash file");
@@ -307,14 +292,14 @@ int dowork()
 	parser.AddOption(&optionDefault);
 
 	bool bHelp = false;
-	parser.AddOption({ L"-h", L"/h"},
+	parser.AddOptionRange({ L"-h", L"/h"},
 		0,
 		&bHelp,
 		ArgEncodingFlags_Default,
 		I18N(L"show help"));
 	
 	bool bVersion = false;
-	parser.AddOption({ L"-v", L"/v" },
+	parser.AddOptionRange({ L"-v", L"/v" },
 		0,
 		&bVersion,
 		ArgEncodingFlags_Default,
@@ -499,7 +484,7 @@ int dowork()
 			if (dwAttr == 0xffffffff)
 			{
 				DWORD dwLE = GetLastError();
-				if (dwLE != 5)  // 'access is denied' means delete pending
+				if (dwLE == ERROR_FILE_NOT_FOUND)  // 'access is denied' means delete pending
 					throw stdFormat(wstring(I18N(L"\"%s\" is not found.")) + L"\r\n" + GetLastErrorString(dwLE), fileOrig.c_str());
 			}
 

@@ -25,7 +25,6 @@
 //OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
-#include "../lsMisc/stlScopedClear.h"
 
 #include "resource.h"
 #include "version.h"
@@ -221,10 +220,10 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 							MessageBox(hDlg, I18N(L"Please enter renaming name."), APPNAME, MB_ICONEXCLAMATION);
 							break;
 						}
-						LPTSTR pBuff = (LPTSTR)LocalAlloc(0, (len + 1)*sizeof(TCHAR));
-						STLSOFT_SCOPEDFREE(pBuff, HLOCAL, LocalFree);
-						GetWindowText(GetDlgItem(hDlg, IDC_EDIT_RENAME), pBuff, len+1);
-						spData->setRenamee(pBuff);
+						// LPTSTR pBuff = (LPTSTR)LocalAlloc(0, (len + 1)*sizeof(TCHAR));
+						vector<wchar_t> buff(len + 1);
+						GetWindowText(GetDlgItem(hDlg, IDC_EDIT_RENAME), buff.data(), len+1);
+						spData->setRenamee(buff.data());
 						if (spData->IsRenameeExists())
 						{
 							MessageBox(NULL,
