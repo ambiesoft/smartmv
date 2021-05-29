@@ -63,3 +63,4 @@
 "Operation: One of 'rename', 'trash', 'delete'"="オペレーション：以下のいずれか。'rename', 'trash', 'delete'"
 "Specify new name"="新しい名前を指定"
 "specify directory"="ディレクトリを指定"
+"Are you sure you want to completely remove %s."="%s を完全に削除しますか？"

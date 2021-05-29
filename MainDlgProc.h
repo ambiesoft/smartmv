@@ -65,6 +65,7 @@ struct MainDialogData {
 	bool IsSingleFile() const{
 		return targets_.size() == 1;
 	}
+	std::wstring ToTargetString() const;
 };
 
 INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);

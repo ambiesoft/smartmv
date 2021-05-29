@@ -44,6 +44,10 @@ wstring MainDialogData::renameefull() const
 	assert(targets_.size() == 1);
 	return stdCombinePath(stdGetParentDirectory(targets_[0]), renamee_);
 }
+wstring MainDialogData::ToTargetString() const
+{
+	return stdJoinStrings(targets_);
+}
 static void updateDialog(HWND hDlg, bool isSingle)
 {
 	LRESULT comboValue = SendDlgItemMessage(hDlg, IDC_COMBO_DELETEMETHOD, CB_GETCURSEL, 0, 0);
@@ -230,6 +234,17 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 								stdFormat(I18N(L"\"%s\" already exists."), spData->renameefull().c_str()).c_str(),
 								APPNAME,
 								MB_ICONEXCLAMATION);
+							break;
+						}
+					}
+					else if (spData->IsComplete())
+					{
+						if (IDYES != MessageBox(NULL,
+							stdFormat(I18N(L"Are you sure you want to completely remove %s."), 
+								spData->ToTargetString().c_str()).c_str(),
+							APPNAME,
+							MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2))
+						{
 							break;
 						}
 					}
