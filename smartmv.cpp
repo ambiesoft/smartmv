@@ -68,7 +68,7 @@ void ShowVersionMessageBox(HWND hParent)
 {
 	wstring message = APPNAME L" ver " VERSION;
 	message += L"\r\n\r\n";
-	message += L"Copyright 2019 Ambiesoft http://ambiesoft.fam.cx/";
+	message += L"Copyright 2019 Ambiesoft http://ambiesoft.mooo.com/";
 	MessageBox(hParent, message.c_str(), APPNAME, MB_ICONINFORMATION);
 }
 static bool myPathFileExists(const wchar_t* pFile)
