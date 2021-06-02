@@ -68,7 +68,9 @@ void ShowVersionMessageBox(HWND hParent)
 {
 	wstring message = APPNAME L" ver " VERSION;
 	message += L"\r\n\r\n";
-	message += L"Copyright 2019 Ambiesoft http://ambiesoft.mooo.com/";
+	message += L"Copyright 2019 Ambiesoft";
+	message += L"\r\n";
+	message += L"http://ambiesoft.mooo.com/";
 	MessageBox(hParent, message.c_str(), APPNAME, MB_ICONINFORMATION);
 }
 static bool myPathFileExists(const wchar_t* pFile)
@@ -80,7 +82,74 @@ static bool myPathFileExists(const wchar_t* pFile)
 	}
 	return true;
 }
-bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee)
+MainDialogData::Operation StringToOperation(const wstring& operation)
+{
+	MainDialogData::Operation op = MainDialogData::Operation_Default;
+	if (operation == L"rename")
+		op = MainDialogData::Operation_Rename;
+	else if (operation == L"trash")
+		op = MainDialogData::Operation_MoveToTrashCan;
+	else if (operation == L"delete")
+		op = MainDialogData::Operation_Delete;
+	return op;
+}
+static bool IsValidOpValue(const wstring& operation)
+{
+	return StringToOperation(operation) != MainDialogData::Operation_Default;
+}
+static wstring getCommandLineArgs(const MainDialogData::Operation operation, const wstring& renamee, int priority)
+{
+	wstring cmdLine = GetCommandLineW();
+	wstring arg;
+	try
+	{
+		CCommandLineString cls(cmdLine.c_str());
+		cls.remove(0); // remove exe
+		int opIndex = cls.getIndex(L"-op");
+		if (opIndex >= 0)
+		{
+			if (!IsValidOpValue(cls.getArg(opIndex + 1)))
+			{
+				MessageBox(nullptr, L"Illeval command line", APPNAME, MB_ICONERROR);
+				ExitProcess(1);
+			}
+			cls.remove(opIndex, 2);
+		}
+		
+		int toIndex = cls.getIndex(L"-to");
+		if (toIndex >= 0)
+		{
+			// remove "-to arg"
+			cls.remove(toIndex, 2);
+		}
+
+		int priIndex = cls.getIndex(L"-pri");
+		if (priIndex >= 0)
+		{
+			cls.remove(priIndex, 2);
+		}
+		arg = cls.toString();
+		arg += L" ";
+		
+		arg += L"-op ";
+		arg += MainDialogData::GetOperationCommandLineString(operation);
+		arg += L" ";
+		
+		arg += L"-to ";
+		arg += stdAddDQIfNecessary(renamee);
+		arg += L" ";
+
+		arg += L"-pri ";
+		arg += to_wstring(priority);
+	}
+	catch (...)
+	{
+		CCommandLineString cls(cmdLine);
+		arg = cls.subString(1);
+	}
+	return arg;
+}
+bool tryMove(const MainDialogData::Operation operation, LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee, int priority)
 {
 	bool movedone = false;
 	while (!movedone)
@@ -115,7 +184,7 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee)
 				message += t;
 
 				assert(pFileOrig);
-				RetryDialogData data(pFileOrig, message, pRenamee ? pRenamee : wstring());
+				RetryDialogData data(pFileOrig, message);
 
 				INT_PTR nDR = DialogBoxParam(GetModuleHandle(NULL),
 					MAKEINTRESOURCE(IDD_DIALOG_RETRY),
@@ -134,7 +203,8 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee)
 				}
 				else if (nDR == IDC_BUTTON_ELEVATE)
 				{
-					RunThisAsAdmin();
+					wstring arg = getCommandLineArgs(operation, pRenamee,priority);
+					RunThisAsAdmin(nullptr, arg.c_str());
 					return false;
 				}
 				else if (nDR == IDC_BUTTON_RUNAS_DIFFERENTCPU)
@@ -149,31 +219,7 @@ bool tryAndArchive(LPCTSTR pFileOrig, LPCTSTR pRenameFull, LPCTSTR pRenamee)
 #endif
 						exe += isNow64 ? L".exe" : L"64.exe";
 
-
-						wstring cmdLine = GetCommandLineW();
-						wstring arg;
-						try
-						{
-							CCommandLineString cls(cmdLine.c_str());
-							cls.remove(0); // remove exe
-							int toIndex = cls.getIndex(L"-to");
-							if (toIndex >= 0)
-								cls.remove(toIndex, 2);
-							arg = cls.toString();
-							arg += L" ";
-							arg += L"-to ";
-							arg += stdAddDQIfNecessary(data.renamee());
-						}
-						catch (...)
-						{
-							//int nArgc;
-							//LPCWSTR* ppArgv = (LPCWSTR*)CommandLineToArgvW(cmdLine.c_str(), &nArgc);
-							//arg = stdSplitCommandLine(nArgc, 1, ppArgv);
-							//LocalFree(ppArgv);
-
-							CCommandLineString cls(cmdLine);
-							arg = cls.subString(1);
-						}
+						wstring arg = getCommandLineArgs(operation, pRenamee,priority);
 						OpenCommon(NULL,
 							exe.c_str(),
 							arg.c_str(),
@@ -228,14 +274,14 @@ int doRemoveWork(MainDialogData& data)
 		lstrcat(szGomiFile, _T("\\"));
 		lstrcat(szGomiFile, pFileName);
 
-		if (!tryAndArchive(target.c_str(), szGomiFile, nullptr))
+		if (!tryMove(data.operation(), target.c_str(), szGomiFile, data.renamee().c_str(), data.priority()))
 			return 0;
 
 		gomiDirs.insert(szGomiDir);
 		gomiFiles.push_back(szGomiFile);
 	}
 	
-	if (!SetPriorityClass(GetCurrentProcess(), data.m_dwRetPri))
+	if (!SetPriorityClass(GetCurrentProcess(), data.getSystemPriorty()))
 	{
 		MessageBox(NULL, I18N(L"SetPriorityClass failed."), APPNAME, MB_ICONASTERISK);
 	}
@@ -265,6 +311,7 @@ int doRemoveWork(MainDialogData& data)
 	return 0;
 }
 
+
 int doRename(MainDialogData& data)
 {
 	if (PathFileExists(data.renameefull().c_str()))
@@ -276,14 +323,14 @@ int doRename(MainDialogData& data)
 		return 1;
 	}
 	assert(data.IsSingleFile());
-	if (!tryAndArchive(data.targets_[0].c_str(), data.renameefull().c_str(), data.renamee().c_str()))
+	if (!tryMove(data.operation(), data.targets_[0].c_str(), data.renameefull().c_str(), data.renamee().c_str(), data.priority()))
 		return 0;
 
 	return 0;
 }
 int dowork()
 {
-	CCommandLineParser parser(CaseFlags_Default, I18N(L"Move and remove folder"));
+	CCommandLineParser parser(CaseFlags_Default, I18N(L"Rename or remove a folder"), APPNAME);
 
 	COption optionDefault(L"",
 		ArgCount::ArgCount_Infinite,
@@ -319,6 +366,13 @@ int dowork()
 		ArgEncodingFlags_Default,
 		I18N(L"Specify new name"));
 
+	int priority = -1;
+	parser.AddOption(L"-pri",
+		1,
+		&priority,
+		ArgEncodingFlags_Default,
+		I18N(L"Specify priority, 0=High 1=Normal 2=Low 3=Idle"));
+
 	parser.Parse(__argc, __targv);
 
 	if (bHelp)
@@ -353,36 +407,14 @@ int dowork()
 	MainDialogData::Operation op = MainDialogData::Operation_Default;
 	if (!operation.empty())
 	{
-		if (operation == L"rename")
-			op = MainDialogData::Operation_Rename;
-		else if (operation == L"trash")
-			op = MainDialogData::Operation_MoveToTrashCan;
-		else if (operation == L"delete")
-			op = MainDialogData::Operation_Delete;
-		else
+		op = StringToOperation(operation);
+		if (op == MainDialogData::Operation_Default)
 		{
 			wstring message = stdFormat(I18N(L"Unknown operation: %s"), operation.c_str());
 			MessageBox(NULL, message.c_str(), APPNAME, MB_ICONERROR);
 			return 1;
 		}
 	}
-	//if (optionDefault.getValueCount() > 1)
-	//{
-	//	tstring exe = stdGetModuleFileName();
-	//	for (size_t i = 0; i < optionDefault.getValueCount(); ++i)
-	//	{
-	//		tstring input = optionDefault.getValue(i);
-	//		
-	//		if (!OpenCommon(NULL,
-	//			stdApplyDQ(exe).c_str(),
-	//			stdApplyDQ(input).c_str()))
-	//		{
-	//			MessageBox(NULL, I18N(L"Failed to launch self"), APPNAME, MB_ICONERROR);
-	//			return 1;
-	//		}
-	//	}
-	//	return 0;
-	//}
 	
 	if(parser.hadUnknownOption())
 	{
@@ -495,6 +527,7 @@ int dowork()
 		data.m_op = op;
 		data.targets_ = targetPathes;
 		data.renamee_ = renameto;
+		data.setPriority(priority);
 		if(IDOK != DialogBoxParam(GetModuleHandle(NULL),
 			MAKEINTRESOURCE(IDD_DIALOG_ASK),
 			NULL,
@@ -513,9 +546,6 @@ int dowork()
 		{
 			doRename(data);
 		}
-
-
-
 	}
 	catch(wstring& message)
 	{

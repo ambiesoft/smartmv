@@ -86,6 +86,16 @@ static void updateDialog(HWND hDlg, bool isSingle)
 		}
 	}
 }
+static wstring getRenamee(HWND hDlg)
+{
+	int len = GetWindowTextLength(GetDlgItem(hDlg, IDC_EDIT_RENAME));
+	if (len <= 0)
+		return wstring();
+
+	vector<wchar_t> buff(len + 1);
+	GetWindowText(GetDlgItem(hDlg, IDC_EDIT_RENAME), buff.data(), len + 1);
+	return buff.data();
+}
 INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	static MainDialogData* spData;
@@ -138,7 +148,8 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				break;
 			}
 
-			int nPriority = GetPrivateProfileInt(APPNAME, KEY_PRIORITY, 1, sIni.c_str());
+			const int nPriority = spData->m_priority >=0 ? spData->m_priority :
+				GetPrivateProfileInt(APPNAME, KEY_PRIORITY, 1, sIni.c_str());
 			SendDlgItemMessage(hDlg, IDC_COMBO_PRIORITY, CB_SETCURSEL, nPriority, 0);
 
 			vector<wstring> addToTitles;
@@ -214,20 +225,17 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 						EndDialog(hDlg, IDCANCEL);
 						return 0;
 					}
-
+					
 					spData->m_op = (MainDialogData::Operation)nDel;
+					spData->setRenamee(getRenamee(hDlg));
 					if (spData->IsRename())
 					{
-						int len = GetWindowTextLength(GetDlgItem(hDlg, IDC_EDIT_RENAME));
-						if (len <= 0)
+						if (spData->renamee().empty())
 						{
 							MessageBox(hDlg, I18N(L"Please enter renaming name."), APPNAME, MB_ICONEXCLAMATION);
 							break;
 						}
-						// LPTSTR pBuff = (LPTSTR)LocalAlloc(0, (len + 1)*sizeof(TCHAR));
-						vector<wchar_t> buff(len + 1);
-						GetWindowText(GetDlgItem(hDlg, IDC_EDIT_RENAME), buff.data(), len+1);
-						spData->setRenamee(buff.data());
+
 						if (spData->IsRenameeExists())
 						{
 							MessageBox(NULL,
@@ -248,24 +256,8 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 							break;
 						}
 					}
-					switch(nPri)
-					{
-						case 0:
-							spData->m_dwRetPri = HIGH_PRIORITY_CLASS;
-							break;
-						case 1:
-							spData->m_dwRetPri = NORMAL_PRIORITY_CLASS;
-							break;
-						case 2:
-							spData->m_dwRetPri = 0x00004000; // BELOW_NORMAL_PRIORITY_CLASS;
-							break;
-						case 3:
-							if(IsWinVistaOrHigher())
-								spData->m_dwRetPri = 0x00100000; // PROCESS_MODE_BACKGROUND_BEGIN;
-							else
-								spData->m_dwRetPri = IDLE_PRIORITY_CLASS;
-							break;
-					}							
+
+					spData->setPriority(nPri);
 
 					WritePrivateProfileInt(APPNAME, KEY_DELETEMETHOD, nDel, sIni.c_str());
 					WritePrivateProfileInt(APPNAME, KEY_PRIORITY, nPri, sIni.c_str());

@@ -35,14 +35,33 @@ struct MainDialogData {
 		Operation_MoveToTrashCan,
 		Operation_Delete,
 	} m_op;
-	// bool bRetComp;
-	DWORD m_dwRetPri;
+	
+	int m_priority = -1;
+
 
 	MainDialogData() {
 		// ZeroMemory(this, sizeof(*this));
 		// m_pTarget_ = nullptr;
 		m_op = Operation_Rename;
-		m_dwRetPri=GetPriorityClass(GetCurrentProcess());
+	}
+	static std::wstring GetOperationCommandLineString(Operation operation) {
+		switch (operation)
+		{
+		case Operation_Default:
+			return L"";
+		case Operation_Rename:
+			return L"rename";
+		case Operation_MoveToTrashCan:
+			return L"trash";
+		case Operation_Delete:
+			return L"delete";
+		default:
+			assert(false);
+		}
+		return L"";
+	}
+	Operation operation() const {
+		return m_op;
 	}
 	bool IsRemove() const {
 		return m_op == Operation_MoveToTrashCan || m_op == Operation_Delete;
@@ -56,8 +75,8 @@ struct MainDialogData {
 	std::wstring renamee() const {
 		return renamee_;
 	}
-	void setRenamee(LPCTSTR p) {
-		renamee_ = p;
+	void setRenamee(const std::wstring& s) {
+		renamee_ = s;
 	}
 	bool IsRenameeExists() const;
 	std::wstring renameefull() const;
@@ -66,6 +85,37 @@ struct MainDialogData {
 		return targets_.size() == 1;
 	}
 	std::wstring ToTargetString() const;
+
+	void setPriority(int nPri) {
+		m_priority = nPri;
+	}
+	int priority() const {
+		return m_priority;
+	}
+	DWORD getSystemPriorty() const {
+		DWORD dwRetPri;
+		switch (m_priority)
+		{
+		case 0:
+			dwRetPri = HIGH_PRIORITY_CLASS;
+			break;
+		case 1:
+			dwRetPri = NORMAL_PRIORITY_CLASS;
+			break;
+		case 2:
+			dwRetPri = 0x00004000; // BELOW_NORMAL_PRIORITY_CLASS;
+			break;
+		case 3:
+			if (IsWinVistaOrHigher())
+				dwRetPri = 0x00100000; // PROCESS_MODE_BACKGROUND_BEGIN;
+			else
+				dwRetPri = IDLE_PRIORITY_CLASS;
+			break;
+		default:
+			dwRetPri = GetPriorityClass(GetCurrentProcess());
+		}
+		return dwRetPri;
+	}
 };
 
 INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);

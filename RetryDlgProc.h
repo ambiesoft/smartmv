@@ -28,11 +28,11 @@
 class RetryDialogData {
 	std::wstring file_;
 	std::wstring message_;
-	std::wstring renamee_;
+	// std::wstring renamee_;
 
 public:
-	RetryDialogData(const std::wstring& file, const std::wstring& message, const std::wstring& renamee) :
-		file_(file), message_(message), renamee_(renamee){
+	RetryDialogData(const std::wstring& file, const std::wstring& message) :
+		file_(file), message_(message) {
 	}
 
 	std::wstring file() const {
@@ -40,9 +40,6 @@ public:
 	}
 	std::wstring message() const {
 		return message_;
-	}
-	std::wstring renamee() const {
-		return renamee_;
 	}
 };
 

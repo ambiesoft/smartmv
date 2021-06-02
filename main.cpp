@@ -48,32 +48,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	gpCommandLine = lpCmdLine;
 
-	// can not find 32bin in 64bit, vice vasa
-//	if (Is64BitWindows() && !Is64BitProcess())
-//	{
-//		wstring exe64 = stdGetParentDirectory(stdGetModuleFileName(), true);
-//		exe64 += L"smartmv";
-//#ifdef _DEBUG
-//		exe64 += L"D";
-//#endif
-//		exe64 += L"64.exe";
-//		if (!PathFileExists(exe64.c_str()))
-//		{
-//			MessageBox(NULL,
-//				I18N(L"could not find 64bit executable."),
-//				APPNAME,
-//				MB_ICONERROR);
-//			return 1;
-//		}
-//
-//
-//		OpenCommon(NULL,
-//			exe64.c_str(),
-//			lpCmdLine);
-//
-//		return 0;
-//	}
-
 	InitCommonControls();
 #if _DEBUG
 	Ambiesoft::i18nInitLangmap(hInstance, L"jpn", L"");

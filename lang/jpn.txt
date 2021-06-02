@@ -55,7 +55,7 @@
 
 "&Terminate"="強制終了(&T)"
 "Are you sure to terminate following process(es)?"="以下のプロセスを強制終了しますか？"
-"Move and remove folder="フォルダの移動と削除"
+"Rename or remove a folder"="フォルダのリネームと削除"
 "Process %d has been terminated."="プロセス %d は強制終了されました。"
 "Rename"="リネーム"
 "show help"="ヘルプを表示"
@@ -64,3 +64,4 @@
 "Specify new name"="新しい名前を指定"
 "specify directory"="ディレクトリを指定"
 "Are you sure you want to completely remove %s."="%s を完全に削除しますか？"
+"Specify priority, 0=High 1=Normal 2=Low 3=Idle"="優先度を指定、0=高い 1=通常 2=低い 3=アイドル"
