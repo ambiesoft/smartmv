@@ -171,7 +171,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 						EnableWindow(btnTerminate, TRUE);
 
 						grabbers.append(L"PID:");
-						grabbers.append(stdItoW(it->dwPID));
+						grabbers.append(to_wstring(it->dwPID));
 						grabbers.append(L", ");
 						grabbers.append(stdApplyDQ(grabber));
 						if (it->filename[0])
@@ -233,7 +233,7 @@ INT_PTR CALLBACK RetryDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 					question += L"\r\n";
 					for (DWORD pid : pidsToKill)
 					{
-						question += stdItoW(pid);
+						question += to_wstring(pid);
 						question += L" ";
 					}
 					if (IDYES != MessageBox(hDlg,

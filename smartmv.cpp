@@ -333,7 +333,7 @@ int dowork()
 	CCommandLineParser parser(CaseFlags_Default, I18N(L"Rename or remove a folder"), APPNAME);
 
 	COption optionDefault(L"",
-		ArgCount::ArgCount_Infinite,
+		ArgCount::ArgCount_ZeroToInfinite,
 		ArgEncodingFlags_Default,
 		I18N(L"specify directory"));
 	parser.AddOption(&optionDefault);
@@ -471,7 +471,7 @@ int dowork()
 			command += stdAddDQIfNecessary(cls[i]);
 			if (!OpenCommon(nullptr, app.c_str(), command.c_str()))
 			{
-				throw stdFormat(L"Failed to launch %s", (app + L" " + command));
+				throw stdFormat(L"Failed to launch %s", (app + L" " + command).c_str());
 			}
 		}
 		return 0;
